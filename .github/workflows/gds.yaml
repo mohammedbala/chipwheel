@@ -38,6 +38,9 @@ jobs:
             runs/wokwi/*/*.rpt
             runs/wokwi/*/*/*.rpt
             runs/wokwi/*/state_in.json
+            runs/wokwi/*/*.drc*
+            runs/wokwi/*/drt-run-*/**
+            runs/wokwi/final/**
 
   precheck:
     needs: gds
