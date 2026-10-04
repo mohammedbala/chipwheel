@@ -1,0 +1,24 @@
+# uart_burst: RV32I, 23 words, assembled by incumbents/common/rvasm.py
+0000: 00100493  addi s1, x0, 1
+0004: fe902823  sw   s1, -16(x0)
+0008: 0480006f  j    poll
+000c: 00155313  srli t1, a0, 1
+0010: 00135393  srli t2, t1, 1
+0014: 0013de13  srli t3, t2, 1
+0018: 001e5e93  srli t4, t3, 1
+001c: 001edf13  srli t5, t4, 1
+0020: 001f5f93  srli t6, t5, 1
+0024: 001fd593  srli a1, t6, 1
+0028: fe002823  sw   x0, -16(x0)
+002c: fea02823  sw   a0, -16(x0)
+0030: fe602823  sw   t1, -16(x0)
+0034: fe702823  sw   t2, -16(x0)
+0038: ffc02823  sw   t3, -16(x0)
+003c: ffd02823  sw   t4, -16(x0)
+0040: ffe02823  sw   t5, -16(x0)
+0044: fff02823  sw   t6, -16(x0)
+0048: feb02823  sw   a1, -16(x0)
+004c: fe902823  sw   s1, -16(x0)
+0050: ff802503  lw   a0, -8(x0)
+0054: fa054ce3  blt  a0, x0, send
+0058: ff9ff06f  j    poll

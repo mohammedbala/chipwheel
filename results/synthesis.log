@@ -1,0 +1,1219 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.55 (git sha1 60f126cd0, ccache clang 18.1.3 -O3 -flto -flto)
+
+-- Executing script file `scripts/synth.ys' --
+
+1. Executing Liberty frontend: .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+Imported 84 cell types from liberty file.
+
+2. Executing Verilog-2005 frontend: src/project.v
+Parsing Verilog input from `src/project.v' to AST representation.
+Generating RTLIL representation for module `\tt_um_chipwheel'.
+Successfully finished Verilog frontend.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+
+3.2. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+Removed 0 unused modules.
+
+4. Executing SYNTH pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1.1. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+
+4.1.2. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+Removed 0 unused modules.
+
+4.2. Executing PROC pass (convert processes to netlists).
+
+4.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+4.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 19 switch rules as full_case in process $proc$src/project.v:38$23 in module tt_um_chipwheel.
+Removed a total of 0 dead cases.
+
+4.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 6 assignments to connections.
+
+4.2.4. Executing PROC_INIT pass (extract init attributes).
+
+4.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~22 debug messages>
+
+4.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+     1/38: $5$memwr$\program_mem$src/project.v:53$18_EN[15:0]$58
+     2/38: $5$memwr$\program_mem$src/project.v:53$18_DATA[15:0]$57
+     3/38: $5$memwr$\program_mem$src/project.v:53$18_ADDR[4:0]$56
+     4/38: $5$memwr$\program_mem$src/project.v:54$19_EN[15:0]$61
+     5/38: $5$memwr$\program_mem$src/project.v:54$19_DATA[15:0]$60
+     6/38: $5$memwr$\program_mem$src/project.v:54$19_ADDR[4:0]$59
+     7/38: $4$memwr$\program_mem$src/project.v:54$19_EN[15:0]$55
+     8/38: $4$memwr$\program_mem$src/project.v:54$19_DATA[15:0]$54
+     9/38: $4$memwr$\program_mem$src/project.v:54$19_ADDR[4:0]$53
+    10/38: $4$memwr$\program_mem$src/project.v:53$18_EN[15:0]$52
+    11/38: $4$memwr$\program_mem$src/project.v:53$18_DATA[15:0]$51
+    12/38: $4$memwr$\program_mem$src/project.v:53$18_ADDR[4:0]$50
+    13/38: $3$memwr$\program_mem$src/project.v:54$19_EN[15:0]$49
+    14/38: $3$memwr$\program_mem$src/project.v:54$19_DATA[15:0]$48
+    15/38: $3$memwr$\program_mem$src/project.v:54$19_ADDR[4:0]$47
+    16/38: $3$memwr$\program_mem$src/project.v:53$18_EN[15:0]$46
+    17/38: $3$memwr$\program_mem$src/project.v:53$18_DATA[15:0]$45
+    18/38: $3$memwr$\program_mem$src/project.v:53$18_ADDR[4:0]$44
+    19/38: $2$memwr$\program_mem$src/project.v:54$19_EN[15:0]$42
+    20/38: $2$memwr$\program_mem$src/project.v:54$19_DATA[15:0]$41
+    21/38: $2$memwr$\program_mem$src/project.v:54$19_ADDR[4:0]$40
+    22/38: $2$memwr$\program_mem$src/project.v:53$18_EN[15:0]$39
+    23/38: $2$memwr$\program_mem$src/project.v:53$18_DATA[15:0]$38
+    24/38: $2$memwr$\program_mem$src/project.v:53$18_ADDR[4:0]$37
+    25/38: $0\start_prev[0:0]
+    26/38: $1$memwr$\program_mem$src/project.v:54$19_EN[15:0]$36
+    27/38: $1$memwr$\program_mem$src/project.v:54$19_DATA[15:0]$35
+    28/38: $1$memwr$\program_mem$src/project.v:54$19_ADDR[4:0]$34
+    29/38: $1$memwr$\program_mem$src/project.v:53$18_EN[15:0]$33
+    30/38: $1$memwr$\program_mem$src/project.v:53$18_DATA[15:0]$32
+    31/38: $1$memwr$\program_mem$src/project.v:53$18_ADDR[4:0]$31
+    32/38: $0\error_flag[0:0]
+    33/38: $0\busy[0:0]
+    34/38: $0\pin_value[0:0]
+    35/38: $0\loop_count[7:0]
+    36/38: $0\data_shift[7:0]
+    37/38: $0\wait_left[11:0]
+    38/38: $0\pc[4:0]
+
+4.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+4.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\tt_um_chipwheel.\pc' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$680' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\wait_left' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$681' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\data_shift' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$682' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\loop_count' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$683' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\pin_value' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$684' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\busy' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$685' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\error_flag' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$686' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.\start_prev' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$687' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:53$18_ADDR' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$688' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:53$18_DATA' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$689' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:53$18_EN' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$690' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:54$19_ADDR' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$691' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:54$19_DATA' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$692' with positive edge clock.
+Creating register for signal `\tt_um_chipwheel.$memwr$\program_mem$src/project.v:54$19_EN' using process `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+  created $dff cell `$procdff$693' with positive edge clock.
+
+4.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 22 empty switches in `\tt_um_chipwheel.$proc$src/project.v:38$23'.
+Removing empty process `tt_um_chipwheel.$proc$src/project.v:38$23'.
+Cleaned up 22 empty switches.
+
+4.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~67 debug messages>
+
+4.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 8 unused cells and 238 unused wires.
+<suppressed ~9 debug messages>
+
+4.5. Executing CHECK pass (checking for obvious problems).
+Checking module tt_um_chipwheel...
+Found and reported 0 problems.
+
+4.6. Executing OPT pass (performing simple optimizations).
+
+4.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+<suppressed ~96 debug messages>
+Removed a total of 32 cells.
+
+4.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+      Replacing known input bits on port B of cell $procmux$466: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$424: \busy -> 1'1
+      Replacing known input bits on port B of cell $procmux$432: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$429: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$439: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$446: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$453: \busy -> 1'1
+      Replacing known input bits on port A of cell $procmux$457: \busy -> 1'1
+      Replacing known input bits on port B of cell $procmux$472: \busy -> 1'0
+      Replacing known input bits on port A of cell $procmux$469: \busy -> 1'0
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$103.
+    dead port 1/2 on $mux $procmux$105.
+    dead port 2/2 on $mux $procmux$107.
+    dead port 2/2 on $mux $procmux$110.
+    dead port 2/2 on $mux $procmux$118.
+    dead port 1/2 on $mux $procmux$120.
+    dead port 2/2 on $mux $procmux$122.
+    dead port 2/2 on $mux $procmux$125.
+    dead port 2/2 on $mux $procmux$133.
+    dead port 1/2 on $mux $procmux$135.
+    dead port 2/2 on $mux $procmux$137.
+    dead port 2/2 on $mux $procmux$140.
+    dead port 2/2 on $mux $procmux$148.
+    dead port 1/2 on $mux $procmux$150.
+    dead port 2/2 on $mux $procmux$152.
+    dead port 2/2 on $mux $procmux$155.
+    dead port 2/2 on $mux $procmux$163.
+    dead port 1/2 on $mux $procmux$165.
+    dead port 2/2 on $mux $procmux$167.
+    dead port 2/2 on $mux $procmux$170.
+    dead port 1/2 on $mux $procmux$177.
+    dead port 2/2 on $mux $procmux$179.
+    dead port 2/2 on $mux $procmux$182.
+    dead port 1/2 on $mux $procmux$189.
+    dead port 2/2 on $mux $procmux$191.
+    dead port 2/2 on $mux $procmux$194.
+    dead port 1/2 on $mux $procmux$201.
+    dead port 2/2 on $mux $procmux$203.
+    dead port 2/2 on $mux $procmux$206.
+    dead port 1/2 on $mux $procmux$213.
+    dead port 2/2 on $mux $procmux$215.
+    dead port 2/2 on $mux $procmux$218.
+    dead port 1/2 on $mux $procmux$225.
+    dead port 2/2 on $mux $procmux$227.
+    dead port 2/2 on $mux $procmux$230.
+    dead port 1/2 on $mux $procmux$237.
+    dead port 2/2 on $mux $procmux$239.
+    dead port 2/2 on $mux $procmux$242.
+    dead port 2/2 on $mux $procmux$248.
+    dead port 2/2 on $mux $procmux$251.
+    dead port 2/2 on $mux $procmux$257.
+    dead port 2/2 on $mux $procmux$260.
+    dead port 2/2 on $mux $procmux$266.
+    dead port 2/2 on $mux $procmux$269.
+    dead port 2/2 on $mux $procmux$275.
+    dead port 2/2 on $mux $procmux$278.
+    dead port 2/2 on $mux $procmux$284.
+    dead port 2/2 on $mux $procmux$287.
+    dead port 2/2 on $mux $procmux$293.
+    dead port 2/2 on $mux $procmux$296.
+    dead port 2/2 on $mux $procmux$302.
+    dead port 2/2 on $mux $procmux$308.
+    dead port 2/2 on $mux $procmux$314.
+    dead port 2/2 on $mux $procmux$320.
+    dead port 2/2 on $mux $procmux$326.
+    dead port 2/2 on $mux $procmux$332.
+    dead port 2/2 on $mux $procmux$88.
+    dead port 1/2 on $mux $procmux$90.
+    dead port 2/2 on $mux $procmux$92.
+    dead port 2/2 on $mux $procmux$95.
+Removed 60 multiplexer ports.
+<suppressed ~15 debug messages>
+
+4.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+    Consolidated identical input bits for $mux cell $procmux$131:
+      Old ports: A=16'0000000011111111, B=16'0000000000000000, Y=$procmux$131_Y
+      New ports: A=1'1, B=1'0, Y=$procmux$131_Y [0]
+      New connections: $procmux$131_Y [15:1] = { 8'00000000 $procmux$131_Y [0] $procmux$131_Y [0] $procmux$131_Y [0] $procmux$131_Y [0] $procmux$131_Y [0] $procmux$131_Y [0] $procmux$131_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$86:
+      Old ports: A=16'0000000000000000, B=16'1111111100000000, Y=$procmux$86_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$86_Y [8]
+      New connections: { $procmux$86_Y [15:9] $procmux$86_Y [7:0] } = { $procmux$86_Y [8] $procmux$86_Y [8] $procmux$86_Y [8] $procmux$86_Y [8] $procmux$86_Y [8] $procmux$86_Y [8] $procmux$86_Y [8] 8'00000000 }
+  Optimizing cells in module \tt_um_chipwheel.
+    Consolidated identical input bits for $mux cell $procmux$211:
+      Old ports: A=16'0000000000000000, B=$5$memwr$\program_mem$src/project.v:53$18_EN[15:0]$58, Y=$procmux$211_Y
+      New ports: A=1'0, B=$procmux$86_Y [8], Y=$procmux$211_Y [8]
+      New connections: { $procmux$211_Y [15:9] $procmux$211_Y [7:0] } = { $procmux$211_Y [8] $procmux$211_Y [8] $procmux$211_Y [8] $procmux$211_Y [8] $procmux$211_Y [8] $procmux$211_Y [8] $procmux$211_Y [8] 8'00000000 }
+    Consolidated identical input bits for $mux cell $procmux$175:
+      Old ports: A=16'0000000000000000, B=$5$memwr$\program_mem$src/project.v:54$19_EN[15:0]$61, Y=$procmux$175_Y
+      New ports: A=1'0, B=$procmux$131_Y [0], Y=$procmux$175_Y [0]
+      New connections: $procmux$175_Y [15:1] = { 8'00000000 $procmux$175_Y [0] $procmux$175_Y [0] $procmux$175_Y [0] $procmux$175_Y [0] $procmux$175_Y [0] $procmux$175_Y [0] $procmux$175_Y [0] }
+  Optimizing cells in module \tt_um_chipwheel.
+    Consolidated identical input bits for $mux cell $procmux$246:
+      Old ports: A=$4$memwr$\program_mem$src/project.v:54$19_EN[15:0]$55, B=16'0000000000000000, Y=$procmux$246_Y
+      New ports: A=$procmux$175_Y [0], B=1'0, Y=$procmux$246_Y [0]
+      New connections: $procmux$246_Y [15:1] = { 8'00000000 $procmux$246_Y [0] $procmux$246_Y [0] $procmux$246_Y [0] $procmux$246_Y [0] $procmux$246_Y [0] $procmux$246_Y [0] $procmux$246_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$273:
+      Old ports: A=$4$memwr$\program_mem$src/project.v:53$18_EN[15:0]$52, B=16'0000000000000000, Y=$procmux$273_Y
+      New ports: A=$procmux$211_Y [8], B=1'0, Y=$procmux$273_Y [8]
+      New connections: { $procmux$273_Y [15:9] $procmux$273_Y [7:0] } = { $procmux$273_Y [8] $procmux$273_Y [8] $procmux$273_Y [8] $procmux$273_Y [8] $procmux$273_Y [8] $procmux$273_Y [8] $procmux$273_Y [8] 8'00000000 }
+  Optimizing cells in module \tt_um_chipwheel.
+    Consolidated identical input bits for $mux cell $procmux$299:
+      Old ports: A=16'0000000000000000, B=$3$memwr$\program_mem$src/project.v:54$19_EN[15:0]$49, Y=$procmux$299_Y
+      New ports: A=1'0, B=$procmux$246_Y [0], Y=$procmux$299_Y [0]
+      New connections: $procmux$299_Y [15:1] = { 8'00000000 $procmux$299_Y [0] $procmux$299_Y [0] $procmux$299_Y [0] $procmux$299_Y [0] $procmux$299_Y [0] $procmux$299_Y [0] $procmux$299_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$317:
+      Old ports: A=16'0000000000000000, B=$3$memwr$\program_mem$src/project.v:53$18_EN[15:0]$46, Y=$procmux$317_Y
+      New ports: A=1'0, B=$procmux$273_Y [8], Y=$procmux$317_Y [8]
+      New connections: { $procmux$317_Y [15:9] $procmux$317_Y [7:0] } = { $procmux$317_Y [8] $procmux$317_Y [8] $procmux$317_Y [8] $procmux$317_Y [8] $procmux$317_Y [8] $procmux$317_Y [8] $procmux$317_Y [8] 8'00000000 }
+  Optimizing cells in module \tt_um_chipwheel.
+    Consolidated identical input bits for $mux cell $procmux$338:
+      Old ports: A=16'0000000000000000, B=$2$memwr$\program_mem$src/project.v:54$19_EN[15:0]$42, Y=$0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29
+      New ports: A=1'0, B=$procmux$299_Y [0], Y=$0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0]
+      New connections: $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [15:1] = { 8'00000000 $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] $0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29 [0] }
+    Consolidated identical input bits for $mux cell $procmux$347:
+      Old ports: A=16'0000000000000000, B=$2$memwr$\program_mem$src/project.v:53$18_EN[15:0]$39, Y=$0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26
+      New ports: A=1'0, B=$procmux$317_Y [8], Y=$0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8]
+      New connections: { $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [15:9] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [7:0] } = { $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] $0$memwr$\program_mem$src/project.v:53$18_EN[15:0]$26 [8] 8'00000000 }
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 10 changes.
+
+4.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+<suppressed ~42 debug messages>
+Removed a total of 14 cells.
+
+4.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 0 unused cells and 106 unused wires.
+<suppressed ~1 debug messages>
+
+4.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.6.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.6.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~19 debug messages>
+
+4.6.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.6.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.6.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.6.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.6.16. Finished OPT passes. (There is nothing left to do.)
+
+4.7. Executing FSM pass (extract and optimize FSM).
+
+4.7.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+4.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+4.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+4.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+4.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+4.8. Executing OPT pass (performing simple optimizations).
+
+4.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~19 debug messages>
+
+4.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$687 ($dff) from module tt_um_chipwheel (D = \uio_in [0], Q = \start_prev, rval = 1'0).
+Adding SRST signal on $procdff$686 ($dff) from module tt_um_chipwheel (D = $procmux$416_Y, Q = \error_flag, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$697 ($sdff) from module tt_um_chipwheel (D = $procmux$414_Y, Q = \error_flag).
+Adding SRST signal on $procdff$685 ($dff) from module tt_um_chipwheel (D = $procmux$476_Y, Q = \busy, rval = 1'0).
+Adding EN signal on $auto$ff.cc:266:slice$705 ($sdff) from module tt_um_chipwheel (D = $procmux$474_Y, Q = \busy).
+Adding SRST signal on $procdff$684 ($dff) from module tt_um_chipwheel (D = $procmux$536_Y, Q = \pin_value, rval = 1'1).
+Adding EN signal on $auto$ff.cc:266:slice$707 ($sdff) from module tt_um_chipwheel (D = $procmux$534_Y, Q = \pin_value).
+Adding SRST signal on $procdff$683 ($dff) from module tt_um_chipwheel (D = $procmux$567_Y, Q = \loop_count, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$721 ($sdff) from module tt_um_chipwheel (D = $procmux$565_Y, Q = \loop_count).
+Adding SRST signal on $procdff$682 ($dff) from module tt_um_chipwheel (D = $procmux$593_Y, Q = \data_shift, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$737 ($sdff) from module tt_um_chipwheel (D = $procmux$591_Y, Q = \data_shift).
+Adding SRST signal on $procdff$681 ($dff) from module tt_um_chipwheel (D = $procmux$617_Y, Q = \wait_left, rval = 12'000000000000).
+Adding EN signal on $auto$ff.cc:266:slice$751 ($sdff) from module tt_um_chipwheel (D = $procmux$615_Y, Q = \wait_left).
+Adding SRST signal on $procdff$680 ($dff) from module tt_um_chipwheel (D = $procmux$675_Y, Q = \pc, rval = 5'00000).
+Adding EN signal on $auto$ff.cc:266:slice$761 ($sdff) from module tt_um_chipwheel (D = $procmux$673_Y, Q = \pc).
+
+4.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 15 unused cells and 15 unused wires.
+<suppressed ~16 debug messages>
+
+4.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~6 debug messages>
+
+4.8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~18 debug messages>
+
+4.8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+<suppressed ~48 debug messages>
+Removed a total of 16 cells.
+
+4.8.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 0 unused cells and 16 unused wires.
+<suppressed ~1 debug messages>
+
+4.8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.8.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.8.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~19 debug messages>
+
+4.8.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.8.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.8.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.8.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.8.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.8.23. Finished OPT passes. (There is nothing left to do.)
+
+4.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 31 bits (of 32) from port B of cell tt_um_chipwheel.$gt$src/project.v:72$65 ($gt).
+Removed top 2 bits (of 3) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$702 ($ne).
+Removed top 24 bits (of 32) from port B of cell tt_um_chipwheel.$gt$src/project.v:81$73 ($gt).
+Removed top 27 bits (of 32) from port B of cell tt_um_chipwheel.$gt$src/project.v:83$76 ($gt).
+Removed top 31 bits (of 32) from port B of cell tt_um_chipwheel.$gt$src/project.v:84$77 ($gt).
+Removed top 1 bits (of 2) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$712 ($ne).
+Removed top 3 bits (of 4) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$732 ($ne).
+Removed top 2 bits (of 3) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$746 ($ne).
+Removed top 2 bits (of 3) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$758 ($ne).
+Removed top 1 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$363_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$373_CMP0 ($eq).
+Removed top 1 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$380_CMP0 ($eq).
+Removed top 2 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$387_CMP0 ($eq).
+Removed top 7 bits (of 8) from port B of cell tt_um_chipwheel.$auto$opt_dff.cc:195:make_patterns_logic$778 ($ne).
+Removed top 2 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$391_CMP0 ($eq).
+Removed top 3 bits (of 4) from port B of cell tt_um_chipwheel.$procmux$398_CMP0 ($eq).
+Removed top 8 bits (of 16) from wire tt_um_chipwheel.$0$memwr$\program_mem$src/project.v:54$19_EN[15:0]$29.
+Removed top 8 bits (of 16) from wire tt_um_chipwheel.$2$memwr$\program_mem$src/project.v:54$19_EN[15:0]$42.
+Removed top 8 bits (of 16) from wire tt_um_chipwheel.$3$memwr$\program_mem$src/project.v:54$19_EN[15:0]$49.
+Removed top 8 bits (of 16) from wire tt_um_chipwheel.$4$memwr$\program_mem$src/project.v:54$19_EN[15:0]$55.
+Removed top 8 bits (of 16) from wire tt_um_chipwheel.$5$memwr$\program_mem$src/project.v:54$19_EN[15:0]$61.
+
+4.10. Executing PEEPOPT pass (run peephole optimizers).
+
+4.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 0 unused cells and 5 unused wires.
+<suppressed ~1 debug messages>
+
+4.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module tt_um_chipwheel:
+  creating $macc model for $add$src/project.v:34$67 ($add).
+  creating $macc model for $sub$src/project.v:67$63 ($sub).
+  creating $macc model for $sub$src/project.v:85$78 ($sub).
+  creating $alu model for $macc $sub$src/project.v:85$78.
+  creating $alu model for $macc $sub$src/project.v:67$63.
+  creating $alu model for $macc $add$src/project.v:34$67.
+  creating $alu model for $gt$src/project.v:72$65 ($gt): new $alu
+  creating $alu model for $gt$src/project.v:81$73 ($gt): new $alu
+  creating $alu model for $gt$src/project.v:83$76 ($gt): new $alu
+  creating $alu model for $gt$src/project.v:84$77 ($gt): merged with $sub$src/project.v:85$78.
+  creating $alu cell for $gt$src/project.v:83$76: $auto$alumacc.cc:495:replace_alu$791
+  creating $alu cell for $gt$src/project.v:81$73: $auto$alumacc.cc:495:replace_alu$802
+  creating $alu cell for $gt$src/project.v:72$65: $auto$alumacc.cc:495:replace_alu$813
+  creating $alu cell for $add$src/project.v:34$67: $auto$alumacc.cc:495:replace_alu$824
+  creating $alu cell for $sub$src/project.v:67$63: $auto$alumacc.cc:495:replace_alu$827
+  creating $alu cell for $sub$src/project.v:85$78, $gt$src/project.v:84$77: $auto$alumacc.cc:495:replace_alu$830
+  created 6 $alu and 0 $macc cells.
+
+4.13. Executing SHARE pass (SAT-based resource sharing).
+
+4.14. Executing OPT pass (performing simple optimizations).
+
+4.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~23 debug messages>
+
+4.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~19 debug messages>
+
+4.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 0 unused cells and 4 unused wires.
+<suppressed ~1 debug messages>
+
+4.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~19 debug messages>
+
+4.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.14.16. Finished OPT passes. (There is nothing left to do.)
+
+4.15. Executing MEMORY pass.
+
+4.15.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 16 transformations.
+
+4.15.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+4.15.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+  Analyzing tt_um_chipwheel.program_mem write port 0.
+  Analyzing tt_um_chipwheel.program_mem write port 1.
+
+4.15.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+4.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+Checking read port `\program_mem'[0] in module `\tt_um_chipwheel': no output FF found.
+Checking read port address `\program_mem'[0] in module `\tt_um_chipwheel': merged address FF to cell.
+
+4.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+Consolidating write ports of memory tt_um_chipwheel.program_mem by address:
+  Merging ports 0, 1 (address \uio_in [7:3]).
+
+4.15.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+4.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 10 unused cells and 10 unused wires.
+<suppressed ~11 debug messages>
+
+4.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.17. Executing OPT pass (performing simple optimizations).
+
+4.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~62 debug messages>
+
+4.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.17.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 0 unused cells and 40 unused wires.
+<suppressed ~1 debug messages>
+
+4.17.5. Finished fast OPT passes.
+
+4.18. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+Mapping memory \program_mem in module \tt_um_chipwheel:
+  created 32 $dff cells and 0 static cells of width 16.
+Extracted addr FF from read port 0 of tt_um_chipwheel.program_mem: $\program_mem$rdreg[0]
+  read interface: 1 $dff and 31 $mux cells.
+  write interface: 64 write mux blocks.
+
+4.19. Executing OPT pass (performing simple optimizations).
+
+4.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~11 debug messages>
+
+4.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~78 debug messages>
+
+4.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+    New ctrl vector for $pmux cell $procmux$486: { $procmux$398_CMP $procmux$391_CMP $procmux$387_CMP $procmux$380_CMP $procmux$373_CMP }
+    New ctrl vector for $pmux cell $procmux$627: { $procmux$373_CMP $procmux$363_CMP }
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 2 changes.
+
+4.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.19.6. Executing OPT_SHARE pass.
+    Found cells that share an operand and can be merged by moving the $pmux $procmux$362 in front of them:
+        $procmux$385
+        $procmux$400
+
+    Found cells that share an operand and can be merged by moving the $pmux $procmux$426 in front of them:
+        $procmux$442
+        $procmux$460
+
+4.19.7. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $\program_mem$rdreg[0] ($dff) from module tt_um_chipwheel (D = $auto$rtlil.cc:3092:Mux$844, Q = $\program_mem$rdreg[0]$q, rval = 5'00000).
+
+4.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 1 unused cells and 75 unused wires.
+<suppressed ~2 debug messages>
+
+4.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~2 debug messages>
+
+4.19.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~80 debug messages>
+
+4.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+    New ctrl vector for $pmux cell $procmux$362: { $procmux$398_CMP $procmux$391_CMP $auto$opt_reduce.cc:137:opt_pmux$1384 $procmux$380_CMP $procmux$373_CMP $procmux$363_CMP }
+    New ctrl vector for $pmux cell $procmux$426: { $procmux$391_CMP $procmux$387_CMP $auto$opt_reduce.cc:137:opt_pmux$1386 $procmux$373_CMP $procmux$363_CMP }
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 2 changes.
+
+4.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.19.14. Executing OPT_SHARE pass.
+
+4.19.15. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $memory\program_mem[9]$865 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[9] [15:8]).
+Adding EN signal on $memory\program_mem[9]$865 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[9] [7:0]).
+Adding EN signal on $memory\program_mem[8]$863 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[8] [15:8]).
+Adding EN signal on $memory\program_mem[8]$863 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[8] [7:0]).
+Adding EN signal on $memory\program_mem[7]$861 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[7] [15:8]).
+Adding EN signal on $memory\program_mem[7]$861 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[7] [7:0]).
+Adding EN signal on $memory\program_mem[6]$859 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[6] [15:8]).
+Adding EN signal on $memory\program_mem[6]$859 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[6] [7:0]).
+Adding EN signal on $memory\program_mem[5]$857 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[5] [15:8]).
+Adding EN signal on $memory\program_mem[5]$857 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[5] [7:0]).
+Adding EN signal on $memory\program_mem[4]$855 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[4] [15:8]).
+Adding EN signal on $memory\program_mem[4]$855 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[4] [7:0]).
+Adding EN signal on $memory\program_mem[3]$853 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[3] [15:8]).
+Adding EN signal on $memory\program_mem[3]$853 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[3] [7:0]).
+Adding EN signal on $memory\program_mem[31]$909 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[31] [7:0]).
+Adding EN signal on $memory\program_mem[31]$909 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[31] [15:8]).
+Adding EN signal on $memory\program_mem[30]$907 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[30] [7:0]).
+Adding EN signal on $memory\program_mem[30]$907 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[30] [15:8]).
+Adding EN signal on $memory\program_mem[2]$851 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[2] [15:8]).
+Adding EN signal on $memory\program_mem[2]$851 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[2] [7:0]).
+Adding EN signal on $memory\program_mem[29]$905 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[29] [7:0]).
+Adding EN signal on $memory\program_mem[29]$905 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[29] [15:8]).
+Adding EN signal on $memory\program_mem[28]$903 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[28] [7:0]).
+Adding EN signal on $memory\program_mem[28]$903 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[28] [15:8]).
+Adding EN signal on $memory\program_mem[27]$901 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[27] [7:0]).
+Adding EN signal on $memory\program_mem[27]$901 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[27] [15:8]).
+Adding EN signal on $memory\program_mem[26]$899 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[26] [7:0]).
+Adding EN signal on $memory\program_mem[26]$899 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[26] [15:8]).
+Adding EN signal on $memory\program_mem[25]$897 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[25] [7:0]).
+Adding EN signal on $memory\program_mem[25]$897 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[25] [15:8]).
+Adding EN signal on $memory\program_mem[24]$895 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[24] [15:8]).
+Adding EN signal on $memory\program_mem[24]$895 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[24] [7:0]).
+Adding EN signal on $memory\program_mem[23]$893 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[23] [15:8]).
+Adding EN signal on $memory\program_mem[23]$893 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[23] [7:0]).
+Adding EN signal on $memory\program_mem[22]$891 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[22] [15:8]).
+Adding EN signal on $memory\program_mem[22]$891 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[22] [7:0]).
+Adding EN signal on $memory\program_mem[21]$889 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[21] [15:8]).
+Adding EN signal on $memory\program_mem[21]$889 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[21] [7:0]).
+Adding EN signal on $memory\program_mem[20]$887 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[20] [15:8]).
+Adding EN signal on $memory\program_mem[20]$887 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[20] [7:0]).
+Adding EN signal on $memory\program_mem[1]$849 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[1] [7:0]).
+Adding EN signal on $memory\program_mem[1]$849 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[1] [15:8]).
+Adding EN signal on $memory\program_mem[19]$885 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[19] [15:8]).
+Adding EN signal on $memory\program_mem[19]$885 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[19] [7:0]).
+Adding EN signal on $memory\program_mem[18]$883 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[18] [15:8]).
+Adding EN signal on $memory\program_mem[18]$883 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[18] [7:0]).
+Adding EN signal on $memory\program_mem[17]$881 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[17] [15:8]).
+Adding EN signal on $memory\program_mem[17]$881 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[17] [7:0]).
+Adding EN signal on $memory\program_mem[16]$879 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[16] [15:8]).
+Adding EN signal on $memory\program_mem[16]$879 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[16] [7:0]).
+Adding EN signal on $memory\program_mem[15]$877 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[15] [15:8]).
+Adding EN signal on $memory\program_mem[15]$877 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[15] [7:0]).
+Adding EN signal on $memory\program_mem[14]$875 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[14] [15:8]).
+Adding EN signal on $memory\program_mem[14]$875 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[14] [7:0]).
+Adding EN signal on $memory\program_mem[13]$873 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[13] [15:8]).
+Adding EN signal on $memory\program_mem[13]$873 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[13] [7:0]).
+Adding EN signal on $memory\program_mem[12]$871 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[12] [15:8]).
+Adding EN signal on $memory\program_mem[12]$871 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[12] [7:0]).
+Adding EN signal on $memory\program_mem[11]$869 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[11] [15:8]).
+Adding EN signal on $memory\program_mem[11]$869 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[11] [7:0]).
+Adding EN signal on $memory\program_mem[10]$867 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[10] [15:8]).
+Adding EN signal on $memory\program_mem[10]$867 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[10] [7:0]).
+Adding EN signal on $memory\program_mem[0]$847 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[0] [15:8]).
+Adding EN signal on $memory\program_mem[0]$847 ($dff) from module tt_um_chipwheel (D = \ui_in, Q = \program_mem[0] [7:0]).
+
+4.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 64 unused cells and 64 unused wires.
+<suppressed ~65 debug messages>
+
+4.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.19.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.19.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \tt_um_chipwheel..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~16 debug messages>
+
+4.19.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \tt_um_chipwheel.
+Performed a total of 0 changes.
+
+4.19.21. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+Removed a total of 0 cells.
+
+4.19.22. Executing OPT_SHARE pass.
+
+4.19.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+
+4.19.25. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+
+4.19.26. Finished OPT passes. (There is nothing left to do.)
+
+4.20. Executing TECHMAP pass (map to technology primitives).
+
+4.20.1. Executing Verilog-2005 frontend: /share/techmap.v
+Parsing Verilog input from `/share/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu_brent_kung'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+4.20.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $dffe.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using template $paramod$403a3c2fa431a154c52a6a5429d7a6260b5d144f\_90_alu for cells of type $alu.
+Using template $paramod$672a140277c71df8314410f22acc08d55222c3c7\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $eq.
+Using template $paramod$6831557730818fb92b11a295f9eb33ff8fa62af1\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $ne.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $sdff.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$a0e100ff180a74c7f306c1b94734a8ec46e8ca57\_90_alu for cells of type $alu.
+Using template $paramod$71fad7bdfcce7438e38ffafbff83c73c41041074\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $or.
+Using template $paramod$eaeb96106163dbf82031649d189817109fe07c69\_90_pmux for cells of type $pmux.
+Using template $paramod$2407ada40cc3dda6c6015be2b49b748cddb5a800\_90_pmux for cells of type $pmux.
+Using template $paramod$70d30c21ff772b34d0d1da2801fbd781dc3c70e4\_90_pmux for cells of type $pmux.
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $xor.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000000101 for cells of type $lcu.
+Using template $paramod\_90_lcu_brent_kung\WIDTH=32'00000000000000000000000000001100 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~1181 debug messages>
+
+4.21. Executing OPT pass (performing simple optimizations).
+
+4.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~403 debug messages>
+
+4.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+<suppressed ~405 debug messages>
+Removed a total of 135 cells.
+
+4.21.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 76 unused cells and 487 unused wires.
+<suppressed ~77 debug messages>
+
+4.21.5. Finished fast OPT passes.
+
+4.22. Executing ABC pass (technology mapping using ABC).
+
+4.22.1. Extracting gate netlist of module `\tt_um_chipwheel' to `<abc-temp-dir>/input.blif'..
+Extracted 1079 gates and 1653 wires to a netlist network with 572 inputs and 111 outputs.
+
+4.22.1.1. Executing ABC.
+Running ABC command: "/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+4.22.1.2. Re-integrating ABC results.
+ABC RESULTS:               AND cells:       15
+ABC RESULTS:            ANDNOT cells:      196
+ABC RESULTS:               MUX cells:      547
+ABC RESULTS:              NAND cells:       19
+ABC RESULTS:               NOR cells:       50
+ABC RESULTS:               NOT cells:       24
+ABC RESULTS:                OR cells:       99
+ABC RESULTS:             ORNOT cells:       30
+ABC RESULTS:              XNOR cells:        4
+ABC RESULTS:               XOR cells:       18
+ABC RESULTS:        internal signals:      970
+ABC RESULTS:           input signals:      572
+ABC RESULTS:          output signals:      111
+Removing temp directory.
+
+4.23. Executing OPT pass (performing simple optimizations).
+
+4.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module tt_um_chipwheel.
+<suppressed ~242 debug messages>
+
+4.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\tt_um_chipwheel'.
+<suppressed ~30 debug messages>
+Removed a total of 10 cells.
+
+4.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \tt_um_chipwheel..
+Removed 4 unused cells and 974 unused wires.
+<suppressed ~9 debug messages>
+
+4.23.5. Finished fast OPT passes.
+
+4.24. Executing HIERARCHY pass (managing design hierarchy).
+Attribute `top' found on module `tt_um_chipwheel'. Setting top module to tt_um_chipwheel.
+
+4.24.1. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+
+4.24.2. Analyzing design hierarchy..
+Top module:  \tt_um_chipwheel
+Removed 0 unused modules.
+
+4.25. Printing statistics.
+
+=== tt_um_chipwheel ===
+
+   Number of wires:               1037
+   Number of wire bits:           1585
+   Number of public wires:          48
+   Number of public wire bits:     592
+   Number of ports:                  8
+   Number of port bits:             43
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1542
+     $_ANDNOT_                     196
+     $_AND_                         15
+     $_DFFE_PP_                    512
+     $_MUX_                        547
+     $_NAND_                        19
+     $_NOR_                         41
+     $_NOT_                         20
+     $_ORNOT_                       30
+     $_OR_                          98
+     $_SDFFE_PN0P_                  35
+     $_SDFFE_PN1P_                   1
+     $_SDFF_PN0_                     6
+     $_XNOR_                         4
+     $_XOR_                         18
+
+4.26. Executing CHECK pass (checking for obvious problems).
+Checking module tt_um_chipwheel...
+Found and reported 0 problems.
+
+5. Executing DFFLIBMAP pass (mapping DFF cells to sequential cells from liberty file).
+  cell sg13cmos5l_dfrbpq_1 (noninv, pins=4, area=48.99) is a direct match for cell type $_DFF_PN0_.
+  final dff cell mappings:
+    unmapped dff cell: $_DFF_N_
+    unmapped dff cell: $_DFF_P_
+    unmapped dff cell: $_DFF_NN0_
+    unmapped dff cell: $_DFF_NN1_
+    unmapped dff cell: $_DFF_NP0_
+    unmapped dff cell: $_DFF_NP1_
+    \sg13cmos5l_dfrbpq_1 _DFF_PN0_ (.CLK( C), .D( D), .Q( Q), .RESET_B( R));
+    unmapped dff cell: $_DFF_PN1_
+    unmapped dff cell: $_DFF_PP0_
+    unmapped dff cell: $_DFF_PP1_
+    unmapped dff cell: $_DFFE_NN_
+    unmapped dff cell: $_DFFE_NP_
+    unmapped dff cell: $_DFFE_PN_
+    unmapped dff cell: $_DFFE_PP_
+    unmapped dff cell: $_DFFSR_NNN_
+    unmapped dff cell: $_DFFSR_NNP_
+    unmapped dff cell: $_DFFSR_NPN_
+    unmapped dff cell: $_DFFSR_NPP_
+    unmapped dff cell: $_DFFSR_PNN_
+    unmapped dff cell: $_DFFSR_PNP_
+    unmapped dff cell: $_DFFSR_PPN_
+    unmapped dff cell: $_DFFSR_PPP_
+
+5.1. Executing DFFLEGALIZE pass (convert FFs to types supported by the target).
+<suppressed ~4 debug messages>
+Mapping DFF cells in module `\tt_um_chipwheel':
+  mapped 554 $_DFF_PN0_ cells to \sg13cmos5l_dfrbpq_1 cells.
+
+6. Executing ABC pass (technology mapping using ABC).
+
+6.1. Extracting gate netlist of module `\tt_um_chipwheel' to `<abc-temp-dir>/input.blif'..
+Extracted 1578 gates and 2152 wires to a netlist network with 572 inputs and 554 outputs.
+
+6.1.1. Executing ABC.
+Running ABC command: "/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_lib -w ./.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib 
+ABC: Parsing finished successfully.  Parsing time =     0.01 sec
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_antennanp" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_decap_4" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_decap_8" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dfrbp_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dfrbpq_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dfrbpq_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dlhq_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dlhr_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dlhrq_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dllr_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_dllrq_1".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_ebufn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_ebufn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_ebufn_8".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_einvn_2".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_einvn_4".
+ABC: Scl_LibertyReadGenlib() skipped three-state cell "sg13cmos5l_einvn_8".
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_fill_1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_fill_2" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_fill_4" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_fill_8" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_lgcp_1" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_sdfbbp_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_sdfrbp_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_sdfrbp_2".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_sdfrbpq_1".
+ABC: Scl_LibertyReadGenlib() skipped sequential cell "sg13cmos5l_sdfrbpq_2".
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_sighold" due to dont_use attribute.
+ABC: Scl_LibertyReadGenlib() skipped cell "sg13cmos5l_slgcp_1" due to dont_use attribute.
+ABC: Library "sg13cmos5l_stdcell_typ_1p20V_25C" from "./.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib" has 54 cells (20 skipped: 14 seq; 6 tri-state; 0 no func; 10 dont_use).  Time =     0.01 sec
+ABC: Memory =    2.25 MB. Time =     0.01 sec
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &fraig -x 
+ABC: + &put 
+ABC: + scorr 
+ABC: Warning: The network is combinational (run "fraig" or "fraig_sweep").
+ABC: + dc2 
+ABC: + dretime 
+ABC: + strash 
+ABC: + &get -n 
+ABC: + &dch -f 
+ABC: + &nf 
+ABC: + &put 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+6.1.2. Re-integrating ABC results.
+ABC RESULTS:   sg13cmos5l_a21o_1 cells:        5
+ABC RESULTS:   sg13cmos5l_a21oi_1 cells:       82
+ABC RESULTS:   sg13cmos5l_a221oi_1 cells:        4
+ABC RESULTS:   sg13cmos5l_a22oi_1 cells:       18
+ABC RESULTS:   sg13cmos5l_and2_1 cells:       24
+ABC RESULTS:   sg13cmos5l_and3_1 cells:        4
+ABC RESULTS:   sg13cmos5l_and4_1 cells:        2
+ABC RESULTS:   sg13cmos5l_inv_1 cells:       19
+ABC RESULTS:   sg13cmos5l_mux2_1 cells:      524
+ABC RESULTS:   sg13cmos5l_mux4_1 cells:      134
+ABC RESULTS:   sg13cmos5l_nand2_1 cells:       44
+ABC RESULTS:   sg13cmos5l_nand2b_1 cells:       41
+ABC RESULTS:   sg13cmos5l_nand3_1 cells:       40
+ABC RESULTS:   sg13cmos5l_nand3b_1 cells:        5
+ABC RESULTS:   sg13cmos5l_nand4_1 cells:       11
+ABC RESULTS:   sg13cmos5l_nor2_1 cells:       79
+ABC RESULTS:   sg13cmos5l_nor2b_1 cells:       15
+ABC RESULTS:   sg13cmos5l_nor3_1 cells:       40
+ABC RESULTS:   sg13cmos5l_nor4_1 cells:        6
+ABC RESULTS:   sg13cmos5l_o21ai_1 cells:       81
+ABC RESULTS:   sg13cmos5l_or2_1 cells:       14
+ABC RESULTS:   sg13cmos5l_or3_1 cells:       19
+ABC RESULTS:   sg13cmos5l_or4_1 cells:        4
+ABC RESULTS:   sg13cmos5l_xnor2_1 cells:       12
+ABC RESULTS:   sg13cmos5l_xor2_1 cells:        1
+ABC RESULTS:        internal signals:     1026
+ABC RESULTS:           input signals:      572
+ABC RESULTS:          output signals:      554
+Removing temp directory.
+Removed 0 unused cells and 2150 unused wires.
+
+7. Executing CHECK pass (checking for obvious problems).
+Checking module tt_um_chipwheel...
+Found and reported 0 problems.
+{
+   "creator": "Yosys 0.55 (git sha1 60f126cd0, ccache clang 18.1.3 -O3 -flto -flto)",
+   "invocation": "stat -json -liberty .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib ",
+   "modules": {
+      "\\tt_um_chipwheel": {
+         "num_wires":         1277,
+         "num_wire_bits":     1825,
+         "num_pub_wires":     48,
+         "num_pub_wire_bits": 592,
+         "num_ports":         8,
+         "num_port_bits":     43,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         1782,
+         "area":              46939.662000,
+         "num_cells_by_type": {
+            "sg13cmos5l_a21o_1": 5,
+            "sg13cmos5l_a21oi_1": 82,
+            "sg13cmos5l_a221oi_1": 4,
+            "sg13cmos5l_a22oi_1": 18,
+            "sg13cmos5l_and2_1": 24,
+            "sg13cmos5l_and3_1": 4,
+            "sg13cmos5l_and4_1": 2,
+            "sg13cmos5l_dfrbpq_1": 554,
+            "sg13cmos5l_inv_1": 19,
+            "sg13cmos5l_mux2_1": 524,
+            "sg13cmos5l_mux4_1": 134,
+            "sg13cmos5l_nand2_1": 44,
+            "sg13cmos5l_nand2b_1": 41,
+            "sg13cmos5l_nand3_1": 40,
+            "sg13cmos5l_nand3b_1": 5,
+            "sg13cmos5l_nand4_1": 11,
+            "sg13cmos5l_nor2_1": 79,
+            "sg13cmos5l_nor2b_1": 15,
+            "sg13cmos5l_nor3_1": 40,
+            "sg13cmos5l_nor4_1": 6,
+            "sg13cmos5l_o21ai_1": 81,
+            "sg13cmos5l_or2_1": 14,
+            "sg13cmos5l_or3_1": 19,
+            "sg13cmos5l_or4_1": 4,
+            "sg13cmos5l_xnor2_1": 12,
+            "sg13cmos5l_xor2_1": 1
+         }
+      }
+   },
+      "design": {
+         "num_wires":         1277,
+         "num_wire_bits":     1825,
+         "num_pub_wires":     48,
+         "num_pub_wire_bits": 592,
+         "num_ports":         8,
+         "num_port_bits":     43,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         1782,
+         "area":              46939.662000,
+         "num_cells_by_type": {
+            "sg13cmos5l_a21o_1": 5,
+            "sg13cmos5l_a21oi_1": 82,
+            "sg13cmos5l_a221oi_1": 4,
+            "sg13cmos5l_a22oi_1": 18,
+            "sg13cmos5l_and2_1": 24,
+            "sg13cmos5l_and3_1": 4,
+            "sg13cmos5l_and4_1": 2,
+            "sg13cmos5l_dfrbpq_1": 554,
+            "sg13cmos5l_inv_1": 19,
+            "sg13cmos5l_mux2_1": 524,
+            "sg13cmos5l_mux4_1": 134,
+            "sg13cmos5l_nand2_1": 44,
+            "sg13cmos5l_nand2b_1": 41,
+            "sg13cmos5l_nand3_1": 40,
+            "sg13cmos5l_nand3b_1": 5,
+            "sg13cmos5l_nand4_1": 11,
+            "sg13cmos5l_nor2_1": 79,
+            "sg13cmos5l_nor2b_1": 15,
+            "sg13cmos5l_nor3_1": 40,
+            "sg13cmos5l_nor4_1": 6,
+            "sg13cmos5l_o21ai_1": 81,
+            "sg13cmos5l_or2_1": 14,
+            "sg13cmos5l_or3_1": 19,
+            "sg13cmos5l_or4_1": 4,
+            "sg13cmos5l_xnor2_1": 12,
+            "sg13cmos5l_xor2_1": 1
+         }
+      }
+}
+
+8. Executing Verilog backend.
+
+8.1. Executing BMUXMAP pass.
+
+8.2. Executing DEMUXMAP pass.
+Dumping module `\tt_um_chipwheel'.
+
+End of script. Logfile hash: 34291e5863, CPU: user 0.68s system 0.00s
+Yosys 0.55 (git sha1 60f126cd0, ccache clang 18.1.3 -O3 -flto -flto)
+Time spent: 61% 2x abc (0 sec), 7% 25x opt_expr (0 sec), ...

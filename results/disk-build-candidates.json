@@ -1,0 +1,12 @@
+[
+  {
+    "path": "/Users/mohammedbala/Projects/polypdf-ipad-release-test/polypdf/.tmp/ipad-xcode-release/DerivedData",
+    "allocated_bytes": 250920960,
+    "reason": "generated compiler or Python cache"
+  },
+  {
+    "path": "/Users/mohammedbala/Desktop/polypdf/.build",
+    "allocated_bytes": 91643904,
+    "reason": "generated compiler or Python cache"
+  }
+]

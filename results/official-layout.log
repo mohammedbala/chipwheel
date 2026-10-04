@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/lib/python3.13/site-packages/librelane/__main__.py", line 340, in cli_in_container
+    run_in_container(
+    ~~~~~~~~~~~~~~~~^
+        container_image,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tty=tty,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/lib/python3.13/site-packages/librelane/container.py", line 191, in run_in_container
+    raise FileNotFoundError("No compatible container engine found.")
+FileNotFoundError: No compatible container engine found.
+[11:45:48] ERROR    No compatible container engine found.        __main__.py:352
+2026-10-03 11:45:48,323 - project    - ERROR    - harden failed

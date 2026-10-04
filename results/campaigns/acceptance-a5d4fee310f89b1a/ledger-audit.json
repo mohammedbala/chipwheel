@@ -1,0 +1,48 @@
+{
+  "checked": 1600,
+  "passed": 1600,
+  "failed": 0,
+  "batches": 12,
+  "by_stage": {
+    "calibration": 400,
+    "screening": 400,
+    "stress": 400,
+    "holdout": 400
+  },
+  "by_candidate": {
+    "A": 200,
+    "B": 600,
+    "C": 200,
+    "D": 600
+  },
+  "eliminated": [],
+  "case_ranges": {
+    "calibration/A": 100,
+    "calibration/B": 100,
+    "calibration/C": 100,
+    "calibration/D": 100,
+    "screening/A": 100,
+    "screening/B": 100,
+    "screening/C": 100,
+    "screening/D": 100,
+    "stress/B": 200,
+    "stress/D": 200,
+    "holdout/B": 200,
+    "holdout/D": 200
+  },
+  "finalists": [
+    "D",
+    "B"
+  ],
+  "ranking_basis": "provisional mapped-area results",
+  "physical_validation_complete": false,
+  "status": "passed",
+  "campaign": "acceptance-a5d4fee310f89b1a",
+  "revision": "a5d4fee310f89b1a5bd0ddec27814eec237f8c7ed16907fdbb16c5817693e545",
+  "target": 1600,
+  "budget_complete": true,
+  "audited_at": 1791072346.3641632,
+  "auditor_sha256": "be400a28547ac6a0c21e65374189e32bf6aa245ff82f07760f5d7e83d210e14a",
+  "frozen_inputs_verified": true,
+  "note": "Audit validates recorded scenarios and provenance; RTL replays remain separate."
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chipwheel · Experiment bench</title><link rel="stylesheet" href="style.css"></head>
+<body><header><div><span class="eyebrow">CHIPWHEEL / LAB 01</span><h1>Experiment bench</h1></div><div class="tag">v1 teaching model · 10 MHz</div></header>
+<main><div class="intro">Follow the instructions. Watch the pin. Keep the evidence.</div>
+<section class="evidence live-design"><div class="section-head"><div><span class="eyebrow">THE DESIGN WE ARE BUILDING</span><h2>Programs in. Precisely timed signals out.</h2></div><span id="live-status" class="mono" aria-live="polite">Connecting to project…</span></div>
+<p class="caption">We are building a programmable pin engine: load instructions through the chip inputs, execute them on clock edges, and verify the output independently.</p>
+<div id="design-facts" class="design-facts"></div><div id="design-map" class="design-map"></div>
+<p id="design-motion" class="caption" aria-live="polite">The diagram follows the selected experiment below.</p>
+<div id="design-stages" class="design-stages" aria-label="Design verification stages"></div><p id="stage-detail" class="stage-detail"></p>
+<p id="model-warning" class="model-warning" hidden></p>
+<details><summary>Design changes &amp; provenance</summary><p id="design-hash" class="mono"></p><ul id="design-changes"></ul><p class="caption">Checks local project files every 3 seconds. Results are marked historical when their design hashes differ. The diagram is a functional schematic, not a chip layout. Verification runs start separately.</p></details></section>
+<section class="evidence campaign-panel"><div class="section-head"><div><span class="eyebrow">CONTROLLED ARCHITECTURE SEARCH</span><h2>Ten million checks. Four designs.</h2></div><span id="campaign-status" class="mono">Reading campaign…</span></div>
+<p class="caption">One background worker compares memory size and SHIFTWAIT. Only independently checked RTL scenarios count toward the budget.</p>
+<div class="controls"><button id="campaign-start" class="primary">Start 10M campaign</button><button id="campaign-pause">Pause after current case</button><button id="campaign-resume">Resume</button><a id="campaign-manifest" hidden target="_blank" rel="noopener">Frozen experiment record</a></div>
+<p id="campaign-message" aria-live="polite"></p><div class="campaign-numbers" id="campaign-numbers"></div>
+<progress id="campaign-progress" max="10000000" value="0" aria-label="Committed campaign checks"></progress>
+<div id="campaign-stages" class="campaign-stages"></div><div id="campaign-designs"></div>
+<p id="campaign-ranking" class="caption"></p><details><summary>Coverage and diagnostic replays</summary><div id="campaign-coverage"></div><div id="campaign-failures"></div></details>
+<p id="campaign-audit" class="caption"></p>
+</section>
+<section class="bench"><aside>
+<h2>01 / Set up</h2>
+<label for="preset">Experiment</label><select id="preset"><option value="uart">UART · send a byte</option><option value="pulse">Pulse · three intervals</option><option value="custom">Custom instructions</option></select>
+<div class="fields"><div><label for="payload">Payload (0–255)</label><input id="payload" type="number" min="0" max="255" value="65"></div><div><label for="bits">Clocks per bit</label><input id="bits" type="number" min="3" max="4096" value="8"></div></div>
+<label for="fault">Deliberate fault</label><select id="fault"><option value="none">None · correct behavior</option><option value="short-wait">WAIT one clock too short</option><option value="msb-first">SHIFT most significant bit first</option></select>
+<label for="code">Instruction memory <span id="word-count"></span></label><textarea id="code" spellcheck="false" rows="10" aria-label="Instruction program"></textarea>
+<button id="load" class="primary">Load experiment</button><p id="error" role="alert"></p>
+<details><summary>How to read the bench</summary><p>START is edge 0. Each instruction takes one enabled clock. WAIT N then stalls N clocks. SHIFT puts the low data bit on the pin. DJNZ repeats the loop.</p><p>The diagram shows state after the selected edge. Program loading is assumed complete. This teaching model does not run RTL or validate physical timing.</p></details>
+</aside><div class="workspace"><div class="section-head"><h2>02 / Follow the engine</h2><span id="current-time" class="mono"></span></div>
+<div class="controls"><button id="play" class="primary">Play</button><button id="step">Step clock</button><button id="restart">Restart</button><label class="speed" for="speed">Playback <select id="speed"><option value="500">Slow</option><option value="120" selected>Normal</option><option value="25">Fast</option></select></label></div>
+<div id="diagram" class="diagram" aria-label="Engine state diagram"></div>
+<div class="readout" id="readout" aria-live="polite"></div>
+<div class="section-head"><h2>03 / Inspect the timing</h2><span class="mono">100 ns / clock</span></div>
+<div id="waveform" class="waveform"></div>
+<label for="cursor" class="cursor-label">Selected clock <output id="edge-label">E0</output></label><input type="range" id="cursor" min="0" max="82" value="0">
+<p id="verdict" class="verdict"></p><p class="caption">Solid: model pin · dashed: UART requirement. Click the trace or scrub to inspect a clock. Long traces show a 120-clock window.</p>
+<div class="trace-list" id="trace-list"></div>
+</div></section>
+<section class="evidence"><div class="section-head"><div><h2>04 / Experiment notebook</h2><p class="caption">Saved explorations stay in this browser. Export a copy to keep or share them.</p></div><div class="controls"><button id="export">Export notebook</button><label class="file-button">Import notebook<input type="file" id="import" accept="application/json,.json"></label></div></div>
+<div class="note-fields"><input id="run-name" placeholder="Experiment name" aria-label="Experiment name"><input id="run-note" placeholder="What did you learn?" aria-label="Experiment note"><button id="save" class="primary">Save current experiment</button></div><p id="notice" aria-live="polite"></p><div id="notebook"></div>
+</section>
+<section class="evidence"><div class="section-head"><div><h2>05 / Recorded verification</h2><p class="caption">Actual project result files. Separate from the interactive teaching model.</p></div><button id="refresh">Refresh evidence</button></div><div id="evidence"></div></section>
+<footer>Chipwheel v1 · One programmable output · Behavioral exploration ≠ silicon verification</footer></main>
+<script src="engine.js"></script><script src="evidence.js"></script><script src="app.js"></script><script src="live.js"></script><script src="campaign.js"></script></body></html>

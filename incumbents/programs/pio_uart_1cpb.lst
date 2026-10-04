@@ -1,0 +1,11 @@
+# uart_1cpb: PIO, 10 words; GRPS=0x44100000 PEND=0x40009000 SHIFT=0x00080000 DIV=0x00000100 IMM=0xE081
+00: 98a0  pull block side 1
+01: b042  nop side 0
+02: 6001  out pins, 1
+03: 6001  out pins, 1
+04: 6001  out pins, 1
+05: 6001  out pins, 1
+06: 6001  out pins, 1
+07: 6001  out pins, 1
+08: 6001  out pins, 1
+09: 6001  out pins, 1

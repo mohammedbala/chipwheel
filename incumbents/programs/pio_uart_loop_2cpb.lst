@@ -1,0 +1,5 @@
+# uart_loop_2cpb: PIO, 4 words; GRPS=0x44100000 PEND=0x40003000 SHIFT=0x00080000 DIV=0x00000100 IMM=0xE081
+00: 99a0  pull block side 1 [1]
+01: f127  set x, 7 side 0 [1]
+02: 6001  bitloop: out pins, 1
+03: 0042  jmp x-- bitloop

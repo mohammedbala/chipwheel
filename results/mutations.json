@@ -1,0 +1,18 @@
+{
+  "correct_rtl_sha256": "fa5ee7e7005e764dd658916f07065339fe05d089ff615dd552a46cdd6cb9f15c",
+  "correct_source_unchanged": true,
+  "faults": [
+    {
+      "fault": "short-wait",
+      "detected": true,
+      "faulty_rtl_sha256": "1044a9112f55ffe3f1bbfeeebf1293ae3961bec444a0255b0804d0e6d54ec1c5",
+      "evidence": "short-wait.json"
+    },
+    {
+      "fault": "msb-first",
+      "detected": true,
+      "faulty_rtl_sha256": "de829a029aa06355b415a25805298f817e8466c418b26f57fc4749497ca8e8e3",
+      "evidence": "msb-first.json"
+    }
+  ]
+}

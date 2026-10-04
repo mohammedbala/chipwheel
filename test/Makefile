@@ -13,6 +13,8 @@ ifneq ($(GATES),yes)
 # RTL simulation:
 SIM_BUILD				= sim_build/rtl
 VERILOG_SOURCES += $(addprefix $(SRC_DIR)/,$(PROJECT_SOURCES))
+# Behavioral models of the library cells the design instantiates (RTL only)
+VERILOG_SOURCES += $(PWD)/cells_sim.v
 
 else
 

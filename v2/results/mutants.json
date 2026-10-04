@@ -1,0 +1,17 @@
+{
+ "rtl_sha_note": "mutants of v2/src/chipwheel2.v",
+ "results": {
+  "msb_shift_drops_input": "directed",
+  "lsb_shift_wraps": "directed",
+  "no_clock_stretch": "directed",
+  "wrap_ignored": "directed",
+  "single_sync_wait": "directed",
+  "overrun_never": "directed",
+  "delay_one_short": "directed",
+  "pull_without_ack": "directed",
+  "od_drives_high": "directed",
+  "push_wrong_half": "directed",
+  "brx_no_decrement": "fuzz",
+  "cpol_ignored_ph3": "directed"
+ }
+}

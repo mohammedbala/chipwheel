@@ -1,0 +1,502 @@
+{
+ "name": "INC_femtorv_bb",
+ "top": "inc_femtorv_bb",
+ "sources": [
+  "incumbents/femtorv_bb/femtorv_cfg.v",
+  "incumbents/femtorv_bb/patched/femtorv32_quark.v",
+  "incumbents/femtorv_bb/top.v"
+ ],
+ "defines": [],
+ "library": "sg13cmos5l_stdcell_typ_1p20V_25C.lib",
+ "cells": 9605,
+ "area_um2": 195398.2926,
+ "by_type": {
+  "sg13cmos5l_a21o_1": 50,
+  "sg13cmos5l_a21oi_1": 452,
+  "sg13cmos5l_a221oi_1": 162,
+  "sg13cmos5l_a22oi_1": 189,
+  "sg13cmos5l_and2_1": 47,
+  "sg13cmos5l_and3_1": 10,
+  "sg13cmos5l_dfrbpq_1": 2194,
+  "sg13cmos5l_inv_1": 120,
+  "sg13cmos5l_mux2_1": 1275,
+  "sg13cmos5l_mux4_1": 385,
+  "sg13cmos5l_nand2_1": 1194,
+  "sg13cmos5l_nand2b_1": 75,
+  "sg13cmos5l_nand3_1": 83,
+  "sg13cmos5l_nand3b_1": 6,
+  "sg13cmos5l_nand4_1": 10,
+  "sg13cmos5l_nor2_1": 952,
+  "sg13cmos5l_nor2b_1": 41,
+  "sg13cmos5l_nor3_1": 185,
+  "sg13cmos5l_nor4_1": 163,
+  "sg13cmos5l_o21ai_1": 1885,
+  "sg13cmos5l_or2_1": 29,
+  "sg13cmos5l_or3_1": 19,
+  "sg13cmos5l_or4_1": 3,
+  "sg13cmos5l_xnor2_1": 51,
+  "sg13cmos5l_xor2_1": 25
+ },
+ "synth_seconds": 3.236,
+ "flops": 2194,
+ "latches": 0,
+ "icgs": 0,
+ "sequential_area_um2": 107481.4272,
+ "combinational_area_um2": 87916.8654,
+ "timing": {
+  "model": "pre-layout NLDM, typical 1.20V 25C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$6288/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 8.6286,
+   "setup_ns": 0.1137,
+   "required_period_ns": 8.7423,
+   "path": [
+    {
+     "at": 0.3673,
+     "node": "launch $auto$ff.cc:266:slice$6334 CLK"
+    },
+    {
+     "at": 0.6536,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19986(sg13cmos5l_nand2b_1).A_N"
+    },
+    {
+     "at": 1.0726,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19994(sg13cmos5l_nor4_1).D"
+    },
+    {
+     "at": 1.4804,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19996(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 1.7045,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20139(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 2.0245,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20142(sg13cmos5l_xor2_1).B"
+    },
+    {
+     "at": 2.2131,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20158(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 2.3533,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20160(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 2.5108,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20161(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 2.6612,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20163(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 2.8218,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20164(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 3.0377,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20165(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 3.2244,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20169(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 3.4442,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20170(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 3.6453,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20172(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 3.7838,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20173(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 3.9538,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20175(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 4.1158,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20177(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 4.242,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20178(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 4.353,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20180(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 4.5573,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20181(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 4.7423,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20182(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 4.9191,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20184(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.0503,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20186(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 5.2193,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20188(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.3888,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20189(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 5.5635,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20191(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.7277,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20192(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 5.9441,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20193(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 6.1243,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20194(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 6.3875,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20195(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 6.6369,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20196(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 6.83,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20202(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 7.2178,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20210(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 7.3848,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20211(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 7.5105,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26859(sg13cmos5l_and3_1).A"
+    },
+    {
+     "at": 7.6786,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26866(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 7.8125,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26867(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 8.1801,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26868(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 8.4314,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26869(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 8.5516,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26871(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 8.6286,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26872(sg13cmos5l_a21oi_1).A2"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$2729/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 1.0367,
+   "setup_ns": 0.0965,
+   "required_period_ns": 1.1332,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in prog_we[0]"
+    },
+    {
+     "at": 0.1666,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22427(sg13cmos5l_nor2b_1).B_N"
+    },
+    {
+     "at": 0.427,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22428(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 0.8648,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22429(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 1.0367,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22430(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "host_rx_data[0]",
+   "cell": "port",
+   "arrival_ns": 0.2485,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.2485,
+   "path": [
+    {
+     "at": 0.2485,
+     "node": "launch $auto$ff.cc:266:slice$2425 CLK"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 114.39,
+  "slack_ns_reg2reg": 11.2577,
+  "endpoints": 2212,
+  "repair_buffers": 1493,
+  "repair_buffer_area_um2": 21671.19
+ },
+ "timing_slow": {
+  "model": "pre-layout NLDM, slow 1.08V 125C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$6288/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 13.5259,
+   "setup_ns": 0.2033,
+   "required_period_ns": 13.7293,
+   "path": [
+    {
+     "at": 0.5341,
+     "node": "launch $auto$ff.cc:266:slice$6334 CLK"
+    },
+    {
+     "at": 0.9728,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19986(sg13cmos5l_nand2b_1).A_N"
+    },
+    {
+     "at": 1.6155,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19994(sg13cmos5l_nor4_1).D"
+    },
+    {
+     "at": 2.2497,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$19996(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 2.6033,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20139(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 3.0998,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20142(sg13cmos5l_xor2_1).B"
+    },
+    {
+     "at": 3.4036,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20158(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 3.6312,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20160(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 3.8859,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20161(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 4.1145,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20163(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 4.3721,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20164(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 4.7013,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20165(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.0047,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20169(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 5.3404,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20170(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.6655,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20172(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 5.8889,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20173(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 6.1503,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20175(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 6.4133,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20177(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 6.6152,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20178(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 6.7914,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20180(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 7.1019,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20181(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 7.402,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20182(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 7.674,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20184(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 7.8818,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20186(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 8.1406,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20188(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 8.4127,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20189(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 8.6809,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20191(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 8.945,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20192(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 9.2752,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20193(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 9.5684,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20194(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 9.9681,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20195(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 10.3688,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20196(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 10.6782,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20202(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 11.2817,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20210(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 11.5617,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$20211(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 11.7666,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26859(sg13cmos5l_and3_1).A"
+    },
+    {
+     "at": 12.0284,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26866(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 12.2455,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26867(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 12.8011,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26868(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 13.2148,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26869(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 13.4045,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26871(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 13.5259,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$26872(sg13cmos5l_a21oi_1).A2"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$2729/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 1.6004,
+   "setup_ns": 0.1653,
+   "required_period_ns": 1.7656,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in prog_we[0]"
+    },
+    {
+     "at": 0.2418,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22427(sg13cmos5l_nor2b_1).B_N"
+    },
+    {
+     "at": 0.659,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22428(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 1.326,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22429(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 1.6004,
+     "node": "$abc$19936$auto$blifparse.cc:396:parse_blif$22430(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "host_rx_data[0]",
+   "cell": "port",
+   "arrival_ns": 0.3687,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.3687,
+   "path": [
+    {
+     "at": 0.3687,
+     "node": "launch $auto$ff.cc:266:slice$2425 CLK"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 72.84,
+  "slack_ns_reg2reg": 6.2707,
+  "endpoints": 2212,
+  "repair_buffers": 1493,
+  "repair_buffer_area_um2": 21671.19
+ }
+}

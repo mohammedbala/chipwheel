@@ -1,0 +1,15 @@
+{
+ "cases": 2000,
+ "cycles": 8214061,
+ "seconds": 131.94,
+ "seed": 101,
+ "target": "rtl",
+ "coverage": {
+  "op2": 231941,
+  "cycles": 8214061,
+  "op3": 175325,
+  "op1": 54540,
+  "op0": 57945
+ },
+ "failures": 0
+}

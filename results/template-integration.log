@@ -1,0 +1,21 @@
+rm -f results.xml
+"/Library/Developer/CommandLineTools/usr/bin/make" -f Makefile results.xml
+/Users/mohammedbala/Documents/chipwheel/.tools/icarus-verilog/13.0/bin/iverilog -o sim_build/rtl/sim.vvp -s tb -g2012 -I/Users/mohammedbala/Documents/chipwheel/test/../src -f sim_build/rtl/cmds.f  /Users/mohammedbala/Documents/chipwheel/test/../src/project.v /Users/mohammedbala/Documents/chipwheel/test/tb.v
+rm -f results.xml
+COCOTB_TEST_MODULES=test COCOTB_TESTCASE= COCOTB_TEST_FILTER= COCOTB_TOPLEVEL=tb TOPLEVEL_LANG=verilog \
+         /Users/mohammedbala/Documents/chipwheel/.tools/icarus-verilog/13.0/bin/vvp -M /Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/libs -m libcocotbvpi_icarus   sim_build/rtl/sim.vvp -fst   
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:94   in _embed_init_python              Using Python 3.9.13 interpreter at /Users/mohammedbala/Documents/chipwheel/.venv/bin/python3
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 13.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with 1791042994
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test.chipwheel_regression (1/1)
+14436800.00ns INFO     cocotb.regression                  test.chipwheel_regression passed
+14436800.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                          ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                          **************************************************************************************
+                                                          ** test.chipwheel_regression      PASS    14436800.00           5.08    2840543.20  **
+                                                          **************************************************************************************
+                                                          ** TESTS=1 PASS=1 FAIL=0 SKIP=0           14436800.00           5.09    2839054.09  **
+                                                          **************************************************************************************

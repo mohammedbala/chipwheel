@@ -1,0 +1,17 @@
+{
+  "stage": "layout",
+  "status": "failed",
+  "returncode": 1,
+  "build_wall_seconds": 1.162324458,
+  "peak_child_rss_bytes": 114032640,
+  "rtl_sha256": "fa5ee7e7005e764dd658916f07065339fe05d089ff615dd552a46cdd6cb9f15c",
+  "config_sha256": "4a175aa98951284800bef96cf3441f89f622fa6c3512a68a000257f1dc27ecd4",
+  "clock_period_ns": 100,
+  "tiles": "6x4",
+  "pdk_revision": "2bbec755dc67ca3db0261c3d6163e15735d66710",
+  "routing_status": "unverified",
+  "timing_slack_ns": null,
+  "area_um2": null,
+  "note": "No completed official physical build.",
+  "blocker": "No compatible container engine found; full PDK not installed; disk space insufficient for full setup."
+}

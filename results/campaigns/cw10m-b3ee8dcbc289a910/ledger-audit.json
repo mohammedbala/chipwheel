@@ -1,0 +1,31 @@
+{
+  "checked": 51453,
+  "passed": 51453,
+  "failed": 0,
+  "batches": 6,
+  "by_stage": {
+    "calibration": 51453
+  },
+  "by_candidate": {
+    "A": 11453,
+    "B": 20000,
+    "C": 10000,
+    "D": 10000
+  },
+  "eliminated": [],
+  "case_ranges": {
+    "calibration/A": 11453,
+    "calibration/B": 20000,
+    "calibration/C": 10000,
+    "calibration/D": 10000
+  },
+  "status": "passed",
+  "campaign": "cw10m-b3ee8dcbc289a910",
+  "revision": "b3ee8dcbc289a91085b12b0cf667aa8420390dc7f15df7d94f8d9129d3847cdc",
+  "target": 10000000,
+  "budget_complete": false,
+  "audited_at": 1791072347.270476,
+  "auditor_sha256": "be400a28547ac6a0c21e65374189e32bf6aa245ff82f07760f5d7e83d210e14a",
+  "frozen_inputs_verified": true,
+  "note": "Audit validates recorded scenarios and provenance; RTL replays remain separate."
+}

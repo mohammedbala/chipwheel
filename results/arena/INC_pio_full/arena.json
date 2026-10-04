@@ -1,0 +1,446 @@
+{
+ "name": "INC_pio_full",
+ "top": "inc_pio_full",
+ "sources": [
+  "incumbents/pio_sm1/patched/pio.v",
+  "incumbents/pio_sm1/patched/machine.v",
+  "incumbents/upstream/fpga_pio/src/decoder.v",
+  "incumbents/upstream/fpga_pio/src/divider.v",
+  "incumbents/upstream/fpga_pio/src/pc.v",
+  "incumbents/upstream/fpga_pio/src/scratch.v",
+  "incumbents/upstream/fpga_pio/src/fifo.v",
+  "incumbents/upstream/fpga_pio/src/isr.v",
+  "incumbents/upstream/fpga_pio/src/osr.v",
+  "incumbents/pio_full/top.v"
+ ],
+ "defines": [],
+ "library": "sg13cmos5l_stdcell_typ_1p20V_25C.lib",
+ "cells": 30164,
+ "area_um2": 458442.3312,
+ "by_type": {
+  "sg13cmos5l_a21o_1": 499,
+  "sg13cmos5l_a21oi_1": 3381,
+  "sg13cmos5l_a221oi_1": 1160,
+  "sg13cmos5l_a22oi_1": 1256,
+  "sg13cmos5l_and2_1": 517,
+  "sg13cmos5l_and3_1": 102,
+  "sg13cmos5l_and4_1": 20,
+  "sg13cmos5l_dfrbpq_1": 2972,
+  "sg13cmos5l_inv_1": 1240,
+  "sg13cmos5l_mux2_1": 2383,
+  "sg13cmos5l_mux4_1": 1511,
+  "sg13cmos5l_nand2_1": 3396,
+  "sg13cmos5l_nand2b_1": 869,
+  "sg13cmos5l_nand3_1": 636,
+  "sg13cmos5l_nand3b_1": 98,
+  "sg13cmos5l_nand4_1": 217,
+  "sg13cmos5l_nor2_1": 2876,
+  "sg13cmos5l_nor2b_1": 464,
+  "sg13cmos5l_nor3_1": 574,
+  "sg13cmos5l_nor4_1": 209,
+  "sg13cmos5l_o21ai_1": 4605,
+  "sg13cmos5l_or2_1": 282,
+  "sg13cmos5l_or3_1": 159,
+  "sg13cmos5l_or4_1": 46,
+  "sg13cmos5l_xnor2_1": 460,
+  "sg13cmos5l_xor2_1": 232
+ },
+ "synth_seconds": 31.982,
+ "flops": 2972,
+ "latches": 0,
+ "icgs": 0,
+ "sequential_area_um2": 145594.7136,
+ "combinational_area_um2": 312847.6176,
+ "timing": {
+  "model": "pre-layout NLDM, typical 1.20V 25C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$93706/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 6.5975,
+   "setup_ns": 0.1011,
+   "required_period_ns": 6.6986,
+   "path": [
+    {
+     "at": 0.3923,
+     "node": "launch $auto$ff.cc:266:slice$94326 CLK"
+    },
+    {
+     "at": 0.615,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299098(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 1.143,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299103(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 1.5731,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299378(sg13cmos5l_nand4_1).B"
+    },
+    {
+     "at": 2.0675,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299379(sg13cmos5l_and2_1).B"
+    },
+    {
+     "at": 2.331,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299800(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 2.4824,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299805(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 2.7697,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299807(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 2.9876,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306098(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 3.1102,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306099(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 3.2191,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306100(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 3.43,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306106(sg13cmos5l_a22oi_1).B1"
+    },
+    {
+     "at": 3.6687,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306560(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 3.8806,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306565(sg13cmos5l_a221oi_1).A1"
+    },
+    {
+     "at": 3.9943,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306571(sg13cmos5l_a21oi_1).A1"
+    },
+    {
+     "at": 4.1624,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306580(sg13cmos5l_or3_1).A"
+    },
+    {
+     "at": 4.5498,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306585(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 4.807,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306586(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 5.0731,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306811(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 5.2425,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306814(sg13cmos5l_mux2_1).A0"
+    },
+    {
+     "at": 5.4585,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306817(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 5.6034,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306818(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 5.7947,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$312473(sg13cmos5l_mux4_1).A0"
+    },
+    {
+     "at": 5.8419,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$322743(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 5.9548,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$322744(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 6.0678,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323001(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 6.1807,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323283(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 6.2842,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323288(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 6.356,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323289(sg13cmos5l_o21ai_1).B1"
+    },
+    {
+     "at": 6.5281,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323295(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 6.5975,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323297(sg13cmos5l_nor2_1).A"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$94154/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 1.7207,
+   "setup_ns": 0.0965,
+   "required_period_ns": 1.8172,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in action[3]"
+    },
+    {
+     "at": 0.3946,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$313125(sg13cmos5l_nor3_1).A"
+    },
+    {
+     "at": 0.9592,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323894(sg13cmos5l_nand4_1).C"
+    },
+    {
+     "at": 1.5536,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323895(sg13cmos5l_nor4_1).D"
+    },
+    {
+     "at": 1.7207,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323896(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "tx_full[0]",
+   "cell": "port",
+   "arrival_ns": 0.5666,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.5666,
+   "path": [
+    {
+     "at": 0.2597,
+     "node": "launch $auto$ff.cc:266:slice$91220 CLK"
+    },
+    {
+     "at": 0.3366,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$298923(sg13cmos5l_inv_1).A"
+    },
+    {
+     "at": 0.4881,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299089(sg13cmos5l_nand3b_1).B"
+    },
+    {
+     "at": 0.5666,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299090(sg13cmos5l_inv_1).A"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 149.28,
+  "slack_ns_reg2reg": 13.3014,
+  "endpoints": 3028,
+  "repair_buffers": 5197,
+  "repair_buffer_area_um2": 75435.49
+ },
+ "timing_slow": {
+  "model": "pre-layout NLDM, slow 1.08V 125C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$93706/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 10.3822,
+   "setup_ns": 0.1738,
+   "required_period_ns": 10.556,
+   "path": [
+    {
+     "at": 0.5711,
+     "node": "launch $auto$ff.cc:266:slice$94326 CLK"
+    },
+    {
+     "at": 0.9256,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299098(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 1.7289,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299103(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 2.4187,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299378(sg13cmos5l_nand4_1).B"
+    },
+    {
+     "at": 3.1999,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299379(sg13cmos5l_and2_1).B"
+    },
+    {
+     "at": 3.6059,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299800(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 3.8496,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299805(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 4.3087,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299807(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 4.6584,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306098(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 4.8526,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306099(sg13cmos5l_a21o_1).A2"
+    },
+    {
+     "at": 5.0241,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306100(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 5.3455,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306106(sg13cmos5l_a22oi_1).B1"
+    },
+    {
+     "at": 5.7322,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306560(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 6.0619,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306565(sg13cmos5l_a221oi_1).A1"
+    },
+    {
+     "at": 6.2463,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306571(sg13cmos5l_a21oi_1).A1"
+    },
+    {
+     "at": 6.5142,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306580(sg13cmos5l_or3_1).A"
+    },
+    {
+     "at": 7.1084,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306585(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 7.5287,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306586(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 7.9615,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306811(sg13cmos5l_mux4_1).A3"
+    },
+    {
+     "at": 8.2283,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306814(sg13cmos5l_mux2_1).A0"
+    },
+    {
+     "at": 8.5645,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306817(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 8.7996,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$306818(sg13cmos5l_a21o_1).B1"
+    },
+    {
+     "at": 9.1089,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$312473(sg13cmos5l_mux4_1).A0"
+    },
+    {
+     "at": 9.1884,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$322743(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 9.3629,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$322744(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 9.5466,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323001(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 9.7275,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323283(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 9.885,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323288(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 9.9994,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323289(sg13cmos5l_o21ai_1).B1"
+    },
+    {
+     "at": 10.2689,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323295(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 10.3822,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323297(sg13cmos5l_nor2_1).A"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$94154/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 2.685,
+   "setup_ns": 0.1653,
+   "required_period_ns": 2.8503,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in action[3]"
+    },
+    {
+     "at": 0.5895,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$313125(sg13cmos5l_nor3_1).A"
+    },
+    {
+     "at": 1.5088,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323894(sg13cmos5l_nand4_1).C"
+    },
+    {
+     "at": 2.4168,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323895(sg13cmos5l_nor4_1).D"
+    },
+    {
+     "at": 2.685,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$323896(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "tx_full[0]",
+   "cell": "port",
+   "arrival_ns": 0.8922,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.8922,
+   "path": [
+    {
+     "at": 0.3843,
+     "node": "launch $auto$ff.cc:266:slice$91220 CLK"
+    },
+    {
+     "at": 0.5068,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$298923(sg13cmos5l_inv_1).A"
+    },
+    {
+     "at": 0.7601,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299089(sg13cmos5l_nand3b_1).B"
+    },
+    {
+     "at": 0.8922,
+     "node": "$abc$298430$auto$blifparse.cc:396:parse_blif$299090(sg13cmos5l_inv_1).A"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 94.73,
+  "slack_ns_reg2reg": 9.444,
+  "endpoints": 3028,
+  "repair_buffers": 5197,
+  "repair_buffer_area_um2": 75435.49
+ }
+}

@@ -1,0 +1,48 @@
+{
+  "checked_at": 1791071633.044575,
+  "campaign": "cw10m-b3ee8dcbc289a910",
+  "status": "running",
+  "committed": 1453,
+  "failed": 0,
+  "first_measured_eta_hours": 56.46051333055762,
+  "qualification": {
+    "A": {
+      "status": "passed",
+      "directed_cases": 1912,
+      "faults_detected": [
+        "short-wait",
+        "msb-first"
+      ]
+    },
+    "B": {
+      "status": "passed",
+      "directed_cases": 1912,
+      "faults_detected": [
+        "short-wait",
+        "msb-first"
+      ]
+    },
+    "C": {
+      "status": "passed",
+      "directed_cases": 1917,
+      "faults_detected": [
+        "short-wait",
+        "msb-first"
+      ]
+    },
+    "D": {
+      "status": "passed",
+      "directed_cases": 1917,
+      "faults_detected": [
+        "short-wait",
+        "msb-first"
+      ]
+    }
+  },
+  "source_changed": false,
+  "pause_resume_via_dashboard": "passed",
+  "duplicate_worker_rejected": true,
+  "baseline_unchanged": true,
+  "free_disk_gib": 6.8170623779296875,
+  "artifacts_mib": 1.9677038192749023
+}

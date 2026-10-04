@@ -1,0 +1,27 @@
+# spi_loop2: RV32I, 26 words, assembled by incumbents/common/rvasm.py
+0000: fe002823  sw   x0, -16(x0)
+0004: 0580006f  j    poll
+0008: 00400e13  addi t3, x0, 4
+000c: 08057313  andi t1, a0, 0x80
+0010: fe602823  sw   t1, -16(x0)
+0014: 00136313  ori  t1, t1, 1
+0018: fe602823  sw   t1, -16(x0)
+001c: ff402383  lw   t2, -12(x0)
+0020: 0013f393  andi t2, t2, 1
+0024: 00a50533  add  a0, a0, a0
+0028: 00756533  or   a0, a0, t2
+002c: 08057313  andi t1, a0, 0x80
+0030: fe602823  sw   t1, -16(x0)
+0034: 00136313  ori  t1, t1, 1
+0038: fe602823  sw   t1, -16(x0)
+003c: ff402383  lw   t2, -12(x0)
+0040: 0013f393  andi t2, t2, 1
+0044: 00a50533  add  a0, a0, a0
+0048: 00756533  or   a0, a0, t2
+004c: fffe0e13  addi t3, t3, -1
+0050: fa0e1ee3  bne  t3, x0, loop
+0054: fe002823  sw   x0, -16(x0)
+0058: fea02e23  sw   a0, -4(x0)
+005c: ff802503  lw   a0, -8(x0)
+0060: fa0544e3  blt  a0, x0, byte
+0064: ff9ff06f  j    poll

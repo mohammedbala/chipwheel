@@ -1,0 +1,11 @@
+# Standalone mapped-area estimate, NOT the official LibreLane physical flow.
+read_liberty -lib .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+read_verilog src/project.v
+hierarchy -check -top tt_um_chipwheel
+synth -top tt_um_chipwheel
+dfflibmap -liberty .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+abc -liberty .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+clean
+check -assert
+tee -o results/mapped-stat.json stat -json -liberty .tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+write_verilog -noattr results/mapped-netlist.v

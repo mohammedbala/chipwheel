@@ -1,0 +1,52 @@
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:94   in _embed_init_python              Using Python 3.9.13 interpreter at /Users/mohammedbala/Documents/chipwheel/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 13.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261003
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test.chipwheel_regression (1/1)
+14436800.00ns INFO     cocotb.regression                  test.chipwheel_regression passed
+14436800.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                          ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                          **************************************************************************************
+                                                          ** test.chipwheel_regression      PASS    14436800.00          10.33    1397847.36  **
+                                                          **************************************************************************************
+                                                          ** TESTS=1 PASS=1 FAIL=0 SKIP=0           14436800.00          10.33    1397481.88  **
+                                                          **************************************************************************************
+{
+  "completed_transactions": 1110,
+  "checked_transactions": 1110,
+  "simulator_python": "3.9.6 (default, Nov 11 2024, 03:15:38) \n[Clang 16.0.0 (clang-1600.0.26.6)]",
+  "instruction_cases": 32,
+  "failures": 0,
+  "timeouts": 0,
+  "simulated_clock_cycles": 144368,
+  "simulation_wall_seconds": 10.327401958000001,
+  "checked_transactions_per_second": 107.48104939792253,
+  "status": "passed",
+  "source_content_sha256": "302ca00dbe4745c2a5ec543f7f6dc7628c054b0f0cf435c5a19142f99ed33772",
+  "rtl_sha256": "6e363413aa22ed00dc67bfa5e3e5e28a90b711ab00486436342c9fba66c21ead",
+  "source_revision": "b86a2a781484bcab7ba522dc5de540086695a430",
+  "revision_note": "worktree content hash identifies local changes",
+  "mode": "short",
+  "seed": 20261003,
+  "requested_random_transactions": 0,
+  "build_wall_seconds": 0.05899470800000001,
+  "simulation_process_wall_seconds": 10.485722333,
+  "peak_child_rss_bytes": 49954816,
+  "peak_rss_note": "macOS bytes; process-family maximum including compile, not simulator-only",
+  "cell_model_sha256": "f4a27e68504e77af8201ec3d07f507279c1f8dacae525cd5ba56730ec2580a21",
+  "configuration": {
+    "clock_hz": 10000000,
+    "words": 32,
+    "word_bits": 16,
+    "waves": false
+  },
+  "tools": {
+    "python": "3.9.6",
+    "cocotb": "2.0.1",
+    "iverilog": "Icarus Verilog version 13.0 (stable) (v13_0)"
+  },
+  "host": "macOS-26.4-arm64-arm-64bit",
+  "runner_error": null
+}

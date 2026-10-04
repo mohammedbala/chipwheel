@@ -1,0 +1,185 @@
+{
+  "disk_before": {
+    "total": 245107195904,
+    "used": 243678359552,
+    "free": 1428836352
+  },
+  "cache_candidates": [
+    {
+      "path": "/Users/mohammedbala/Library/Caches/Homebrew",
+      "allocated_bytes": 70963200,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/pip",
+      "allocated_bytes": 21704704,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/com.apple.python",
+      "allocated_bytes": 104693760,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/Google",
+      "allocated_bytes": 279437312,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/.cache/uv",
+      "allocated_bytes": 306528256,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/.npm/_prebuilds",
+      "allocated_bytes": 942080,
+      "reason": "re-downloadable package or compiled-code cache"
+    },
+    {
+      "path": "/Users/mohammedbala/.npm/_logs",
+      "allocated_bytes": 118784,
+      "reason": "re-downloadable package or compiled-code cache"
+    }
+  ],
+  "vm": {
+    "path": "/Users/mohammedbala/Parallels/Windows 11.pvm",
+    "state": "running",
+    "estimated_gib": 106,
+    "deletion": "Restored and preserved; no guest files deleted",
+    "observed_original_path_exists": true,
+    "trash_verified_via_finder": true,
+    "trash_item_name": "Windows 11.pvm",
+    "unused_disk_reclaimed_gb": 2.4
+  },
+  "deleted": [
+    {
+      "path": "/Users/mohammedbala/Library/Caches/Homebrew",
+      "allocated_bytes": 70963200,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/pip",
+      "allocated_bytes": 21704704,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/com.apple.python",
+      "allocated_bytes": 104693760,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Caches/Google",
+      "allocated_bytes": 279437312,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/.cache/uv",
+      "allocated_bytes": 306528256,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/.npm/_prebuilds",
+      "allocated_bytes": 942080,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/.npm/_logs",
+      "allocated_bytes": 118784,
+      "reason": "re-downloadable package or compiled-code cache",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Google/GoogleUpdater/crx_cache",
+      "allocated_bytes": 753168384,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Google/Chrome/extensions_crx_cache",
+      "allocated_bytes": 211296256,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Google/Chrome/component_crx_cache",
+      "allocated_bytes": 29032448,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Claude/Code Cache",
+      "allocated_bytes": 36065280,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Claude/Cache",
+      "allocated_bytes": 25042944,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Cursor/GPUCache",
+      "allocated_bytes": 5840896,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Library/Application Support/Codex/component_crx_cache",
+      "allocated_bytes": 81682432,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Projects/polypdf-ipad-release-test/polypdf/.tmp/ipad-xcode-release/DerivedData",
+      "allocated_bytes": 250920960,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    },
+    {
+      "path": "/Users/mohammedbala/Desktop/polypdf/.build/arm64-apple-macosx",
+      "allocated_bytes": 91475968,
+      "reason": "cached installers or generated compiler output",
+      "status": "cleared"
+    }
+  ],
+  "errors": [],
+  "disk_after_cache_cleanup": {
+    "total": 245107195904,
+    "used": 241819656192,
+    "free": 3287539712
+  },
+  "preserved_categories": [
+    "Mac documents/photos and credentials",
+    "project source and Git history",
+    "release/evidence archives and recovery copies",
+    "installed applications and active runtimes",
+    "browser logins, bookmarks, extensions and local website data",
+    "Chipwheel RTL, tests, local dependencies and results"
+  ],
+  "protected_locations": [
+    "Trash: macOS denied filesystem access; not emptied",
+    "system-managed storage: preserved"
+  ],
+  "disk_current": {
+    "total": 245107195904,
+    "used": 239273443328,
+    "free": 5833752576
+  },
+  "cleared_candidate_allocated_bytes": 2268913664,
+  "observed_free_space_increase_bytes": 1874141184,
+  "git_compaction": {
+    "repository": "/Users/mohammedbala/Documents/PolyPDFMac",
+    "before_loose_gib": 1.99,
+    "before_packed_mib": 268.33,
+    "after_packed_mib": 993.46,
+    "pruned_history": false,
+    "working_files_changed": false
+  }
+}

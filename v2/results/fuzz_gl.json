@@ -1,0 +1,15 @@
+{
+ "cases": 600,
+ "cycles": 2463984,
+ "seconds": 56.11,
+ "seed": 202,
+ "target": "gl",
+ "coverage": {
+  "op2": 70421,
+  "op3": 49115,
+  "op1": 16682,
+  "cycles": 2463984,
+  "op0": 15303
+ },
+ "failures": 0
+}

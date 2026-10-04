@@ -1,0 +1,13 @@
+# arena recipe (identical for every design)
+read_liberty -lib /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+read_verilog -sv  /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_bufreg.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_bufreg2.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_alu.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_csr.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_ctrl.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_decode.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_immdec.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_mem_if.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_rf_if.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_rf_ram_if.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_rf_ram.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_state.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_debug.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_top.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_rf_top.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_aligner.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/serv/rtl/serv_compdec.v /Users/mohammedbala/Documents/chipwheel/incumbents/serv_bb/top.v
+hierarchy -check -top inc_serv_bb
+
+synth -flatten -top inc_serv_bb
+dfflibmap -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+abc -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+opt_clean -purge
+check -assert
+tee -o /Users/mohammedbala/Documents/chipwheel/results/arena/INC_serv_bb/stat.json stat -json -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+write_json /Users/mohammedbala/Documents/chipwheel/results/arena/INC_serv_bb/netlist.json
+write_verilog -noattr /Users/mohammedbala/Documents/chipwheel/results/arena/INC_serv_bb/netlist.v

@@ -1,0 +1,13 @@
+# arena recipe (identical for every design)
+read_liberty -lib /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+read_verilog -sv  /Users/mohammedbala/Documents/chipwheel/incumbents/femtorv_bb/femtorv_cfg.v /Users/mohammedbala/Documents/chipwheel/incumbents/femtorv_bb/patched/femtorv32_quark.v /Users/mohammedbala/Documents/chipwheel/incumbents/femtorv_bb/top.v
+hierarchy -check -top inc_femtorv_bb
+
+synth -flatten -top inc_femtorv_bb
+dfflibmap -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+abc -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+opt_clean -purge
+check -assert
+tee -o /Users/mohammedbala/Documents/chipwheel/results/arena/INC_femtorv_bb/stat.json stat -json -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+write_json /Users/mohammedbala/Documents/chipwheel/results/arena/INC_femtorv_bb/netlist.json
+write_verilog -noattr /Users/mohammedbala/Documents/chipwheel/results/arena/INC_femtorv_bb/netlist.v

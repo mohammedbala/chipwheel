@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "campaign": "acceptance-a5d4fee310f89b1a",
+  "checked": 1600,
+  "uninterrupted_cases": 100,
+  "pause_prefix": 9,
+  "resume_suffix": 91,
+  "same_cycles": true,
+  "same_coverage": true,
+  "infrastructure_failure_not_counted": true,
+  "replay_not_counted": true,
+  "replay_waveform_bytes": 1144
+}

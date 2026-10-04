@@ -1,0 +1,19 @@
+Command: /Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/bin/python tt/tt_tool.py --create-user-config --ihp
+2026-10-03 11:58:01,212 - project    - INFO     - creating include file
+Command: /Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/bin/python tt/tt_tool.py --harden --ihp
+Traceback (most recent call last):
+  File "/Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/lib/python3.13/site-packages/librelane/__main__.py", line 340, in cli_in_container
+    run_in_container(
+    ~~~~~~~~~~~~~~~~^
+        container_image,
+        ^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+        tty=tty,
+        ^^^^^^^^
+    )
+    ^
+  File "/Users/mohammedbala/Documents/chipwheel/.tools/flow-venv/lib/python3.13/site-packages/librelane/container.py", line 191, in run_in_container
+    raise FileNotFoundError("No compatible container engine found.")
+FileNotFoundError: No compatible container engine found.
+[11:58:01] ERROR    No compatible container engine found.        __main__.py:352
+2026-10-03 11:58:01,673 - project    - ERROR    - harden failed

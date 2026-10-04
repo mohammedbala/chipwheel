@@ -1,0 +1,709 @@
+[
+ {
+  "name": "pio_sm1",
+  "top": "inc_pio_sm1",
+  "sources": [
+   "incumbents/pio_sm1/patched/pio.v",
+   "incumbents/pio_sm1/patched/machine.v",
+   "incumbents/upstream/fpga_pio/src/decoder.v",
+   "incumbents/upstream/fpga_pio/src/divider.v",
+   "incumbents/upstream/fpga_pio/src/pc.v",
+   "incumbents/upstream/fpga_pio/src/scratch.v",
+   "incumbents/upstream/fpga_pio/src/fifo.v",
+   "incumbents/upstream/fpga_pio/src/isr.v",
+   "incumbents/upstream/fpga_pio/src/osr.v",
+   "incumbents/pio_sm1/top.v"
+  ],
+  "defines": [],
+  "upstream": {
+   "url": "https://github.com/lawrie/fpga_pio",
+   "commit": "f38be97cdfa86d4551c96bb98599e3443000628b",
+   "license": "BSD-2-Clause",
+   "license_file": "incumbents/upstream/fpga_pio/LICENSE"
+  },
+  "config": {
+   "state_machines": 1,
+   "instruction_memory": "32 x 16 bit, writable through host action INSTR",
+   "tx_fifo": "4 x 32 bit",
+   "rx_fifo": "4 x 32 bit",
+   "clock_divider": "upstream 24-bit (16.8 fractional); measured at clkdiv 1.0 (DIV=0x100)",
+   "gpio": "8 pins brought out (upstream has 32; the other 24 are tied off and trimmed by synthesis)",
+   "host_interface": "upstream action bus: action[3:0], index[4:0], din[31:0], dout[31:0]",
+   "patches": [
+    "pio.v [yosys-patch]: gpio_out/gpio_dir/output_pins_prev/pin_directions_prev were driven by two always blocks; Yosys resolved the conflict to the constant reset value (all GPIO outputs tied 0). Reset moved into the single driving block.",
+    "machine.v [yosys-patch]: same two-always-block problem for output_pins/pin_directions; reset moved into the pin-update block (reset/restart priority).",
+    "pio.v [asic-patch]: one-cycle strobes (push/pull/imm/restart/clkdiv_restart) cleared every cycle incl. reset (upstream left them at their power-up value through reset); use_divider reset with div.",
+    "machine.v [asic-patch]: exec1 cleared on reset/restart (was only an initial value).",
+    "Full diff: incumbents/pio_sm1/patched/fpga_pio.patch; decoder/divider/pc/scratch/fifo/isr/osr unmodified."
+   ]
+  },
+  "uart_tx": {
+   "case": "uart_1cpb",
+   "clocks_per_bit": 1,
+   "clocks_per_byte_sustained": 10,
+   "program_words": 10,
+   "program_bits": 160,
+   "verified": true,
+   "bytes_sent": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "bytes_decoded": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "program": [
+    "0x98A0  pull block side 1",
+    "0xB042  nop side 0",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1"
+   ]
+  },
+  "spi_mode0": {
+   "case": "spi_2cpb",
+   "clocks_per_bit": 2,
+   "clocks_per_bit_min": 2,
+   "clocks_per_bit_max": 2,
+   "clocks_per_byte_sustained": 19,
+   "program_words": 19,
+   "program_bits": 304,
+   "verified": true,
+   "mosi_at_slave": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "miso_at_host": [
+    "0x96",
+    "0x0F",
+    "0xF0",
+    "0x33",
+    "0xCC",
+    "0x01",
+    "0x80",
+    "0x7E"
+   ],
+   "program": [
+    "0x80A0  pull block side 0",
+    "0x6001  out pins, 1 side 0",
+    "0xB042  nop side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x4001  in pins, 1 side 0",
+    "0x8020  push block side 0"
+   ]
+  },
+  "alternatives": [
+   {
+    "case": "uart_loop_2cpb",
+    "verified": true,
+    "clocks_per_bit": 2,
+    "clocks_per_byte_sustained": 20,
+    "program_words": 4
+   },
+   {
+    "case": "spi_3cpb",
+    "verified": true,
+    "clocks_per_bit": 3,
+    "clocks_per_byte_sustained": 26,
+    "program_words": 18
+   },
+   {
+    "case": "spi_2cpb_negative",
+    "verified": false,
+    "clocks_per_bit": 2,
+    "clocks_per_byte_sustained": 18,
+    "program_words": 18
+   }
+  ],
+  "notes": "Measured with clkdiv = 1 (no divider), 10 MHz-clock testbench, programs loaded through the action bus. UART: canonical pull / start / 8x out / stop, unrolled so each bit is one instruction (1 clk/bit, 10 clk/byte, FIFO pull included). The canonical delay-free loop (pull side1 [1]; set x,7 side0 [1]; out pins,1; jmp x--) gives 2 clk/bit in 4 words. SPI: spi_cpha0 structure (out pins side 0 / in pins side 1) at 2 clk/bit; upstream's GPIO output path has one more register than its input path, so `in` sees the pins of two instructions earlier: the plain 2-clk/bit program reads MISO one bit late (spi_2cpb_negative, fails); the measured program raises SCK for bit 0 with a nop and adds one `in` after the last pulse (19 words, 19 clk/byte incl. pull+push). The textbook variant with [1] delay is 3 clk/bit, 26 clk/byte. Autopull/autopush were not used: upstream autopush only fires at the next `in`, so the last RX byte would stay in ISR.",
+  "generic_cells": 10618,
+  "generic_flops": 1163,
+  "generic_cells_hier": 14647,
+  "gate_level_sim": {
+   "uart_1cpb": true,
+   "spi_2cpb": true
+  },
+  "yosys_cmd": "incumbents/yosys.sh -p \"read_verilog -sv incumbents/pio_sm1/patched/pio.v incumbents/pio_sm1/patched/machine.v incumbents/upstream/fpga_pio/src/decoder.v incumbents/upstream/fpga_pio/src/divider.v incumbents/upstream/fpga_pio/src/pc.v incumbents/upstream/fpga_pio/src/scratch.v incumbents/upstream/fpga_pio/src/fifo.v incumbents/upstream/fpga_pio/src/isr.v incumbents/upstream/fpga_pio/src/osr.v incumbents/pio_sm1/top.v; synth -flatten -top inc_pio_sm1; stat\""
+ },
+ {
+  "name": "pio_full",
+  "top": "inc_pio_full",
+  "sources": [
+   "incumbents/pio_sm1/patched/pio.v",
+   "incumbents/pio_sm1/patched/machine.v",
+   "incumbents/upstream/fpga_pio/src/decoder.v",
+   "incumbents/upstream/fpga_pio/src/divider.v",
+   "incumbents/upstream/fpga_pio/src/pc.v",
+   "incumbents/upstream/fpga_pio/src/scratch.v",
+   "incumbents/upstream/fpga_pio/src/fifo.v",
+   "incumbents/upstream/fpga_pio/src/isr.v",
+   "incumbents/upstream/fpga_pio/src/osr.v",
+   "incumbents/pio_full/top.v"
+  ],
+  "defines": [],
+  "upstream": {
+   "url": "https://github.com/lawrie/fpga_pio",
+   "commit": "f38be97cdfa86d4551c96bb98599e3443000628b",
+   "license": "BSD-2-Clause",
+   "license_file": "incumbents/upstream/fpga_pio/LICENSE"
+  },
+  "config": {
+   "state_machines": 4,
+   "instruction_memory": "32 x 16 bit, writable through host action INSTR (shared by the 4 SMs)",
+   "tx_fifo": "4 x 32 bit per SM",
+   "rx_fifo": "4 x 32 bit per SM",
+   "clock_divider": "upstream 24-bit (16.8 fractional); measured at clkdiv 1.0 (DIV=0x100)",
+   "gpio": "8 pins brought out (upstream has 32; the other 24 are tied off and trimmed by synthesis)",
+   "host_interface": "upstream action bus: action[3:0], index[4:0], din[31:0], dout[31:0], mindex[1:0]",
+   "patches": [
+    "pio.v [yosys-patch]: gpio_out/gpio_dir/output_pins_prev/pin_directions_prev were driven by two always blocks; Yosys resolved the conflict to the constant reset value (all GPIO outputs tied 0). Reset moved into the single driving block.",
+    "machine.v [yosys-patch]: same two-always-block problem for output_pins/pin_directions; reset moved into the pin-update block (reset/restart priority).",
+    "pio.v [asic-patch]: one-cycle strobes (push/pull/imm/restart/clkdiv_restart) cleared every cycle incl. reset (upstream left them at their power-up value through reset); use_divider reset with div.",
+    "machine.v [asic-patch]: exec1 cleared on reset/restart (was only an initial value).",
+    "Full diff: incumbents/pio_sm1/patched/fpga_pio.patch; decoder/divider/pc/scratch/fifo/isr/osr unmodified."
+   ]
+  },
+  "uart_tx": {
+   "case": "uart_1cpb",
+   "clocks_per_bit": 1,
+   "clocks_per_byte_sustained": 10,
+   "program_words": 10,
+   "program_bits": 160,
+   "verified": true,
+   "bytes_sent": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "bytes_decoded": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "program": [
+    "0x98A0  pull block side 1",
+    "0xB042  nop side 0",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1",
+    "0x6001  out pins, 1"
+   ]
+  },
+  "spi_mode0": {
+   "case": "spi_2cpb",
+   "clocks_per_bit": 2,
+   "clocks_per_bit_min": 2,
+   "clocks_per_bit_max": 2,
+   "clocks_per_byte_sustained": 19,
+   "program_words": 19,
+   "program_bits": 304,
+   "verified": true,
+   "mosi_at_slave": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "miso_at_host": [
+    "0x96",
+    "0x0F",
+    "0xF0",
+    "0x33",
+    "0xCC",
+    "0x01",
+    "0x80",
+    "0x7E"
+   ],
+   "program": [
+    "0x80A0  pull block side 0",
+    "0x6001  out pins, 1 side 0",
+    "0xB042  nop side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x6001  out pins, 1 side 0",
+    "0x5001  in pins, 1 side 1",
+    "0x4001  in pins, 1 side 0",
+    "0x8020  push block side 0"
+   ]
+  },
+  "alternatives": [
+   {
+    "case": "uart_loop_2cpb",
+    "verified": true,
+    "clocks_per_bit": 2,
+    "clocks_per_byte_sustained": 20,
+    "program_words": 4
+   },
+   {
+    "case": "spi_3cpb",
+    "verified": true,
+    "clocks_per_bit": 3,
+    "clocks_per_byte_sustained": 26,
+    "program_words": 18
+   },
+   {
+    "case": "spi_2cpb_negative",
+    "verified": false,
+    "clocks_per_bit": 2,
+    "clocks_per_byte_sustained": 18,
+    "program_words": 18
+   }
+  ],
+  "notes": "Measured with clkdiv = 1 (no divider), 10 MHz-clock testbench, programs loaded through the action bus. UART: canonical pull / start / 8x out / stop, unrolled so each bit is one instruction (1 clk/bit, 10 clk/byte, FIFO pull included). The canonical delay-free loop (pull side1 [1]; set x,7 side0 [1]; out pins,1; jmp x--) gives 2 clk/bit in 4 words. SPI: spi_cpha0 structure (out pins side 0 / in pins side 1) at 2 clk/bit; upstream's GPIO output path has one more register than its input path, so `in` sees the pins of two instructions earlier: the plain 2-clk/bit program reads MISO one bit late (spi_2cpb_negative, fails); the measured program raises SCK for bit 0 with a nop and adds one `in` after the last pulse (19 words, 19 clk/byte incl. pull+push). The textbook variant with [1] delay is 3 clk/bit, 26 clk/byte. Autopull/autopush were not used: upstream autopush only fires at the next `in`, so the last RX byte would stay in ISR. Secondary reference: full 4-SM block; measured on SM0 with the same programs.",
+  "generic_cells": 40864,
+  "generic_flops": 2972,
+  "generic_cells_hier": 56998,
+  "gate_level_sim": {
+   "uart_1cpb": true,
+   "spi_2cpb": true
+  },
+  "yosys_cmd": "incumbents/yosys.sh -p \"read_verilog -sv incumbents/pio_sm1/patched/pio.v incumbents/pio_sm1/patched/machine.v incumbents/upstream/fpga_pio/src/decoder.v incumbents/upstream/fpga_pio/src/divider.v incumbents/upstream/fpga_pio/src/pc.v incumbents/upstream/fpga_pio/src/scratch.v incumbents/upstream/fpga_pio/src/fifo.v incumbents/upstream/fpga_pio/src/isr.v incumbents/upstream/fpga_pio/src/osr.v incumbents/pio_full/top.v; synth -flatten -top inc_pio_full; stat\""
+ },
+ {
+  "name": "serv_bb",
+  "top": "inc_serv_bb",
+  "sources": [
+   "incumbents/upstream/serv/rtl/serv_bufreg.v",
+   "incumbents/upstream/serv/rtl/serv_bufreg2.v",
+   "incumbents/upstream/serv/rtl/serv_alu.v",
+   "incumbents/upstream/serv/rtl/serv_csr.v",
+   "incumbents/upstream/serv/rtl/serv_ctrl.v",
+   "incumbents/upstream/serv/rtl/serv_decode.v",
+   "incumbents/upstream/serv/rtl/serv_immdec.v",
+   "incumbents/upstream/serv/rtl/serv_mem_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_ram_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_ram.v",
+   "incumbents/upstream/serv/rtl/serv_state.v",
+   "incumbents/upstream/serv/rtl/serv_debug.v",
+   "incumbents/upstream/serv/rtl/serv_top.v",
+   "incumbents/upstream/serv/rtl/serv_rf_top.v",
+   "incumbents/upstream/serv/rtl/serv_aligner.v",
+   "incumbents/upstream/serv/rtl/serv_compdec.v",
+   "incumbents/serv_bb/top.v"
+  ],
+  "defines": [],
+  "upstream": {
+   "url": "https://github.com/olofk/serv",
+   "commit": "f200eb2ed7b69ac1c6b8eddd47654522aeee5ce8",
+   "license": "ISC",
+   "license_file": "incumbents/upstream/serv/LICENSE"
+  },
+  "config": {
+   "core": "SERV via upstream serv_rf_top, W=1 (classic bit-serial)",
+   "isa": "RV32I (SERV has no RV32E option)",
+   "WITH_CSR": 0,
+   "COMPRESSED": 0,
+   "MDU": 0,
+   "PRE_REGISTER": 1,
+   "RESET_STRATEGY": "MINI",
+   "RF_WIDTH": 2,
+   "register_file": "serv_rf_ram 512 x 2 bit = 1024 bits (32 x 32, plain Verilog array)",
+   "prog_mem": "32 x 32 bit = 1024 bits, plain reg array, host-writable (prog_we/prog_addr/prog_wdata), combinational read",
+   "bus": "Harvard: ibus -> program memory, dbus -> I/O only (no data RAM); ack = cyc on both (zero wait states)",
+   "io": "zero-wait-state I/O, x0-relative: -16 GPIO_OUT[7:0] (W/R), -12 GPIO_IN[7:0] (R), -8 TX mailbox {valid,23b0,data} (R, read clears valid; 1-deep, host_tx_full), -4 RX mailbox (W, sets host_rx_valid)",
+   "patches": []
+  },
+  "uart_tx": {
+   "case": "uart_burst",
+   "clocks_per_bit": 68,
+   "clocks_per_byte_sustained": 1291,
+   "program_words": 23,
+   "program_bits": 736,
+   "verified": true,
+   "bytes_sent": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "bytes_decoded": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ]
+  },
+  "spi_mode0": {
+   "case": "spi_loop2",
+   "clocks_per_bit": 422.714,
+   "clocks_per_bit_min": 379,
+   "clocks_per_bit_max": 481,
+   "clocks_per_byte_sustained": 3746,
+   "program_words": 26,
+   "program_bits": 832,
+   "verified": true,
+   "mosi_at_slave": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "miso_at_host": [
+    "0x96",
+    "0x0F",
+    "0xF0",
+    "0x33",
+    "0xCC",
+    "0x01",
+    "0x80",
+    "0x7E"
+   ]
+  },
+  "alternatives": [
+   {
+    "case": "uart_pairs",
+    "verified": true,
+    "clocks_per_bit": 136,
+    "clocks_per_byte_sustained": 1529,
+    "program_words": 27,
+    "prog_mem_words_needed": 32
+   },
+   {
+    "case": "spi_unrolled",
+    "verified": true,
+    "clocks_per_bit": 379,
+    "clocks_per_byte_sustained": 3303,
+    "program_words": 71,
+    "prog_mem_words_needed": 72
+   }
+  ],
+  "notes": "Firmware hand-assembled (incumbents/common/rvasm.py), loaded through the host port, listings in incumbents/programs/rv32i_<case>.lst. UART: poll mailbox, precompute d1..d7 with seven 1-bit srli, then ten back-to-back identical sw (start, d0..d7, stop) so the bit period is exactly one store; stop bit is stretched by the next poll/precompute (clocks_per_byte includes it). Alternative sw/srli pairs: see alternatives. SPI: 8 instructions/bit (andi MOSI, sw SCK low, ori, sw SCK high, lw GPIO_IN, andi, add, or), loop unrolled 2x with a counter to fit the 32-word memory; the fully unrolled version needs 71 words (see alternatives, simulated with PROG_WORDS=72). Pins: UART TX=gpio_out[0]; SPI SCK=gpio_out[0], MOSI=gpio_out[7], MISO=gpio_in[0]. Other GPIO_OUT bits are don't-care during UART TX (whole-register writes).",
+  "generic_cells": 5739,
+  "generic_flops": 2181,
+  "generic_cells_hier": 5912,
+  "gate_level_sim": {
+   "uart_burst": true,
+   "spi_loop2": true
+  },
+  "yosys_cmd": "incumbents/yosys.sh -p \"read_verilog -sv incumbents/upstream/serv/rtl/serv_bufreg.v incumbents/upstream/serv/rtl/serv_bufreg2.v incumbents/upstream/serv/rtl/serv_alu.v incumbents/upstream/serv/rtl/serv_csr.v incumbents/upstream/serv/rtl/serv_ctrl.v incumbents/upstream/serv/rtl/serv_decode.v incumbents/upstream/serv/rtl/serv_immdec.v incumbents/upstream/serv/rtl/serv_mem_if.v incumbents/upstream/serv/rtl/serv_rf_if.v incumbents/upstream/serv/rtl/serv_rf_ram_if.v incumbents/upstream/serv/rtl/serv_rf_ram.v incumbents/upstream/serv/rtl/serv_state.v incumbents/upstream/serv/rtl/serv_debug.v incumbents/upstream/serv/rtl/serv_top.v incumbents/upstream/serv/rtl/serv_rf_top.v incumbents/upstream/serv/rtl/serv_aligner.v incumbents/upstream/serv/rtl/serv_compdec.v incumbents/serv_bb/top.v; synth -flatten -top inc_serv_bb; stat\""
+ },
+ {
+  "name": "qerv_bb",
+  "top": "inc_qerv_bb",
+  "sources": [
+   "incumbents/upstream/serv/rtl/serv_bufreg.v",
+   "incumbents/upstream/serv/rtl/serv_bufreg2.v",
+   "incumbents/upstream/serv/rtl/serv_alu.v",
+   "incumbents/upstream/serv/rtl/serv_csr.v",
+   "incumbents/upstream/serv/rtl/serv_ctrl.v",
+   "incumbents/upstream/serv/rtl/serv_decode.v",
+   "incumbents/upstream/serv/rtl/serv_immdec.v",
+   "incumbents/upstream/serv/rtl/serv_mem_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_ram_if.v",
+   "incumbents/upstream/serv/rtl/serv_rf_ram.v",
+   "incumbents/upstream/serv/rtl/serv_state.v",
+   "incumbents/upstream/serv/rtl/serv_debug.v",
+   "incumbents/upstream/serv/rtl/serv_top.v",
+   "incumbents/upstream/serv/rtl/serv_rf_top.v",
+   "incumbents/upstream/serv/rtl/serv_aligner.v",
+   "incumbents/upstream/serv/rtl/serv_compdec.v",
+   "incumbents/serv_bb/top.v",
+   "incumbents/qerv_bb/top.v"
+  ],
+  "defines": [],
+  "upstream": {
+   "url": "https://github.com/olofk/serv",
+   "commit": "f200eb2ed7b69ac1c6b8eddd47654522aeee5ce8",
+   "license": "ISC",
+   "license_file": "incumbents/upstream/serv/LICENSE"
+  },
+  "config": {
+   "core": "SERV via upstream serv_rf_top, W=4 (QERV)",
+   "isa": "RV32I (SERV has no RV32E option)",
+   "WITH_CSR": 0,
+   "COMPRESSED": 0,
+   "MDU": 0,
+   "PRE_REGISTER": 1,
+   "RESET_STRATEGY": "MINI",
+   "RF_WIDTH": 8,
+   "register_file": "serv_rf_ram 128 x 8 bit = 1024 bits (32 x 32, plain Verilog array)",
+   "prog_mem": "32 x 32 bit = 1024 bits, plain reg array, host-writable (prog_we/prog_addr/prog_wdata), combinational read",
+   "bus": "Harvard: ibus -> program memory, dbus -> I/O only (no data RAM); ack = cyc on both (zero wait states)",
+   "io": "zero-wait-state I/O, x0-relative: -16 GPIO_OUT[7:0] (W/R), -12 GPIO_IN[7:0] (R), -8 TX mailbox {valid,23b0,data} (R, read clears valid; 1-deep, host_tx_full), -4 RX mailbox (W, sets host_rx_valid)",
+   "patches": []
+  },
+  "uart_tx": {
+   "case": "uart_burst",
+   "clocks_per_bit": 20,
+   "clocks_per_byte_sustained": 372,
+   "program_words": 23,
+   "program_bits": 736,
+   "verified": true,
+   "bytes_sent": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "bytes_decoded": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ]
+  },
+  "spi_mode0": {
+   "case": "spi_loop2",
+   "clocks_per_bit": 127.857,
+   "clocks_per_bit_min": 115,
+   "clocks_per_bit_max": 145,
+   "clocks_per_byte_sustained": 1130,
+   "program_words": 26,
+   "program_bits": 832,
+   "verified": true,
+   "mosi_at_slave": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "miso_at_host": [
+    "0x96",
+    "0x0F",
+    "0xF0",
+    "0x33",
+    "0xCC",
+    "0x01",
+    "0x80",
+    "0x7E"
+   ]
+  },
+  "alternatives": [
+   {
+    "case": "uart_pairs",
+    "verified": true,
+    "clocks_per_bit": 39,
+    "clocks_per_byte_sustained": 440,
+    "program_words": 27,
+    "prog_mem_words_needed": 32
+   },
+   {
+    "case": "spi_unrolled",
+    "verified": true,
+    "clocks_per_bit": 115,
+    "clocks_per_byte_sustained": 999,
+    "program_words": 71,
+    "prog_mem_words_needed": 72
+   }
+  ],
+  "notes": "Firmware hand-assembled (incumbents/common/rvasm.py), loaded through the host port, listings in incumbents/programs/rv32i_<case>.lst. UART: poll mailbox, precompute d1..d7 with seven 1-bit srli, then ten back-to-back identical sw (start, d0..d7, stop) so the bit period is exactly one store; stop bit is stretched by the next poll/precompute (clocks_per_byte includes it). Alternative sw/srli pairs: see alternatives. SPI: 8 instructions/bit (andi MOSI, sw SCK low, ori, sw SCK high, lw GPIO_IN, andi, add, or), loop unrolled 2x with a counter to fit the 32-word memory; the fully unrolled version needs 71 words (see alternatives, simulated with PROG_WORDS=72). Pins: UART TX=gpio_out[0]; SPI SCK=gpio_out[0], MOSI=gpio_out[7], MISO=gpio_in[0]. Other GPIO_OUT bits are don't-care during UART TX (whole-register writes).",
+  "generic_cells": 5177,
+  "generic_flops": 2216,
+  "generic_cells_hier": 5365,
+  "gate_level_sim": {
+   "uart_burst": true,
+   "spi_loop2": true
+  },
+  "yosys_cmd": "incumbents/yosys.sh -p \"read_verilog -sv incumbents/upstream/serv/rtl/serv_bufreg.v incumbents/upstream/serv/rtl/serv_bufreg2.v incumbents/upstream/serv/rtl/serv_alu.v incumbents/upstream/serv/rtl/serv_csr.v incumbents/upstream/serv/rtl/serv_ctrl.v incumbents/upstream/serv/rtl/serv_decode.v incumbents/upstream/serv/rtl/serv_immdec.v incumbents/upstream/serv/rtl/serv_mem_if.v incumbents/upstream/serv/rtl/serv_rf_if.v incumbents/upstream/serv/rtl/serv_rf_ram_if.v incumbents/upstream/serv/rtl/serv_rf_ram.v incumbents/upstream/serv/rtl/serv_state.v incumbents/upstream/serv/rtl/serv_debug.v incumbents/upstream/serv/rtl/serv_top.v incumbents/upstream/serv/rtl/serv_rf_top.v incumbents/upstream/serv/rtl/serv_aligner.v incumbents/upstream/serv/rtl/serv_compdec.v incumbents/serv_bb/top.v incumbents/qerv_bb/top.v; synth -flatten -top inc_qerv_bb; stat\""
+ },
+ {
+  "name": "femtorv_bb",
+  "top": "inc_femtorv_bb",
+  "sources": [
+   "incumbents/femtorv_bb/femtorv_cfg.v",
+   "incumbents/femtorv_bb/patched/femtorv32_quark.v",
+   "incumbents/femtorv_bb/top.v"
+  ],
+  "defines": [],
+  "upstream": {
+   "url": "https://github.com/BrunoLevy/learn-fpga",
+   "path": "FemtoRV/RTL/PROCESSOR/femtorv32_quark.v",
+   "commit": "5c08c870315c09ccd9ec64ccde20ab3375b3f273",
+   "license": "BSD-3-Clause",
+   "license_file": "incumbents/upstream/femtorv/LICENSE"
+  },
+  "config": {
+   "core": "FemtoRV32 Quark",
+   "isa": "RV32I (Quark has no RV32E option)",
+   "ADDR_WIDTH": 8,
+   "NRV_IS_IO_ADDR": "0 (zero-wait I/O: 3-cycle stores)",
+   "NRV_COUNTER_WIDTH": 1,
+   "register_file": "31 x 32 bit (x0 storage removed by the x0 patch)",
+   "prog_mem": "32 x 32 bit = 1024 bits, plain reg array, host-writable, combinational read; shared instruction/data port as Quark requires (I/O when addr[7]=1)",
+   "io": "zero-wait-state I/O, x0-relative: -16 GPIO_OUT[7:0] (W/R), -12 GPIO_IN[7:0] (R), -8 TX mailbox {valid,23b0,data} (R, read clears valid; 1-deep, host_tx_full), -4 RX mailbox (W, sets host_rx_valid)",
+   "sim_only_defines": [
+    "BENCH"
+   ],
+   "patches": [
+    "[icarus-patch] declarations moved ahead of first use (Icarus 13 rejects use-before-declaration); logic unchanged",
+    "[asic-patch] x0 reads forced to 0 and x0 storage dropped (registerFile [31:1]): upstream never writes x0 and relies on FPGA power-up init; in the generic netlist x0 was a never-written 32-bit register (random at power-up)",
+    "Full diff: incumbents/femtorv_bb/patched/femtorv32_quark.patch"
+   ]
+  },
+  "uart_tx": {
+   "case": "uart_burst",
+   "clocks_per_bit": 3,
+   "clocks_per_byte_sustained": 72,
+   "program_words": 23,
+   "program_bits": 736,
+   "verified": true,
+   "bytes_sent": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "bytes_decoded": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ]
+  },
+  "spi_mode0": {
+   "case": "spi_loop2",
+   "clocks_per_bit": 27.571,
+   "clocks_per_bit_min": 25,
+   "clocks_per_bit_max": 31,
+   "clocks_per_byte_sustained": 240,
+   "program_words": 26,
+   "program_bits": 832,
+   "verified": true,
+   "mosi_at_slave": [
+    "0x41",
+    "0x55",
+    "0xA5",
+    "0x00",
+    "0xFF",
+    "0x5A",
+    "0x3C",
+    "0x81"
+   ],
+   "miso_at_host": [
+    "0x96",
+    "0x0F",
+    "0xF0",
+    "0x33",
+    "0xCC",
+    "0x01",
+    "0x80",
+    "0x7E"
+   ]
+  },
+  "alternatives": [
+   {
+    "case": "uart_pairs",
+    "verified": true,
+    "clocks_per_bit": 8,
+    "clocks_per_byte_sustained": 90,
+    "program_words": 27,
+    "prog_mem_words_needed": 32
+   },
+   {
+    "case": "spi_unrolled",
+    "verified": true,
+    "clocks_per_bit": 25,
+    "clocks_per_byte_sustained": 213,
+    "program_words": 71,
+    "prog_mem_words_needed": 72
+   }
+  ],
+  "notes": "Firmware hand-assembled (incumbents/common/rvasm.py), loaded through the host port, listings in incumbents/programs/rv32i_<case>.lst. UART: poll mailbox, precompute d1..d7 with seven 1-bit srli, then ten back-to-back identical sw (start, d0..d7, stop) so the bit period is exactly one store; stop bit is stretched by the next poll/precompute (clocks_per_byte includes it). Alternative sw/srli pairs: see alternatives. SPI: 8 instructions/bit (andi MOSI, sw SCK low, ori, sw SCK high, lw GPIO_IN, andi, add, or), loop unrolled 2x with a counter to fit the 32-word memory; the fully unrolled version needs 71 words (see alternatives, simulated with PROG_WORDS=72). Pins: UART TX=gpio_out[0]; SPI SCK=gpio_out[0], MOSI=gpio_out[7], MISO=gpio_in[0]. Other GPIO_OUT bits are don't-care during UART TX (whole-register writes).",
+  "generic_cells": 7746,
+  "generic_flops": 2194,
+  "generic_cells_hier": 6984,
+  "gate_level_sim": {
+   "uart_burst": true,
+   "spi_loop2": true
+  },
+  "yosys_cmd": "incumbents/yosys.sh -p \"read_verilog -sv incumbents/femtorv_bb/femtorv_cfg.v incumbents/femtorv_bb/patched/femtorv32_quark.v incumbents/femtorv_bb/top.v; synth -flatten -top inc_femtorv_bb; stat\""
+ }
+]

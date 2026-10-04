@@ -1,0 +1,17 @@
+{
+  "template_url": "https://github.com/TinyTapeout/ttihp-verilog-template",
+  "branch": "cmos5l",
+  "revision": "b86a2a781484bcab7ba522dc5de540086695a430",
+  "status": "passed",
+  "test_cases": 1,
+  "simulated_time_ns": 100000,
+  "simulator": "Icarus Verilog 13.0",
+  "cocotb": "2.0.1",
+  "python": "3.9.6",
+  "host": "macOS-26.4-arm64-arm-64bit",
+  "cpu": "Apple M4",
+  "logical_cpus": 10,
+  "ram_bytes": 17179869184,
+  "command": "PATH=\"$PWD/.venv/bin:$PWD/.tools/icarus-verilog/13.0/bin:$PATH\" make -C test",
+  "build_and_simulation_timing": "not separately instrumented in unmodified baseline; see log"
+}

@@ -1,0 +1,13 @@
+# arena recipe (identical for every design)
+read_liberty -lib /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+read_verilog -sv  /Users/mohammedbala/Documents/chipwheel/incumbents/pio_sm1/patched/pio.v /Users/mohammedbala/Documents/chipwheel/incumbents/pio_sm1/patched/machine.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/decoder.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/divider.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/pc.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/scratch.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/fifo.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/isr.v /Users/mohammedbala/Documents/chipwheel/incumbents/upstream/fpga_pio/src/osr.v /Users/mohammedbala/Documents/chipwheel/incumbents/pio_sm1/top.v
+hierarchy -check -top inc_pio_sm1
+
+synth -flatten -top inc_pio_sm1
+dfflibmap -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+abc -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+opt_clean -purge
+check -assert
+tee -o /Users/mohammedbala/Documents/chipwheel/results/arena/INC_pio_sm1/stat.json stat -json -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+write_json /Users/mohammedbala/Documents/chipwheel/results/arena/INC_pio_sm1/netlist.json
+write_verilog -noattr /Users/mohammedbala/Documents/chipwheel/results/arena/INC_pio_sm1/netlist.v

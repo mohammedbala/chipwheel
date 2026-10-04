@@ -1,0 +1,19 @@
+# spi_2cpb_negative: PIO, 18 words; GRPS=0x28100400 PEND=0x00011000 SHIFT=0x00000000 DIV=0x00000100 IMM=0xE083
+00: 80a0  pull block side 0
+01: 6001  out pins, 1 side 0
+02: 5001  in pins, 1 side 1
+03: 6001  out pins, 1 side 0
+04: 5001  in pins, 1 side 1
+05: 6001  out pins, 1 side 0
+06: 5001  in pins, 1 side 1
+07: 6001  out pins, 1 side 0
+08: 5001  in pins, 1 side 1
+09: 6001  out pins, 1 side 0
+10: 5001  in pins, 1 side 1
+11: 6001  out pins, 1 side 0
+12: 5001  in pins, 1 side 1
+13: 6001  out pins, 1 side 0
+14: 5001  in pins, 1 side 1
+15: 6001  out pins, 1 side 0
+16: 5001  in pins, 1 side 1
+17: 8020  push block side 0

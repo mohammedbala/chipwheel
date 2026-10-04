@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "seed": 20261003,
+  "stage_budgets": {
+    "calibration": 100000,
+    "screening": 400000,
+    "stress": 2000000,
+    "holdout": 7500000
+  },
+  "kind": "ten-million",
+  "input_hashes": {
+    "src/project.v": "fa5ee7e7005e764dd658916f07065339fe05d089ff615dd552a46cdd6cb9f15c",
+    "src/config.json": "4a175aa98951284800bef96cf3441f89f622fa6c3512a68a000257f1dc27ecd4",
+    "info.yaml": "6c5dd957c6bf6082ad252e48bf08200b6f166f6b0d84f1d109c4296427abfde7",
+    "docs/spec.md": "a3e5a23fd15c67bd25a797561ad280130206eb5babeaa97e9106acc8cf4dce2e",
+    "test/tb.v": "10a94a95ce914b93e59716faddf2cfe27967b93d76f8ce6b9a0378c336577f6f",
+    "test/test.py": "5d3222f223496b84a6f87d60ce6a70a08e7944edefc1147d192c7371bb3166a8",
+    "test/checker.py": "dbe31bcd66f343d972596e70450d11b523a6bc38eda7486a82c2d9b1710147b5",
+    "test/campaign_cases.py": "4997700f16b0cfaa91937c1d46cfe5151e32ab818832c4a65e7fdd973b4cc34c",
+    "test/campaign_worker.py": "8e8b86c7caec3d8a3ad1851df36c77711879c68632615354db3f520ede9a3cbe",
+    "programs/encode.py": "dbe7f837d348df2fbb13f0be344c63ec8cce8b0e33e7b1b3205a0b65cd4af96c",
+    "scripts/campaign.py": "05772e4eb57186ca30bc06e9c2a4ffc4c3b0ef5fa798ffbb18aadc4a664427e3",
+    "scripts/campaign_designs.py": "0d754152b64d3b8c45e30f0a6b00bdd4d4110c3cd624f6c727baaec381a979b8",
+    "scripts/campaign_hardware.py": "681e83669241c93546df2d52041f454f82e5e33aeb7c2ccc4f9d0e0eaa10ce0f",
+    ".tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib": "34163f3e7de9f854afac57332ba06f1739b78e7ac35660a8a5ddd39c570124ad",
+    "docs/campaign.md": "0c721a2aa8aa930720b51bbdadce9ff144bec28217b428eddbeb31f35cc22f07"
+  },
+  "tools": {
+    "iverilog": "Icarus Verilog version 13.0 (stable) (v13_0)",
+    "cocotb_python": "2.0.1 / 3.9.6",
+    "yosys_librelane": "0.55.0.0.post944 3.1.0.dev3"
+  },
+  "clock_period_ns": 100,
+  "tiles": "6x4",
+  "batch_limit": 10000,
+  "workers": 1,
+  "pdk_revision": "2bbec755dc67ca3db0261c3d6163e15735d66710",
+  "support_revision": "d66cf179e7bc4d296362ab7e2e3b344dc3c4f665",
+  "action_revision": "3412659307918422f3f0727917cf9b499aaca588",
+  "source_revision": "b86a2a781484bcab7ba522dc5de540086695a430",
+  "id": "cw10m-bca8638a5d3a7552",
+  "revision": "bca8638a5d3a755299e0aaf38e6e850f516e01579fb67e20f93f000338efd64c",
+  "created": 1791070867.469342,
+  "candidates": {
+    "A": {
+      "label": "Baseline",
+      "words": 32,
+      "fused": false,
+      "id": "A",
+      "rtl_sha256": "fa5ee7e7005e764dd658916f07065339fe05d089ff615dd552a46cdd6cb9f15c",
+      "uart_words": 9,
+      "load_clocks": 18
+    },
+    "B": {
+      "label": "Smaller memory",
+      "words": 16,
+      "fused": false,
+      "id": "B",
+      "rtl_sha256": "03878304a1e9f6afbd918608bae9c461d300922e851e9436b60aa98adbfc73f8",
+      "uart_words": 9,
+      "load_clocks": 18
+    },
+    "C": {
+      "label": "Fused instruction",
+      "words": 32,
+      "fused": true,
+      "id": "C",
+      "rtl_sha256": "893ccc07ae465ae754281fafc0df49686a9d77c9d856eca5e30226594ab4cadc",
+      "uart_words": 8,
+      "load_clocks": 16
+    },
+    "D": {
+      "label": "Combined",
+      "words": 16,
+      "fused": true,
+      "id": "D",
+      "rtl_sha256": "f0f453026c3c48c4928a1e1959643da3f5cbe9ef15dfdb8a47c6544531795900",
+      "uart_words": 8,
+      "load_clocks": 16
+    }
+  }
+}

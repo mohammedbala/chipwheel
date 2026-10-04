@@ -1,0 +1,35 @@
+{
+  "completed_transactions": 2000,
+  "checked_transactions": 2000,
+  "instruction_cases": 0,
+  "failures": 0,
+  "timeouts": 0,
+  "simulated_clock_cycles": 530943,
+  "simulation_wall_seconds": 19.227497791999998,
+  "checked_transactions_per_second": 104.01769495103736,
+  "status": "passed",
+  "source_content_sha256": "2a3057073be0e6a8ba3e356d04a44b0ca73c33ebd0680473e2e5542db82b1810",
+  "rtl_sha256": "fa5ee7e7005e764dd658916f07065339fe05d089ff615dd552a46cdd6cb9f15c",
+  "source_revision": "b86a2a781484bcab7ba522dc5de540086695a430",
+  "revision_note": "worktree content hash identifies local changes",
+  "mode": "campaign",
+  "seed": 20261003,
+  "requested_random_transactions": 2000,
+  "build_wall_seconds": 0.00035316700000000145,
+  "simulation_process_wall_seconds": 19.348354833000002,
+  "peak_child_rss_bytes": 41402368,
+  "peak_rss_note": "macOS bytes; process-family maximum including compile, not simulator-only",
+  "configuration": {
+    "clock_hz": 10000000,
+    "words": 32,
+    "word_bits": 16,
+    "waves": false
+  },
+  "tools": {
+    "python": "3.9.6",
+    "cocotb": "2.0.1",
+    "iverilog": "Icarus Verilog version 13.0 (stable) (v13_0)"
+  },
+  "host": "macOS-26.4-arm64-arm-64bit",
+  "runner_error": null
+}

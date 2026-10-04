@@ -1,0 +1,82 @@
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:94   in _embed_init_python              Using Python 3.9.13 interpreter at /Users/mohammedbala/Documents/chipwheel/.venv/bin/python
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+     0.00ns INFO     cocotb                             Running on Icarus Verilog version 13.0 (stable)
+     0.00ns INFO     cocotb                             Seeding Python random module with supplied seed 20261003
+     0.00ns INFO     cocotb                             Initialized cocotb v2.0.1 from /Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb
+     0.00ns INFO     cocotb                             Running tests
+     0.00ns INFO     cocotb.regression                  running test.chipwheel_regression (1/1)
+  9500.00ns WARNING  .._regression.chipwheel_regression busy/completion at edge 72
+                                                        assert False == True
+                                                         +  where False = bool((1 & 2))
+                                                        Traceback (most recent call last):
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/regression.py", line 378, in func
+                                                            await with_timeout(f(*args, **kwargs), timeout, self._test.timeout_unit)
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/_extended_awaitables.py", line 411, in with_timeout
+                                                            res = await First(timeout_timer, trigger)
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/_extended_awaitables.py", line 203, in _wait
+                                                            return completed[0].result()
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/task.py", line 450, in result
+                                                            return cast("Outcome[ResultType]", self._outcome).get()
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/_outcomes.py", line 51, in get
+                                                            raise self.error
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/_extended_awaitables.py", line 73, in _wait_callback
+                                                            return await trigger
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/task.py", line 493, in __await__
+                                                            return self.result()
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/task.py", line 450, in result
+                                                            return cast("Outcome[ResultType]", self._outcome).get()
+                                                          File "/Users/mohammedbala/Documents/chipwheel/.venv/lib/python3.9/site-packages/cocotb/_outcomes.py", line 51, in get
+                                                            raise self.error
+                                                          File "/Users/mohammedbala/Documents/chipwheel/test/test.py", line 190, in chipwheel_regression
+                                                            await b.frame(65, 8, demo=True)
+                                                          File "/Users/mohammedbala/Documents/chipwheel/test/test.py", line 80, in frame
+                                                            assert bool(actual & 2) == expected_busy, f'busy/completion at edge {edge}'
+                                                        AssertionError: busy/completion at edge 72
+                                                        assert False == True
+                                                         +  where False = bool((1 & 2))
+  9500.00ns WARNING  cocotb.regression                  test.chipwheel_regression failed
+  9500.00ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test.chipwheel_regression      FAIL        9500.00           0.01    1362811.68  **
+                                                        **************************************************************************************
+                                                        ** TESTS=1 PASS=0 FAIL=1 SKIP=0               9500.00           0.01     813978.75  **
+                                                        **************************************************************************************
+FST info: dumpfile tb.fst opened for output.
+{
+  "completed_transactions": 0,
+  "checked_transactions": 0,
+  "simulator_python": "3.9.6 (default, Nov 11 2024, 03:15:38) \n[Clang 16.0.0 (clang-1600.0.26.6)]",
+  "instruction_cases": 0,
+  "failures": 1,
+  "timeouts": 0,
+  "simulated_clock_cycles": 95,
+  "simulation_wall_seconds": 0.004950250000000017,
+  "checked_transactions_per_second": 0.0,
+  "status": "failed",
+  "source_content_sha256": "302ca00dbe4745c2a5ec543f7f6dc7628c054b0f0cf435c5a19142f99ed33772",
+  "rtl_sha256": "1044a9112f55ffe3f1bbfeeebf1293ae3961bec444a0255b0804d0e6d54ec1c5",
+  "source_revision": "b86a2a781484bcab7ba522dc5de540086695a430",
+  "revision_note": "worktree content hash identifies local changes",
+  "mode": "mutation",
+  "seed": 20261003,
+  "requested_random_transactions": 0,
+  "build_wall_seconds": 0.011189375000000001,
+  "simulation_process_wall_seconds": 0.2258485,
+  "peak_child_rss_bytes": 42303488,
+  "peak_rss_note": "macOS bytes; process-family maximum including compile, not simulator-only",
+  "cell_model_sha256": null,
+  "configuration": {
+    "clock_hz": 10000000,
+    "words": 32,
+    "word_bits": 16,
+    "waves": true
+  },
+  "tools": {
+    "python": "3.9.6",
+    "cocotb": "2.0.1",
+    "iverilog": "Icarus Verilog version 13.0 (stable) (v13_0)"
+  },
+  "host": "macOS-26.4-arm64-arm-64bit",
+  "runner_error": null
+}

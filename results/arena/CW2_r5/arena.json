@@ -1,0 +1,270 @@
+{
+ "name": "CW2_r5",
+ "top": "tt_um_chipwheel2",
+ "sources": [
+  "v2/src/chipwheel2.v"
+ ],
+ "defines": [],
+ "library": "sg13cmos5l_stdcell_typ_1p20V_25C.lib",
+ "cells": 895,
+ "area_um2": 13772.241,
+ "by_type": {
+  "sg13cmos5l_a21o_1": 17,
+  "sg13cmos5l_a21oi_1": 79,
+  "sg13cmos5l_a221oi_1": 5,
+  "sg13cmos5l_a22oi_1": 71,
+  "sg13cmos5l_and2_1": 35,
+  "sg13cmos5l_and3_1": 10,
+  "sg13cmos5l_and4_1": 8,
+  "sg13cmos5l_dfrbpq_1": 68,
+  "sg13cmos5l_dlhq_1": 104,
+  "sg13cmos5l_inv_1": 24,
+  "sg13cmos5l_lgcp_1": 13,
+  "sg13cmos5l_mux2_1": 40,
+  "sg13cmos5l_nand2_1": 104,
+  "sg13cmos5l_nand2b_1": 17,
+  "sg13cmos5l_nand3_1": 15,
+  "sg13cmos5l_nand3b_1": 7,
+  "sg13cmos5l_nand4_1": 9,
+  "sg13cmos5l_nor2_1": 66,
+  "sg13cmos5l_nor2b_1": 26,
+  "sg13cmos5l_nor3_1": 30,
+  "sg13cmos5l_nor4_1": 3,
+  "sg13cmos5l_o21ai_1": 106,
+  "sg13cmos5l_or2_1": 13,
+  "sg13cmos5l_or3_1": 4,
+  "sg13cmos5l_or4_1": 3,
+  "sg13cmos5l_xnor2_1": 10,
+  "sg13cmos5l_xor2_1": 8
+ },
+ "synth_seconds": 1.178,
+ "flops": 68,
+ "latches": 104,
+ "icgs": 13,
+ "sequential_area_um2": 6892.9056,
+ "combinational_area_um2": 6879.3354,
+ "timing": {
+  "model": "pre-layout NLDM, typical 1.20V 25C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$4930/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 3.3868,
+   "setup_ns": 0.0966,
+   "required_period_ns": 3.4834,
+   "path": [
+    {
+     "at": 0.3259,
+     "node": "launch $auto$ff.cc:266:slice$5256 CLK"
+    },
+    {
+     "at": 0.578,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7944(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 0.8943,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7954(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 0.9995,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8004(sg13cmos5l_a22oi_1).B1"
+    },
+    {
+     "at": 1.1191,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8006(sg13cmos5l_and3_1).B"
+    },
+    {
+     "at": 1.5931,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8013(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 1.8951,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8037(sg13cmos5l_nor3_1).A"
+    },
+    {
+     "at": 2.0162,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8038(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 2.0728,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8039(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 2.1523,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8057(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 2.3178,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8071(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 2.6238,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8081(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 2.7129,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8393(sg13cmos5l_o21ai_1).B1"
+    },
+    {
+     "at": 3.129,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8495(sg13cmos5l_nor2_1).A"
+    },
+    {
+     "at": 3.3868,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8502(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$5243/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 0.0,
+   "setup_ns": 0.1267,
+   "required_period_ns": 0.1267,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in uio_in[4]"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "uio_oe[0]",
+   "cell": "port",
+   "arrival_ns": 0.6335,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.6335,
+   "path": [
+    {
+     "at": 0.3225,
+     "node": "launch $auto$ff.cc:266:slice$5254 CLK"
+    },
+    {
+     "at": 0.51,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7921(sg13cmos5l_inv_1).A"
+    },
+    {
+     "at": 0.6335,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8380(sg13cmos5l_a21oi_1).B1"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 287.08,
+  "slack_ns_reg2reg": 16.5166,
+  "endpoints": 201,
+  "repair_buffers": 98,
+  "repair_buffer_area_um2": 1422.49
+ },
+ "timing_slow": {
+  "model": "pre-layout NLDM, slow 1.08V 125C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$4930/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 5.324,
+   "setup_ns": 0.1654,
+   "required_period_ns": 5.4894,
+   "path": [
+    {
+     "at": 0.4839,
+     "node": "launch $auto$ff.cc:266:slice$5256 CLK"
+    },
+    {
+     "at": 0.8916,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7944(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 1.401,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7954(sg13cmos5l_and3_1).C"
+    },
+    {
+     "at": 1.5766,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8004(sg13cmos5l_a22oi_1).B1"
+    },
+    {
+     "at": 1.7688,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8006(sg13cmos5l_and3_1).B"
+    },
+    {
+     "at": 2.4927,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8013(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 2.9795,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8037(sg13cmos5l_nor3_1).A"
+    },
+    {
+     "at": 3.1805,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8038(sg13cmos5l_nand2_1).B"
+    },
+    {
+     "at": 3.2728,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8039(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 3.3972,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8057(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 3.6637,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8071(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 4.1284,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8081(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 4.2721,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8393(sg13cmos5l_o21ai_1).B1"
+    },
+    {
+     "at": 4.9006,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8495(sg13cmos5l_nor2_1).A"
+    },
+    {
+     "at": 5.324,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8502(sg13cmos5l_mux2_1).S"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$5243/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 0.0,
+   "setup_ns": 0.2076,
+   "required_period_ns": 0.2076,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in uio_in[4]"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "uio_oe[0]",
+   "cell": "port",
+   "arrival_ns": 0.9771,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.9771,
+   "path": [
+    {
+     "at": 0.4797,
+     "node": "launch $auto$ff.cc:266:slice$5254 CLK"
+    },
+    {
+     "at": 0.7789,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$7921(sg13cmos5l_inv_1).A"
+    },
+    {
+     "at": 0.9771,
+     "node": "$abc$7906$auto$blifparse.cc:396:parse_blif$8380(sg13cmos5l_a21oi_1).B1"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 182.17,
+  "slack_ns_reg2reg": 14.5106,
+  "endpoints": 201,
+  "repair_buffers": 98,
+  "repair_buffer_area_um2": 1422.49
+ }
+}
