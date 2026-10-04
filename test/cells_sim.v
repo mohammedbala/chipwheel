@@ -13,4 +13,8 @@ endmodule
 module sg13cmos5l_and2_1 (input wire A, input wire B, output wire X);
     assign X = A & B;
 endmodule
+
+module sg13cmos5l_dlygate4sd3_1 (input wire A, output wire X);
+    assign X = A;
+endmodule
 `endif

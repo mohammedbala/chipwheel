@@ -224,13 +224,16 @@ endmodule
 // Library cells are instantiated directly so synthesis cannot restructure the
 // clock gate. test/cells_sim.v models them for RTL simulation.
 
-// Clock gate: enable captured by a transparent-low latch, gclk = clk & en_l.
-// en_l only changes while clk is low, so gclk cannot glitch. Built from
-// discrete cells because the PDK excludes sg13cmos5l_lgcp_1 from the flow.
+// Clock gate: enable captured by a transparent-low latch, gclk = clk & en_d.
+// en_d only changes while clk is low, so gclk cannot glitch. Built from
+// discrete cells because the PDK excludes sg13cmos5l_lgcp_1 from the flow. The
+// delay cell keeps en_d stable until the AND gate has seen clk fall, covering
+// clock skew between the latch and the gate (fast-corner gating hold check).
 module chipwheel_icg (input wire clk, input wire en, output wire gclk);
-    wire en_l;
+    wire en_l, en_d;
     sg13cmos5l_dllrq_1 hold (.GATE_N(clk), .D(en), .RESET_B(1'b1), .Q(en_l));
-    sg13cmos5l_and2_1 gate (.A(clk), .B(en_l), .X(gclk));
+    sg13cmos5l_dlygate4sd3_1 skew (.A(en_l), .X(en_d));
+    sg13cmos5l_and2_1 gate (.A(clk), .B(en_d), .X(gclk));
 endmodule
 
 // 8-bit transparent-high latch word.
