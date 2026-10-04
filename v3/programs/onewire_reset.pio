@@ -1,0 +1,21 @@
+; 1-Wire reset and presence detect on an open-drain pin G0 with a timeout.
+; One tick = 1 us (DIV). Pushes 1 if a device answered, 0 if the wait timed out.
+.program onewire_reset
+    set pins, 0             ; pull the bus low
+    set x, 15
+low:
+    jmp x-- low [31]        ; 16 x 32 = 512 us low
+    set pins, 1             ; release
+    set x, 31
+    wait 0 pin 0 timeout    ; presence pulse within 31 us?
+    jmp flag none
+    set y, 1
+    jmp report
+none:
+    set y, 0
+report:
+    mov isr, y
+    push
+    wait 1 pin 0            ; let the bus recover
+end:
+    jmp end

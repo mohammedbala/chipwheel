@@ -1,0 +1,7 @@
+; Quad-lane output: 4 data pins (G0-G3), clock on G4, MSB nibble first.
+.program qspi_out
+.side_set 1
+.wrap_target
+    out pins, 4 side 0
+    nop         side 1
+.wrap

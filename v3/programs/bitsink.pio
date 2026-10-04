@@ -1,0 +1,4 @@
+.program bitsink
+.wrap_target
+    in pins, 1
+.wrap

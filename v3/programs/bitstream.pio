@@ -1,0 +1,5 @@
+; Shift every bit from the host through the line unit (TX) or into the host (RX).
+.program bitstream
+.wrap_target
+    out pins, 1
+.wrap

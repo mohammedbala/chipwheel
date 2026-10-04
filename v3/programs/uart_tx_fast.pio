@@ -1,0 +1,15 @@
+; UART TX at one bit per cycle: 10 cycles per 8N1 frame
+.program uart_tx_fast
+.side_set 1 opt
+.wrap_target
+    pull       side 1      ; stop bit / idle while waiting for data
+    nop        side 0      ; start bit
+    out pins, 1
+    out pins, 1
+    out pins, 1
+    out pins, 1
+    out pins, 1
+    out pins, 1
+    out pins, 1
+    out pins, 1
+.wrap

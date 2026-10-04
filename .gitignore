@@ -27,3 +27,6 @@ test/output/
 .DS_Store
 results/arena/INC_*/netlist.v
 results/bench-server.log
+v3/build/
+v3/test/__pycache__/
+v3/model/__pycache__/

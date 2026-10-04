@@ -1,0 +1,6 @@
+; SPI slave receive: the state machine is stepped by rising edges of SCK
+; (CLKSRC=1), so each instruction samples MOSI exactly once per bit.
+.program spi_slave_rx
+.wrap_target
+    in pins, 1
+.wrap

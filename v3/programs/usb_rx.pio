@@ -1,0 +1,27 @@
+; USB-style packet receive through the line unit (NRZI decode, destuffing, CRC16).
+; LSB first (in right), FIFO16. x = bytes after SYNC - 1 (set by EXEC).
+; Pushes each byte (entry = byte<<8) and finally the CRC register.
+.program usb_rx
+hunt:
+    mov isr, null
+    in pins, 1
+    mov y, isr
+    jmp y-- hunt            ; idle J decodes as 1s: keep hunting
+zeros:
+    mov isr, null
+    in pins, 1
+    mov y, isr
+    jmp !y zeros            ; inside SYNC
+    mov crc, !null          ; SYNC complete
+byte:
+    mov isr, null
+    set y, 7
+bit:
+    in pins, 1
+    jmp y-- bit
+    push
+    jmp x-- byte
+    mov isr, crc
+    push
+end:
+    jmp end

@@ -1,0 +1,31 @@
+; USB-style packet transmit through the line unit (NRZI, 6-ones stuffing, CRC16).
+; LSB first, FIFO 8-bit, no autopull. x = data bytes - 1 (set by EXEC).
+; D+ = G0 (OUT/SET base), D- = G1 (DIFF / SET_COUNT 2). Host sends SYNC, PID, data.
+.program usb_tx
+    set y, 1
+hdr:
+    pull
+hbit:
+    out pins, 1
+    jmp !osre hbit
+    jmp y-- hdr
+    mov crc, !null          ; CRC16 covers the data only
+dat:
+    pull
+dbit:
+    out pins, 1
+    jmp !osre dbit
+    jmp x-- dat
+    mov osr, !crc           ; complemented CRC, LSB first
+c1:
+    out pins, 1
+    jmp !osre c1
+    mov osr, osr            ; restart the count for the high byte
+c2:
+    out pins, 1
+    jmp !osre c2
+    wait 1 line             ; last bit (and any stuff bit) has left
+    set pins, 0 [7]         ; SE0 for two bit times
+    set pins, 1 [3]         ; J
+end:
+    jmp end
