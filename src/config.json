@@ -31,9 +31,10 @@
   "PL_RESIZER_SETUP_SLACK_MARGIN": 0,
   "PL_RESIZER_SETUP_REPAIR_TNS_PCT": 0,
 
-  "//": "v3 debugging: detailed routing stalls at 3 Metal2 violations; save DRC reports",
-  "DRT_SAVE_DRC_REPORT_ITERS": 4,
-  "DRT_OPT_ITERS": 24,
+  "//": "v3: the last detailed-routing violations were on the root nets of the 50 gated",
+  "//": "clocks, which CTS gives a 2x-spacing rule; plain spacing is enough at 50 MHz.",
+  "CTS_APPLY_NDR": "none",
+  "DRT_SAVE_DRC_REPORT_ITERS": 8,
 
   "//": "RUN_LINTER, LINTER_INCLUDE_PDK_MODELS - Disabling the linter is not recommended!",
   "RUN_LINTER": 1,
