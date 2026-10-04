@@ -642,53 +642,66 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   wire f;
   wire \g_word[0].gclk ;
   wire \g_word[0].icg.en ;
+  wire \g_word[0].icg.en_d ;
   wire \g_word[0].icg.en_l ;
   wire [7:0] \g_word[0].word.q ;
   wire \g_word[10].gclk ;
   wire \g_word[10].icg.en ;
+  wire \g_word[10].icg.en_d ;
   wire \g_word[10].icg.en_l ;
   wire \g_word[11].gclk ;
   wire \g_word[11].icg.en ;
+  wire \g_word[11].icg.en_d ;
   wire \g_word[11].icg.en_l ;
   wire [7:0] \g_word[11].word.q ;
   wire \g_word[12].gclk ;
   wire \g_word[12].icg.en ;
+  wire \g_word[12].icg.en_d ;
   wire \g_word[12].icg.en_l ;
   wire [7:0] \g_word[12].word.q ;
   wire \g_word[1].gclk ;
   wire \g_word[1].icg.en ;
+  wire \g_word[1].icg.en_d ;
   wire \g_word[1].icg.en_l ;
   wire [7:0] \g_word[1].word.q ;
   wire \g_word[2].gclk ;
   wire \g_word[2].icg.en ;
+  wire \g_word[2].icg.en_d ;
   wire \g_word[2].icg.en_l ;
   wire [7:0] \g_word[2].word.q ;
   wire \g_word[3].gclk ;
   wire \g_word[3].icg.en ;
+  wire \g_word[3].icg.en_d ;
   wire \g_word[3].icg.en_l ;
   wire [7:0] \g_word[3].word.q ;
   wire \g_word[4].gclk ;
   wire \g_word[4].icg.en ;
+  wire \g_word[4].icg.en_d ;
   wire \g_word[4].icg.en_l ;
   wire [7:0] \g_word[4].word.q ;
   wire \g_word[5].gclk ;
   wire \g_word[5].icg.en ;
+  wire \g_word[5].icg.en_d ;
   wire \g_word[5].icg.en_l ;
   wire [7:0] \g_word[5].word.q ;
   wire \g_word[6].gclk ;
   wire \g_word[6].icg.en ;
+  wire \g_word[6].icg.en_d ;
   wire \g_word[6].icg.en_l ;
   wire [7:0] \g_word[6].word.q ;
   wire \g_word[7].gclk ;
   wire \g_word[7].icg.en ;
+  wire \g_word[7].icg.en_d ;
   wire \g_word[7].icg.en_l ;
   wire [7:0] \g_word[7].word.q ;
   wire \g_word[8].gclk ;
   wire \g_word[8].icg.en ;
+  wire \g_word[8].icg.en_d ;
   wire \g_word[8].icg.en_l ;
   wire [7:0] \g_word[8].word.q ;
   wire \g_word[9].gclk ;
   wire \g_word[9].icg.en ;
+  wire \g_word[9].icg.en_d ;
   wire \g_word[9].icg.en_l ;
   wire [7:0] \g_word[9].word.q ;
   wire insel;
@@ -5010,7 +5023,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[0].icg.gate  (
     .A(clk),
-    .B(\g_word[0].icg.en_l ),
+    .B(\g_word[0].icg.en_d ),
     .X(\g_word[0].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[0].icg.hold  (
@@ -5018,6 +5031,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[0].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[0].icg.skew  (
+    .A(\g_word[0].icg.en_l ),
+    .X(\g_word[0].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[0].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5061,7 +5078,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[10].icg.gate  (
     .A(clk),
-    .B(\g_word[10].icg.en_l ),
+    .B(\g_word[10].icg.en_d ),
     .X(\g_word[10].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[10].icg.hold  (
@@ -5069,6 +5086,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[10].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[10].icg.skew  (
+    .A(\g_word[10].icg.en_l ),
+    .X(\g_word[10].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[10].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5112,7 +5133,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[11].icg.gate  (
     .A(clk),
-    .B(\g_word[11].icg.en_l ),
+    .B(\g_word[11].icg.en_d ),
     .X(\g_word[11].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[11].icg.hold  (
@@ -5120,6 +5141,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[11].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[11].icg.skew  (
+    .A(\g_word[11].icg.en_l ),
+    .X(\g_word[11].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[11].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5163,7 +5188,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[12].icg.gate  (
     .A(clk),
-    .B(\g_word[12].icg.en_l ),
+    .B(\g_word[12].icg.en_d ),
     .X(\g_word[12].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[12].icg.hold  (
@@ -5171,6 +5196,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[12].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[12].icg.skew  (
+    .A(\g_word[12].icg.en_l ),
+    .X(\g_word[12].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[12].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5214,7 +5243,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[1].icg.gate  (
     .A(clk),
-    .B(\g_word[1].icg.en_l ),
+    .B(\g_word[1].icg.en_d ),
     .X(\g_word[1].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[1].icg.hold  (
@@ -5222,6 +5251,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[1].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[1].icg.skew  (
+    .A(\g_word[1].icg.en_l ),
+    .X(\g_word[1].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[1].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5265,7 +5298,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[2].icg.gate  (
     .A(clk),
-    .B(\g_word[2].icg.en_l ),
+    .B(\g_word[2].icg.en_d ),
     .X(\g_word[2].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[2].icg.hold  (
@@ -5273,6 +5306,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[2].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[2].icg.skew  (
+    .A(\g_word[2].icg.en_l ),
+    .X(\g_word[2].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[2].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5316,7 +5353,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[3].icg.gate  (
     .A(clk),
-    .B(\g_word[3].icg.en_l ),
+    .B(\g_word[3].icg.en_d ),
     .X(\g_word[3].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[3].icg.hold  (
@@ -5324,6 +5361,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[3].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[3].icg.skew  (
+    .A(\g_word[3].icg.en_l ),
+    .X(\g_word[3].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[3].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5367,7 +5408,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[4].icg.gate  (
     .A(clk),
-    .B(\g_word[4].icg.en_l ),
+    .B(\g_word[4].icg.en_d ),
     .X(\g_word[4].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[4].icg.hold  (
@@ -5375,6 +5416,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[4].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[4].icg.skew  (
+    .A(\g_word[4].icg.en_l ),
+    .X(\g_word[4].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[4].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5418,7 +5463,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[5].icg.gate  (
     .A(clk),
-    .B(\g_word[5].icg.en_l ),
+    .B(\g_word[5].icg.en_d ),
     .X(\g_word[5].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[5].icg.hold  (
@@ -5426,6 +5471,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[5].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[5].icg.skew  (
+    .A(\g_word[5].icg.en_l ),
+    .X(\g_word[5].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[5].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5469,7 +5518,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[6].icg.gate  (
     .A(clk),
-    .B(\g_word[6].icg.en_l ),
+    .B(\g_word[6].icg.en_d ),
     .X(\g_word[6].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[6].icg.hold  (
@@ -5477,6 +5526,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[6].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[6].icg.skew  (
+    .A(\g_word[6].icg.en_l ),
+    .X(\g_word[6].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[6].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5520,7 +5573,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[7].icg.gate  (
     .A(clk),
-    .B(\g_word[7].icg.en_l ),
+    .B(\g_word[7].icg.en_d ),
     .X(\g_word[7].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[7].icg.hold  (
@@ -5528,6 +5581,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[7].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[7].icg.skew  (
+    .A(\g_word[7].icg.en_l ),
+    .X(\g_word[7].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[7].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5571,7 +5628,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[8].icg.gate  (
     .A(clk),
-    .B(\g_word[8].icg.en_l ),
+    .B(\g_word[8].icg.en_d ),
     .X(\g_word[8].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[8].icg.hold  (
@@ -5579,6 +5636,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[8].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[8].icg.skew  (
+    .A(\g_word[8].icg.en_l ),
+    .X(\g_word[8].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[8].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),
@@ -5622,7 +5683,7 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
   );
   sg13cmos5l_and2_1 \g_word[9].icg.gate  (
     .A(clk),
-    .B(\g_word[9].icg.en_l ),
+    .B(\g_word[9].icg.en_d ),
     .X(\g_word[9].gclk )
   );
   sg13cmos5l_dllrq_1 \g_word[9].icg.hold  (
@@ -5630,6 +5691,10 @@ module tt_um_chipwheel(ui_in, uo_out, uio_in, uio_out, uio_oe, ena, clk, rst_n);
     .GATE_N(clk),
     .Q(\g_word[9].icg.en_l ),
     .RESET_B(1'h1)
+  );
+  sg13cmos5l_dlygate4sd3_1 \g_word[9].icg.skew  (
+    .A(\g_word[9].icg.en_l ),
+    .X(\g_word[9].icg.en_d )
   );
   sg13cmos5l_dlhq_1 \g_word[9].word.g_bit[0].bit_latch  (
     .D(ui_in[0]),

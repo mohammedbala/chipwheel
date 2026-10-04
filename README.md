@@ -19,14 +19,18 @@ Same synthesis and timing flow for every design, equal clock (pre-layout):
 
 | Design | Cell area µm² | UART TX clk/byte | SPI clk/byte | v2 throughput per area |
 |---|---:|---:|---:|---:|
-| **Chipwheel v2** | **13,829** | **10** | **17** | — |
-| Chipwheel v1 (archived) | 46,940 | 33 | unsupported | 11.2x |
-| PIO-class engine, 1 state machine | 142,266 | 10 | 19 | 10.3x / 11.5x |
+| **Chipwheel v2** | **14,041** | **10** | **17** | — |
+| Chipwheel v1 (archived) | 46,940 | 33 | unsupported | 11.0x |
+| PIO-class engine, 1 state machine | 142,266 | 10 | 19 | 10.1x / 11.3x |
 | FemtoRV32 / QERV / SERV bit-banging | 176k–195k | 72–1,291 | 240–3,746 | 100x and more |
 
-Size is 10.3–14.1x smaller than the PIO clone and the CPUs (3.4x vs v1); speed
+Size is 10.1–13.9x smaller than the PIO clone and the CPUs (3.3x vs v1); speed
 per clock ties PIO at the 1-bit-per-clock UART limit. Full method, caveats and
 what is not 10x: [v2/docs/benchmark.md](v2/docs/benchmark.md).
+
+**Hardened** in the official Tiny Tapeout flow (GitHub Actions): one tile,
+0 DRC/LVS errors, precheck passed, setup slack 8.29 ns at 20 ns and hold
++0.105 ns in every corner. Details: [docs/hardening.md](docs/hardening.md).
 
 ## Test
 

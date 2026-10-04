@@ -5,14 +5,14 @@
   "v1_clock_mhz": 10,
   "v2_clock_mhz": 50,
   "speed_ratio": 16.5,
-  "density_ratio": 56.00574830461914
+  "density_ratio": 55.15901987546538
  },
  "rows": [
   {
    "design": "Chipwheel v2",
    "arena": "CW2_final",
-   "area_um2": 13829.0166,
-   "area_with_repair_bufs_um2": 15193.446600000001,
+   "area_um2": 14041.3014,
+   "area_with_repair_bufs_um2": 15405.7314,
    "flops": 70,
    "latches": 117,
    "fmax_mhz_prelayout": 277.37,
@@ -41,11 +41,11 @@
    "uart_program_bits": 144,
    "spi_program_bits": null,
    "note": "32x16 flop program, UART TX only",
-   "area_ratio": 3.3942877760375234,
-   "area_ratio_with_bufs": 3.2986914239722274,
+   "area_ratio": 3.3429709015433566,
+   "area_ratio_with_bufs": 3.253236779137925,
    "uart_speed_ratio": 3.3,
    "spi_speed_ratio": null,
-   "uart_density_ratio": 11.201149660923827,
+   "uart_density_ratio": 11.031803975093077,
    "spi_density_ratio": null
   },
   {
@@ -61,12 +61,12 @@
    "uart_program_bits": 160,
    "spi_program_bits": 304,
    "note": "",
-   "area_ratio": 10.287510899365035,
-   "area_ratio_with_bufs": 10.793825345725045,
+   "area_ratio": 10.13197815125598,
+   "area_ratio_with_bufs": 10.645090761481146,
    "uart_speed_ratio": 1.0,
    "spi_speed_ratio": 1.1176470588235294,
-   "uart_density_ratio": 10.287510899365035,
-   "spi_density_ratio": 11.497806299290334
+   "uart_density_ratio": 10.13197815125598,
+   "spi_density_ratio": 11.323975580815508
   },
   {
    "design": "FemtoRV32 bit-bang",
@@ -81,12 +81,12 @@
    "uart_program_bits": 736,
    "spi_program_bits": 832,
    "note": "",
-   "area_ratio": 14.129586958482642,
-   "area_ratio_with_bufs": 14.28704679818995,
+   "area_ratio": 13.915967404559806,
+   "area_ratio_with_bufs": 14.090177023338208,
    "uart_speed_ratio": 7.2,
    "spi_speed_ratio": 14.117647058823529,
-   "uart_density_ratio": 101.73302610107503,
-   "spi_density_ratio": 199.47652176681376
+   "uart_density_ratio": 100.1949653128306,
+   "spi_density_ratio": 196.46071629966784
   },
   {
    "design": "QERV bit-bang",
@@ -101,12 +101,12 @@
    "uart_program_bits": 736,
    "spi_program_bits": 832,
    "note": "",
-   "area_ratio": 12.85370387074378,
-   "area_ratio_with_bufs": 12.76079610534189,
+   "area_ratio": 12.659373881113329,
+   "area_ratio_with_bufs": 12.58495745291262,
    "uart_speed_ratio": 37.2,
    "spi_speed_ratio": 66.47058823529412,
-   "uart_density_ratio": 478.1577839916687,
-   "spi_density_ratio": 854.393257290616
+   "uart_density_ratio": 470.92870837741583,
+   "spi_density_ratio": 841.4760285681213
   },
   {
    "design": "SERV bit-bang",
@@ -121,12 +121,12 @@
    "uart_program_bits": 736,
    "spi_program_bits": 832,
    "note": "",
-   "area_ratio": 12.754230593663472,
-   "area_ratio_with_bufs": 12.611023136777932,
+   "area_ratio": 12.561404500582832,
+   "area_ratio_with_bufs": 12.437248295786853,
    "uart_speed_ratio": 129.1,
    "spi_speed_ratio": 220.35294117647058,
-   "uart_density_ratio": 1646.5711696419542,
-   "spi_density_ratio": 2810.4322237566685
+   "uart_density_ratio": 1621.6773210252436,
+   "spi_density_ratio": 2767.9424270107816
   },
   {
    "design": "PIO-class, 4 SMs (fpga_pio)",
@@ -141,12 +141,12 @@
    "uart_program_bits": 160,
    "spi_program_bits": 304,
    "note": "",
-   "area_ratio": 33.150754277061175,
-   "area_ratio_with_bufs": 35.13869072998881,
+   "area_ratio": 32.64956132912295,
+   "area_ratio_with_bufs": 34.65449366461108,
    "uart_speed_ratio": 1.0,
    "spi_speed_ratio": 1.1176470588235294,
-   "uart_density_ratio": 33.150754277061175,
-   "spi_density_ratio": 37.05084301553896
+   "uart_density_ratio": 32.64956132912295,
+   "spi_density_ratio": 36.49068619137271
   }
  ]
 }

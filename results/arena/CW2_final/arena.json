@@ -6,8 +6,8 @@
  ],
  "defines": [],
  "library": "sg13cmos5l_stdcell_typ_1p20V_25C.lib",
- "cells": 874,
- "area_um2": 13829.0166,
+ "cells": 887,
+ "area_um2": 14041.3014,
  "by_type": {
   "sg13cmos5l_a21o_1": 14,
   "sg13cmos5l_a21oi_1": 78,
@@ -19,6 +19,7 @@
   "sg13cmos5l_dfrbpq_1": 70,
   "sg13cmos5l_dlhq_1": 104,
   "sg13cmos5l_dllrq_1": 13,
+  "sg13cmos5l_dlygate4sd3_1": 13,
   "sg13cmos5l_inv_1": 28,
   "sg13cmos5l_mux2_1": 48,
   "sg13cmos5l_mux4_1": 2,
@@ -38,12 +39,12 @@
   "sg13cmos5l_xnor2_1": 8,
   "sg13cmos5l_xor2_1": 9
  },
- "synth_seconds": 1.114,
+ "synth_seconds": 1.392,
  "flops": 70,
  "latches": 117,
  "icgs": 0,
  "sequential_area_um2": 7014.4704,
- "combinational_area_um2": 6814.5462,
+ "combinational_area_um2": 7026.831,
  "timing": {
   "model": "pre-layout NLDM, typical 1.20V 25C, ideal clock, wire_load 2k",
   "period_ns": 20.0,

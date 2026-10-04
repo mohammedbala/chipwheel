@@ -25,6 +25,8 @@ COMPILE_ARGS    += -DFUNCTIONAL
 COMPILE_ARGS    += -DSIM
 VERILOG_SOURCES += $(PDK_ROOT)/ihp-sg13cmos5l/libs.ref/sg13cmos5l_io/verilog/sg13cmos5l_io.v
 VERILOG_SOURCES += $(PDK_ROOT)/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/verilog/sg13cmos5l_stdcell.v
+# The cell models instantiate primitives defined in the PDK's UDP file
+VERILOG_SOURCES += $(PDK_ROOT)/ihp-sg13cmos5l/libs.ref/sg13cmos5l_stdcell/verilog/sg13cmos5l_udp.v
 
 # this gets copied in by the GDS action workflow
 VERILOG_SOURCES += $(PWD)/gate_level_netlist.v

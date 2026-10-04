@@ -45,3 +45,35 @@ It refuses to start below 15 GiB, then hardens, saves `results/hardening/`
 random campaign on the routed netlist. Alternative without local disk: push
 to GitHub, where `.github/workflows/gds.yaml` runs the same flow, precheck and
 gate-level test.
+
+## 2026-10-04: GitHub Actions (official Tiny Tapeout flow) — hardened
+
+Repository: https://github.com/mohammedbala/chipwheel (public). The unchanged
+template workflows ran on every push: `test`, `docs` and `gds`
+(LibreLane 3.1.0.dev3 hardening → precheck → gate-level test → viewer).
+
+1. First run (`35e7540`): placement and routing completed, setup met (8.88 ns
+   slack at 20 ns, slow corner), but 13 fast-corner hold violations (worst
+   −31 ps), all the clock-gating check inside each memory word's discrete clock
+   gate (latch → AND), which the flow's hold repair does not fix. Fix
+   (`4a75749`): a `sg13cmos5l_dlygate4sd3_1` between latch and AND gate.
+2. Second run: **hardening passed, Tiny Tapeout precheck passed (all 9
+   checks), viewer published**. The gate-level test failed to compile because
+   the template's `test/Makefile` omits the PDK's `sg13cmos5l_udp.v`, which the
+   flop/latch/mux cell models need (the template's adder example never needs it).
+   Fix: add it. The cocotb test then passes locally on the routed submission
+   netlist, as do the 32 directed v2 tests and 1.23M random cycles
+   (`v2/results/fuzz_postlayout.json`).
+
+Signoff numbers (1x1 tile, die 202.08 × 154.98 µm, 20 ns clock):
+
+| Metric | Value |
+|---|---|
+| Worst setup slack (slow 1.08 V 125 °C) | 8.29 ns → about 85 MHz achievable |
+| Worst hold slack (fast 1.32 V −40 °C) | +0.105 ns |
+| Routing DRC / Magic DRC / LVS / antenna | 0 / 0 / 0 / 0 |
+| Std-cell area | 18,186 µm²: logic 13,549 (sequential 7,014) + timing-repair buffers 2,932 + clock tree 1,704 |
+| Fill | 10,756 µm²; utilization 62.8 % of the core |
+| Total power (typical) | 0.73 mW |
+
+Viewer: https://mohammedbala.github.io/chipwheel/

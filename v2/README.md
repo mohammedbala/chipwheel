@@ -14,10 +14,10 @@ This folder holds the v2 model, programs, verification and benchmark.
 
 ## Headline (final entry, pre-layout, equal clock)
 
-13,829 µm² of cells (10 program words + 3 config words in a clock-gated latch
+14,041 µm² of cells (pre-layout; 18,186 µm² routed with clock tree and repair buffers) (10 program words + 3 config words in a clock-gated latch
 array, 70 flops). UART TX streams at 10 clocks/byte (1 bit per clock), full-duplex
-SPI at 17 clocks/byte (SCK = clk/2). Throughput per area is 11.2x v1, 10.3x
-(UART) / 11.5x (SPI) a one-state-machine PIO clone, and about 100x or more
+SPI at 17 clocks/byte (SCK = clk/2). Throughput per area is 11.0x v1, 10.1x
+(UART) / 11.3x (SPI) a one-state-machine PIO clone, and about 100x or more
 soft-CPU bit-banging. See the benchmark for what is and is not 10x.
 
 ## Verify
@@ -26,7 +26,7 @@ From `v2/test` with the project's `.venv` Python:
 
 ```sh
 python -m pytest -q test_protocols.py            # 32 directed tests, each replayed on RTL
-CW2_GL=../../results/arena/CW2_final/netlist.v python -m pytest -q test_protocols.py   # on gates
+CW2_GL=../../test/gate_level_netlist.v python -m pytest -q test_protocols.py   # on the routed netlist
 python fuzz.py --cases 500 --cycles 4000 --seed 1                # random model-vs-RTL
 python fuzz.py --cases 200 --cycles 4000 --seed 2 --gl ../../results/arena/CW2_final/netlist.v
 python mutants.py                                # 12 injected faults must all be caught

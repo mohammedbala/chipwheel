@@ -25,17 +25,17 @@ code and pushed through **one identical flow**.
   differential testing against an independent cycle model (millions of cycles,
   RTL and gates); 12 injected faults, all caught.
 
-## Results (final entry: `src/project.v`, revision r6 with discrete clock gates)
+## Results (final entry: `src/project.v`, r6 with discrete, hold-safe clock gates)
 
 | Design | Cell area µm² | UART TX clk/byte | SPI full-duplex clk/byte | v2 smaller | v2 faster UART / SPI | v2 throughput/area UART / SPI |
 |---|---:|---:|---:|---:|---:|---:|
-| **Chipwheel v2** | **13,829** | **10** | **17** | — | — | — |
-| Chipwheel v1 | 46,940 | 33 | unsupported | 3.4x | 3.3x / ∞ | **11.2x** / ∞ |
-| PIO-class, 1 state machine | 142,266 | 10 | 19 | **10.3x** | 1.0x / 1.1x | **10.3x / 11.5x** |
-| FemtoRV32 bit-bang | 195,398 | 72 | 240 | **14.1x** | 7.2x / **14.1x** | **102x / 200x** |
-| QERV bit-bang | 177,754 | 372 | 1,130 | **12.9x** | **37x / 66x** | **478x / 854x** |
-| SERV bit-bang | 176,378 | 1,291 | 3,746 | **12.8x** | **129x / 220x** | **1,647x / 2,810x** |
-| PIO-class, 4 state machines | 458,442 | 10 (each) | 19 (each) | 8.3x per channel | 1.0x / 1.1x | 8.3x / 9.3x per channel |
+| **Chipwheel v2** | **14,041** | **10** | **17** | — | — | — |
+| Chipwheel v1 | 46,940 | 33 | unsupported | 3.3x | 3.3x / ∞ | **11.0x** / ∞ |
+| PIO-class, 1 state machine | 142,266 | 10 | 19 | **10.1x** | 1.0x / 1.1x | **10.1x / 11.3x** |
+| FemtoRV32 bit-bang | 195,398 | 72 | 240 | **13.9x** | 7.2x / **14.1x** | **100x / 197x** |
+| QERV bit-bang | 177,754 | 372 | 1,130 | **12.7x** | **37x / 66x** | **471x / 842x** |
+| SERV bit-bang | 176,378 | 1,291 | 3,746 | **12.6x** | **129x / 220x** | **1,622x / 2,768x** |
+| PIO-class, 4 state machines | 458,442 | 10 (each) | 19 (each) | 8.2x per channel | 1.0x / 1.1x | 8.2x / 9.1x per channel |
 
 Including estimated repair buffers the size ratios are v1 3.3x,
 PIO 10.8x, CPUs 12.6–14.3x. Program size: v2 needs 16 bits for UART TX
@@ -44,22 +44,25 @@ PIO 10.8x, CPUs 12.6–14.3x. Program size: v2 needs 16 bits for UART TX
 ## What is and is not 10x
 
 - **Throughput per area ≥ 10x against every single-engine incumbent**: v1
-  11.2x, PIO 10.3x (UART) / 11.5x (SPI), CPUs 100x and up.
+  11.0x, PIO 10.1x (UART) / 11.3x (SPI), CPUs 100x and up.
 - **Size ≥ 10x** against PIO and all CPU bit-banging designs. Against v1 it is
   3.4x: v1 is already a small single-protocol engine.
 - **Speed ≥ 10x per clock** against SERV and QERV, and against FemtoRV on SPI
   (7.2x on UART). Against PIO it is parity: both reach the physical limit of
   1 bit per clock for UART 8N1 (10 clocks/byte). Against v1 it is 3.3x per
   clock; at the clocks each is specified for (v1 10 MHz, v2 50 MHz) it is 16.5x.
-- **Not 10x**: the full 4-state-machine PIO block divided per channel (8.3x
-  UART, 9.3x SPI), because its 32-slot instruction memory is shared by four
+- **Not 10x**: the full 4-state-machine PIO block divided per channel (8.2x
+  UART, 9.1x SPI), because its 32-slot instruction memory is shared by four
   engines.
 
 ## Caveats
 
-Pre-layout numbers only: typical and slow liberty corners, ideal clock, wire-load
-estimate. The official LibreLane hardening, DRC/precheck and post-route timing
-have not completed yet (see `docs/hardening.md` for the local container attempt). v2's
+The comparison uses pre-layout numbers for every design (incumbents are not
+hardened): typical and slow liberty corners, ideal clock, wire-load estimate.
+v2 itself has since passed the official flow in CI (`docs/hardening.md`): routed
+in one tile with 0 DRC/LVS errors, precheck passed, setup slack 8.29 ns at 20 ns
+and hold +0.105 ns across corners, 18,186 µm² of cells including clock tree and
+repair buffers. v2's
 program memory is a latch array behind clock gates; this is a known Tiny
 Tapeout technique, but its behaviour in the official flow's STA is unverified.
 The incumbents are open-source clones, not RP2040 silicon; their memories are
