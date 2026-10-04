@@ -15,7 +15,7 @@ jobs:
 
       - name: Build GDS
         uses: TinyTapeout/tt-gds-action@ihp-cmos5l
-        timeout-minutes: 70        # v3 branch: stop a stuck flow so the logs below survive
+        timeout-minutes: 170       # v3 branch: stop a stuck flow so the logs below survive
         with:
           pdk: ihp-sg13cmos5l
 
