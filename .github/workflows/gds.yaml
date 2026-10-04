@@ -15,8 +15,29 @@ jobs:
 
       - name: Build GDS
         uses: TinyTapeout/tt-gds-action@ihp-cmos5l
+        timeout-minutes: 70        # v3 branch: stop a stuck flow so the logs below survive
         with:
           pdk: ihp-sg13cmos5l
+
+      - name: Flow progress (v3 branch debugging)
+        if: always()
+        shell: bash
+        run: |
+          ls -la --time-style=+%H:%M:%S runs/wokwi/ || true
+          last=$(ls -d runs/wokwi/[0-9]*-* 2>/dev/null | sort -V | tail -1)
+          echo "LAST STEP: $last"
+          for f in "$last"/*.log; do echo "== $f"; tail -120 "$f"; done || true
+
+      - name: Upload partial flow logs (v3 branch debugging)
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: flow_logs_partial
+          path: |
+            runs/wokwi/*/*.log
+            runs/wokwi/*/*.rpt
+            runs/wokwi/*/*/*.rpt
+            runs/wokwi/*/state_in.json
 
   precheck:
     needs: gds
