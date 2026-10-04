@@ -260,11 +260,11 @@ def test_ws2812_pico():
 USB_BIT = 4      # clocks per bit (12.5 Mbit/s at 50 MHz)
 
 
-def usb_line_cfg(p, tx=0, rx=0, in_base=2):
+def usb_line_cfg(p, tx=0, rx=0, in_base=2, fifo16=None):
     return config3(prog=p, div=USB_BIT - 1, out_base=0, out_count=1, set_base=0, set_count=2, pull_thresh=8,
                    in_base=in_base, resync=rx, line_tx=tx, line_rx=rx, enc=1, dec=1,
                    stuff_n=6, stuff_ones=1, crc_out=tx, crc_in=rx, crc_reflect=1, poly=0xA001,
-                   diff=tx, fifo16=rx)
+                   diff=tx, fifo16=rx if fifo16 is None else fifo16)
 
 
 def test_usb_style_tx_nrzi_stuffing_crc16():
@@ -411,4 +411,105 @@ def test_onewire_reset_presence_timeout(present):
           ['set pins, 1', 'set pindirs, 1'], od=0b1, enable=1)
     assert b.read(0, limit=20000) == (1 if present else 0)
     assert slave.resets == (1 if present else 0)
+    check_rtl(b)
+
+
+# ---------------------------------------------------------------- translation features
+def usb_packet_wave(data):
+    """SYNC + data with the USB CRC16 of data[1:], NRZI-coded and bit-stuffed, then EOP."""
+    crc = dv.crc16_usb(dv.bytes_lsb(data[1:]))
+    bits = dv.bytes_lsb([0x80]) + dv.bytes_lsb(data) + crc
+    line = dv.nrzi_encode(dv.stuff(bits, 6, True), 1)
+    return [lv for lv in line for _ in range(USB_BIT)] + [0] * (2 * USB_BIT) + [1] * USB_BIT, crc
+
+
+def test_link_translates_usb_line_to_uart_without_host():
+    """SM-to-SM link: SM0 decodes a USB-style line (NRZI, destuffing) and every byte moves
+    straight into SM1's TX buffer; SM1 re-sends it as UART at 2 clocks/bit. After ENABLE
+    the host bus does not move: no reads, no writes."""
+    data = [0xC3, 0x00, 0xFF, 0xFF, 0x7E, 0x01, 0x80, 0x3F]
+    wave, crc = usb_packet_wave(data)
+    rec = LineRecorder(0)
+    b = Bench3([dv.Waveform({2: wave}, start=1500, idle={2: 1}), rec])
+    b.reset()
+    rx = prog('usb_rx_bridge.pio')
+    tx = prog('uart_tx_fast.pio', origin=16)
+    nbytes = len(data) + 2
+    start(b, rx, 0, usb_line_cfg(rx, rx=1, fifo16=0), [f'set x, {nbytes - 1}'])
+    start(b, tx, 1, config3(prog=tx, div=1, out_count=1, set_count=1), ['set pins, 1', 'set pindirs, 1'])
+    b.globals(owner=0b1, link01=1)
+    b.enable(3)
+    t0, k0 = b.cycle, len(b.stim)
+    assert t0 < 1500
+    b.step(1500 + len(wave) + 100 - b.cycle)
+    assert len({(s >> 8) & 0xFF for s in b.stim[k0:]}) == 1          # host pins never changed
+    got, _ = uart_decode(rec.trace, 2, start=t0)
+    assert got == data + dv.bits_to_bytes_lsb(crc)
+    assert dv.usb_crc16_ok(dv.bytes_lsb(got[1:]))
+    assert b.chip.cov['link'] == nbytes
+    check_rtl(b)
+
+
+def test_link_both_directions_and_host_lockout():
+    """LINK01 and LINK10 together: SM1 echoes what SM0 receives back to SM0, and host
+    writes to a linked TX channel are ignored while host reads of a linked RX entry peek."""
+    rx_data = [0x12, 0x9A, 0x00, 0xFF]
+    rec = LineRecorder(0)
+    b = Bench3([UartSource(2, rx_data, 8, gap=40, start=1600), rec])
+    b.reset()
+    rxp = prog('uart_rx.pio')
+    txp = prog('uart_tx.pio', origin=16)
+    start(b, rxp, 0, config3(prog=rxp, in_base=2, jmp_pin=2))
+    start(b, txp, 1, config3(prog=txp, out_count=1, set_count=1), ['set pins, 1', 'set pindirs, 1'])
+    b.globals(owner=0b1, link01=1, link10=1)
+    b.enable(3)
+    t0 = b.cycle
+    b.write_entry(1, 0x55)                                     # ignored: SM1's TX is fed by the link
+    assert (b.status >> 2) & 1                                 # SM1 TX still empty
+    b.wait_until(lambda: (b.status >> 2) & 1 == 0, what='first linked byte')
+    b.step(2000)
+    got, _ = uart_decode(rec.trace, 8, start=t0)
+    assert got == rx_data
+    assert b.chip.cov['link'] == len(rx_data)
+    check_rtl(b)
+
+
+@pytest.mark.parametrize('fast,left', [(0, 0), (1, 0), (0, 1), (1, 1)])
+def test_ddr_capture_two_samples_per_clock(fast, left):
+    """IN_DDR: `in pins, 2` every clock records 16 consecutive half-clock levels per entry,
+    including pulses half a clock wide that rising-edge sampling cannot see."""
+    import random
+    rng = random.Random(11 + 2 * fast + left)
+    halves = [1, 1] + [rng.randrange(2) for _ in range(40)] + [1, 0, 1, 0, 0, 1, 0, 1]
+    b = Bench3([dv.HalfWave(3, halves, start=700)])
+    b.reset()
+    p = prog('ddr_capture.pio')
+    start(b, p, 0, config3(prog=p, in_base=3, in_fast=fast, in_ddr=1, in_left=left, autopush=1, fifo16=1),
+          enable=1)
+    e = b.read(0, nibbles=4)
+    seq = [(e >> k) & 1 for k in range(16)]
+    if left:
+        seq = seq[::-1]                                        # shift left: newest sample in bit 0
+    offs = [o for o in range(len(halves) - 15) if halves[o:o + 16] == seq]
+    # the trigger is seen 2 clocks after the edge (1 with IN_FAST) and capture starts one
+    # clock later, at half 2 (rising sample of the next clock; half 1, its falling sample)
+    assert offs == [2 - fast], (offs, seq)
+    check_rtl(b)
+
+
+def test_edge_timestamps_measure_pulse_widths():
+    """IN TIME: timestamps of every edge give exact high and low widths in clocks."""
+    widths = [37, 61, 45, 90, 52, 120, 41, 77]                 # high, low, high, ...
+    wave, lvl = [], 1
+    for w in widths:
+        wave += [lvl] * w
+        lvl ^= 1
+    wave += [0] * 50
+    b = Bench3([dv.Waveform({1: wave}, start=700, idle={1: 0})])
+    b.reset()
+    p = prog('edge_times.pio')
+    start(b, p, 0, config3(prog=p, in_base=1, autopush=1, fifo16=1), enable=1)
+    stamps = [b.read(0, nibbles=4) for _ in range(len(widths))]
+    assert [(t1 - t0) & 0xFFFF for t0, t1 in zip(stamps, stamps[1:])] == widths[:-1]
+    assert b.chip.cov['in_time'] == len(widths)
     check_rtl(b)

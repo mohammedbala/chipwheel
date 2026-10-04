@@ -1,0 +1,456 @@
+{
+ "name": "CW3_r2",
+ "top": "tt_um_chipwheel3",
+ "sources": [
+  "v3/src/chipwheel3.v"
+ ],
+ "defines": [],
+ "library": "sg13cmos5l_stdcell_typ_1p20V_25C.lib",
+ "cells": 7860,
+ "area_um2": 110850.012,
+ "by_type": {
+  "sg13cmos5l_a21o_1": 141,
+  "sg13cmos5l_a21oi_1": 851,
+  "sg13cmos5l_a221oi_1": 184,
+  "sg13cmos5l_a22oi_1": 692,
+  "sg13cmos5l_and2_1": 302,
+  "sg13cmos5l_and3_1": 25,
+  "sg13cmos5l_and4_1": 31,
+  "sg13cmos5l_dfrbpq_1": 459,
+  "sg13cmos5l_dlhq_1": 739,
+  "sg13cmos5l_dllrq_1": 50,
+  "sg13cmos5l_dlygate4sd3_1": 50,
+  "sg13cmos5l_inv_1": 406,
+  "sg13cmos5l_mux2_1": 223,
+  "sg13cmos5l_mux4_1": 49,
+  "sg13cmos5l_nand2_1": 737,
+  "sg13cmos5l_nand2b_1": 174,
+  "sg13cmos5l_nand3_1": 269,
+  "sg13cmos5l_nand3b_1": 28,
+  "sg13cmos5l_nand4_1": 114,
+  "sg13cmos5l_nor2_1": 823,
+  "sg13cmos5l_nor2b_1": 143,
+  "sg13cmos5l_nor3_1": 232,
+  "sg13cmos5l_nor4_1": 67,
+  "sg13cmos5l_o21ai_1": 785,
+  "sg13cmos5l_or2_1": 58,
+  "sg13cmos5l_or3_1": 24,
+  "sg13cmos5l_or4_1": 16,
+  "sg13cmos5l_xnor2_1": 143,
+  "sg13cmos5l_xor2_1": 45
+ },
+ "synth_seconds": 8.175,
+ "flops": 459,
+ "latches": 789,
+ "icgs": 0,
+ "sequential_area_um2": 46731.6864,
+ "combinational_area_um2": 64118.3256,
+ "timing": {
+  "model": "pre-layout NLDM, typical 1.20V 25C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$22087/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 8.4811,
+   "setup_ns": 0.1046,
+   "required_period_ns": 8.5857,
+   "path": [
+    {
+     "at": 0.3846,
+     "node": "launch $auto$ff.cc:266:slice$18103 CLK"
+    },
+    {
+     "at": 0.6788,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48080(sg13cmos5l_and2_1).A"
+    },
+    {
+     "at": 1.1424,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48088(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 1.5043,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48117(sg13cmos5l_and2_1).A"
+    },
+    {
+     "at": 1.5952,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48226(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 1.7244,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48227(sg13cmos5l_and4_1).D"
+    },
+    {
+     "at": 1.7956,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48229(sg13cmos5l_nand3_1).B"
+    },
+    {
+     "at": 2.0654,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49170(sg13cmos5l_a21oi_1).A1"
+    },
+    {
+     "at": 2.538,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49173(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 2.8619,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49191(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 3.1064,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49200(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 3.3711,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49203(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 3.5123,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49204(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 3.6893,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49211(sg13cmos5l_xnor2_1).A"
+    },
+    {
+     "at": 3.997,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49216(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 4.2598,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49222(sg13cmos5l_nand3b_1).B"
+    },
+    {
+     "at": 4.4122,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49224(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 4.5274,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49228(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 4.8836,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49232(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 4.9888,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49253(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 5.2339,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49365(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 5.5312,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49672(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 5.7543,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49844(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 5.9978,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49846(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 6.3094,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49859(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 6.6036,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49861(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 6.8645,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49896(sg13cmos5l_mux4_1).S0"
+    },
+    {
+     "at": 7.0371,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49941(sg13cmos5l_a22oi_1).A2"
+    },
+    {
+     "at": 7.2925,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52612(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 7.4899,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52749(sg13cmos5l_a221oi_1).A1"
+    },
+    {
+     "at": 7.6292,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52750(sg13cmos5l_or2_1).B"
+    },
+    {
+     "at": 7.7539,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52751(sg13cmos5l_or2_1).B"
+    },
+    {
+     "at": 7.8666,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52936(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 8.1108,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53043(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 8.2302,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53193(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 8.387,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53200(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 8.4811,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53204(sg13cmos5l_o21ai_1).A1"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$15194/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 0.0,
+   "setup_ns": 0.1267,
+   "required_period_ns": 0.1267,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in ui_in[4]"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "uo_out[0]",
+   "cell": "port",
+   "arrival_ns": 0.7695,
+   "setup_ns": 0.0,
+   "required_period_ns": 0.7695,
+   "path": [
+    {
+     "at": 0.2866,
+     "node": "launch $auto$ff.cc:266:slice$22397 CLK"
+    },
+    {
+     "at": 0.5167,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49073(sg13cmos5l_nand2_1).A"
+    },
+    {
+     "at": 0.6388,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49789(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 0.7695,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49801(sg13cmos5l_or4_1).A"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 116.47,
+  "slack_ns_reg2reg": 11.4143,
+  "endpoints": 1272,
+  "repair_buffers": 1149,
+  "repair_buffer_area_um2": 16677.96
+ },
+ "timing_slow": {
+  "model": "pre-layout NLDM, slow 1.08V 125C, ideal clock, wire_load 2k",
+  "period_ns": 20.0,
+  "reg2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$22087/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 13.3659,
+   "setup_ns": 0.1812,
+   "required_period_ns": 13.5471,
+   "path": [
+    {
+     "at": 0.5603,
+     "node": "launch $auto$ff.cc:266:slice$18103 CLK"
+    },
+    {
+     "at": 1.0019,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48080(sg13cmos5l_and2_1).A"
+    },
+    {
+     "at": 1.7213,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48088(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 2.2842,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48117(sg13cmos5l_and2_1).A"
+    },
+    {
+     "at": 2.4332,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48226(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 2.6392,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48227(sg13cmos5l_and4_1).D"
+    },
+    {
+     "at": 2.7526,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$48229(sg13cmos5l_nand3_1).B"
+    },
+    {
+     "at": 3.1917,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49170(sg13cmos5l_a21oi_1).A1"
+    },
+    {
+     "at": 3.959,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49173(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 4.4884,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49191(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 4.8796,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49200(sg13cmos5l_nand3_1).C"
+    },
+    {
+     "at": 5.2913,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49203(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 5.5237,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49204(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 5.7991,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49211(sg13cmos5l_xnor2_1).A"
+    },
+    {
+     "at": 6.2738,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49216(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 6.6989,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49222(sg13cmos5l_nand3b_1).B"
+    },
+    {
+     "at": 6.939,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49224(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 7.1269,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49228(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 7.6625,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49232(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 7.8328,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49253(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 8.203,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49365(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 8.682,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49672(sg13cmos5l_a221oi_1).B2"
+    },
+    {
+     "at": 9.0373,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49844(sg13cmos5l_a22oi_1).B2"
+    },
+    {
+     "at": 9.4315,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49846(sg13cmos5l_o21ai_1).A2"
+    },
+    {
+     "at": 9.9231,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49859(sg13cmos5l_mux2_1).S"
+    },
+    {
+     "at": 10.3637,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49861(sg13cmos5l_nor2_1).B"
+    },
+    {
+     "at": 10.7806,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49896(sg13cmos5l_mux4_1).S0"
+    },
+    {
+     "at": 11.0503,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49941(sg13cmos5l_a22oi_1).A2"
+    },
+    {
+     "at": 11.4598,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52612(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 11.7827,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52749(sg13cmos5l_a221oi_1).A1"
+    },
+    {
+     "at": 12.005,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52750(sg13cmos5l_or2_1).B"
+    },
+    {
+     "at": 12.2034,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52751(sg13cmos5l_or2_1).B"
+    },
+    {
+     "at": 12.3854,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$52936(sg13cmos5l_a21oi_1).A2"
+    },
+    {
+     "at": 12.7645,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53043(sg13cmos5l_a221oi_1).A2"
+    },
+    {
+     "at": 12.9656,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53193(sg13cmos5l_o21ai_1).A1"
+    },
+    {
+     "at": 13.2108,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53200(sg13cmos5l_a221oi_1).B1"
+    },
+    {
+     "at": 13.3659,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$53204(sg13cmos5l_o21ai_1).A1"
+    }
+   ]
+  },
+  "in2reg": {
+   "endpoint": "$auto$ff.cc:266:slice$15194/D",
+   "cell": "sg13cmos5l_dfrbpq_1",
+   "arrival_ns": 0.0,
+   "setup_ns": 0.2076,
+   "required_period_ns": 0.2076,
+   "path": [
+    {
+     "at": 0.0,
+     "node": "in ui_in[4]"
+    }
+   ]
+  },
+  "reg2out": {
+   "endpoint": "uo_out[0]",
+   "cell": "port",
+   "arrival_ns": 1.201,
+   "setup_ns": 0.0,
+   "required_period_ns": 1.201,
+   "path": [
+    {
+     "at": 0.4254,
+     "node": "launch $auto$ff.cc:266:slice$22397 CLK"
+    },
+    {
+     "at": 0.7899,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49073(sg13cmos5l_nand2_1).A"
+    },
+    {
+     "at": 0.9904,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49789(sg13cmos5l_a21oi_1).B1"
+    },
+    {
+     "at": 1.201,
+     "node": "$abc$47635$auto$blifparse.cc:396:parse_blif$49801(sg13cmos5l_or4_1).A"
+    }
+   ]
+  },
+  "fmax_mhz_reg2reg": 73.82,
+  "slack_ns_reg2reg": 6.4529,
+  "endpoints": 1272,
+  "repair_buffers": 1149,
+  "repair_buffer_area_um2": 16677.96
+ }
+}

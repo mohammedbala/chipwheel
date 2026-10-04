@@ -1,0 +1,8 @@
+; Two samples per clock (IN_DDR): after a trigger, every clock shifts the IN_BASE
+; pin's falling-edge and rising-edge samples into the ISR, earlier sample first.
+; With autopush at 16 and FIFO16, each entry holds 8 clocks = 16 half-clock samples.
+.program ddr_capture
+    wait 1 pin 0            ; trigger: first high sample
+.wrap_target
+    in pins, 2
+.wrap

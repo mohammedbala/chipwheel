@@ -1,0 +1,10 @@
+; Edge timestamps: push the free-running clock counter at every rising and
+; falling edge of the IN_BASE pin (autopush 16, FIFO16). The host turns the
+; differences into exact pulse and gap widths in clocks.
+.program edge_times
+.wrap_target
+    wait 1 pin 0 edge
+    in time, 16
+    wait 0 pin 0 edge
+    in time, 16
+.wrap

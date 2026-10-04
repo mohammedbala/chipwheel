@@ -199,3 +199,20 @@ class OneWireSlave(Device):
 
     def update(self, cycle):
         self.drive = {self.pin: 0} if self.sched and self.sched[0] <= cycle < self.sched[1] else {}
+
+
+class HalfWave(Device):
+    """Drives one pin with half-clock resolution: halves[2k] before the rising
+    edge of cycle start+k and halves[2k+1] after it (through the falling edge)."""
+
+    def __init__(self, pin, halves, start, idle=0):
+        super().__init__()
+        self.pin, self.halves, self.start, self.idle = pin, list(halves), start, idle
+        self.drive = {pin: idle}
+        self.drive_late = {pin: idle}
+
+    def update(self, cycle):
+        k = 2 * (cycle - self.start)
+        ok = 0 <= k and k + 1 < len(self.halves)
+        self.drive = {self.pin: self.halves[k] if ok else self.idle}
+        self.drive_late = {self.pin: self.halves[k + 1] if ok else self.idle}

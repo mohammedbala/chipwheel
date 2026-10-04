@@ -7,6 +7,7 @@ Supported directives: .program, .side_set N [opt] [pindirs], .wrap_target,
   jmp flag, L              (condition 111 when JFLAG != 0: CRC==0 / TIMEOUT / CODE_ERR)
   wait P gpio|pin N [edge] [timeout]
   in crc, N   out crc, N   mov crc, SRC   mov DEST, crc
+  in time, N               (low N bits of the free-running clock counter)
 
 Returns a Program with words, wrap target/top and side-set settings.
 """
@@ -35,7 +36,7 @@ class Program:
 
 
 JMP_COND = {'': 0, '!x': 1, 'x--': 2, '!y': 3, 'y--': 4, 'x!=y': 5, 'pin': 6, '!osre': 7, 'flag': 7}
-IN_SRC = {'pins': 0, 'x': 1, 'y': 2, 'null': 3, 'crc': 4, 'isr': 6, 'osr': 7}
+IN_SRC = {'pins': 0, 'x': 1, 'y': 2, 'null': 3, 'crc': 4, 'time': 5, 'isr': 6, 'osr': 7}
 OUT_DST = {'pins': 0, 'x': 1, 'y': 2, 'null': 3, 'pindirs': 4, 'pc': 5, 'isr': 6, 'crc': 7}
 MOV_DST = {'pins': 0, 'x': 1, 'y': 2, 'crc': 3, 'exec': 4, 'pc': 5, 'isr': 6, 'osr': 7}
 MOV_SRC = {'pins': 0, 'x': 1, 'y': 2, 'null': 3, 'crc': 4, 'status': 5, 'isr': 6, 'osr': 7}

@@ -1,9 +1,10 @@
 """Chipwheel v3 cycle-accurate reference model (see v3/docs/spec.md).
 
-`Chip.edge(ui_in, uio_in, rst_n)` advances one rising clock edge. Inputs are
-those present at the edge and through the following high phase (the bench
-changes them just after the falling edge). Returns the outputs after the edge
-with the same inputs: (uo_out, uio_out, uio_oe, uio_out_care_mask).
+`Chip.edge(ui_in, uio_in, rst_n, uio_late)` advances one rising clock edge.
+Inputs are those present at the edge (the bench changes them just after the
+falling edge). `uio_late` is the uio value at the falling edge that follows
+(default `uio_in`; DDR sampling). Returns the outputs after the edge:
+(uo_out, uio_out, uio_oe, uio_out_care_mask).
 """
 
 M16 = 0xFFFF
@@ -24,6 +25,7 @@ class Cfg:
         self.resync = (r[1] >> 2) & 1
         self.clk_pin = (r[1] >> 3) & 7
         self.in_fast = (r[1] >> 6) & 1
+        self.in_ddr = (r[1] >> 7) & 1
         self.out_base = r[2] & 7
         self.out_count = min((r[2] >> 3) & 15, 8)
         self.set_base = (r[2] >> 7) & 7
@@ -113,6 +115,8 @@ class Chip:
     def reset(self):
         self.sms = [SM(0), SM(1)]
         self.pa = self.pb = 0
+        self.pn = self.pnr = 0   # falling-edge sample of uio and its rising-edge copy
+        self.now = 0             # free-running clock counter (IN TIME)
         self.w1 = self.w2 = self.w3 = 0
         self.r1 = self.r2 = self.r3 = 0
         self.irq = 0
@@ -154,10 +158,13 @@ class Chip:
         return uo, uout, oe, 0xFF
 
     # ------------------------------------------------------------ one edge
-    def edge(self, ui_in, uio_in, rst_n=1):
+    def edge(self, ui_in, uio_in, rst_n=1, uio_late=None):
         if not rst_n:
             self.reset()
             return self.outputs(ui_in)
+        uio_late = uio_in if uio_late is None else uio_late
+        g1 = self.glob[1] or 0
+        link01, link10 = (g1 >> 1) & 1, (g1 >> 2) & 1
         nib = ui_in & 15
         ch = (ui_in >> 5) & 3
         mem_before = list(self.mem)                  # the instruction register samples these
@@ -176,7 +183,7 @@ class Chip:
             if ch in (0, 1):
                 s = self.sms[ch]
                 f16 = Cfg(self.cfg[ch]).fifo16
-                if not s.txv:
+                if not s.txv and not (link01 if ch == 1 else link10):
                     tb = (s.txbuf & ~(15 << (4 * s.txn))) | (nib << (4 * s.txn))
                     tb &= M16 if f16 else 0xFF
                     n = s.txn + 1
@@ -205,11 +212,11 @@ class Chip:
                 s = self.sms[ch]
                 if s.rxv:
                     last = (4 if Cfg(self.cfg[ch]).fifo16 else 2) - 1
-                    if self.rd_nib >= last:
+                    if self.rd_nib >= last and not (link01 if ch == 0 else link10):
                         nxt['rd_nib'] = 0
                         sm_next[ch]['rxv'] = 0
                     else:
-                        nxt['rd_nib'] = self.rd_nib + 1
+                        nxt['rd_nib'] = (self.rd_nib + 1) & 3
             elif ch == 2:
                 nxt['rd_nib'] = (self.rd_nib + 1) & 3
 
@@ -260,6 +267,15 @@ class Chip:
                 self._run_sm(s, Cfg(self.cfg[i]), nx, flags_now, exec_req[i])
             irq_set |= nx.pop('_irq_set', 0)
             irq_clr |= nx.pop('_irq_clr', 0)
+        # ---- SM-to-SM links: a waiting RX entry moves into the other SM's empty
+        # TX buffer (the SM itself never pushes into a full RX buffer or pulls
+        # from an empty TX buffer in the same clock, so these never collide)
+        for src, dst, on in ((0, 1, link01), (1, 0, link10)):
+            a, b = self.sms[src], self.sms[dst]
+            if on and a.rxv and not b.txv:
+                self.cov['link'] += 1
+                sm_next[src]['rxv'] = 0
+                sm_next[dst].update(txbuf=a.rxbuf, txv=1, txn=0)
         # per-clock input history for edge clocking / resync (both SMs, always)
         for i, s in enumerate(self.sms):
             c = Cfg(self.cfg[i])
@@ -301,6 +317,8 @@ class Chip:
         self.w1, self.w2, self.w3 = (ui_in >> 4) & 1, self.w1, self.w2
         self.r1, self.r2, self.r3 = (ui_in >> 7) & 1, self.r1, self.r2
         self.pa, self.pb = uio_in & 0xFF, self.pa
+        self.pnr, self.pn = self.pn, uio_late & 0xFF
+        self.now = (self.now + 1) & M16
         return self.outputs(ui_in)
 
     # ------------------------------------------------------------ SM step
@@ -710,8 +728,17 @@ class Chip:
             nx['rqv'] = 0
             if c.crc_in:
                 nx['crc'] = self._crc(s.crc, data, c)
+        elif src == 0 and c.in_ddr:
+            self.cov['in_ddr'] += 1
+            early, late = (self.pnr, self.pa) if c.in_fast else (self.pb, self.pnr)
+            lo, hi = (late, early) if c.in_left else (early, late)
+            rot = lambda v: ((v >> c.in_base) | (v << (8 - c.in_base))) & 0xFF
+            lo, hi = rot(lo), rot(hi)
+            data = sum((((lo >> k) & 1) << (2 * k)) | (((hi >> k) & 1) << (2 * k + 1)) for k in range(8)) & mask
         else:
-            data = [rot_in(), s.x, s.y, 0, s.crc, 0, s.isr, s.osr][src] & mask
+            if src == 5:
+                self.cov['in_time'] += 1
+            data = [rot_in(), s.x, s.y, 0, s.crc, self.now, s.isr, s.osr][src] & mask
         if c.in_left:
             isr = ((s.isr << cnt) | data) & M16
         else:

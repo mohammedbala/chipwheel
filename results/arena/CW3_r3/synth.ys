@@ -1,0 +1,13 @@
+# arena recipe (identical for every design)
+read_liberty -lib /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+read_verilog -sv  /Users/mohammedbala/Documents/chipwheel/v3/src/chipwheel3.v
+hierarchy -check -top tt_um_chipwheel3
+
+synth -flatten -top tt_um_chipwheel3
+dfflibmap -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+abc -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+opt_clean -purge
+check -assert
+tee -o /Users/mohammedbala/Documents/chipwheel/results/arena/CW3_r3/stat.json stat -json -liberty /Users/mohammedbala/Documents/chipwheel/.tools/pdk-lib/sg13cmos5l_stdcell_typ_1p20V_25C.lib
+write_json /Users/mohammedbala/Documents/chipwheel/results/arena/CW3_r3/netlist.json
+write_verilog -noattr /Users/mohammedbala/Documents/chipwheel/results/arena/CW3_r3/netlist.v
