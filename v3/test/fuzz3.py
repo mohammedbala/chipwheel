@@ -25,10 +25,12 @@ import replay  # noqa: E402
 
 
 class RandomPins:
-    def __init__(self, rng, rate, ref):
+    def __init__(self, rng, rate, ref, half=False):
         self.rng, self.rate, self.ref = rng, rate, ref
         self.level = [1] * 8
         self.drive = {}
+        self.half = half          # also change levels for the falling-edge half (DDR)
+        self.drive_late = None
 
     def observe(self, lines, cycle):
         pass
@@ -41,6 +43,9 @@ class RandomPins:
         # never fight a chip-driven 1; may pull an open-drain or undriven line low
         self.drive = {i: self.level[i] for i in range(8)
                       if not ((oe >> i) & 1) or (self.level[i] == 0 and not (uout >> i) & 1)}
+        if self.half:
+            late = [lv ^ (self.rng.random() < self.rate) for lv in self.level]
+            self.drive_late = {i: late[i] for i in self.drive}
 
 
 def random_word(rng):
@@ -58,7 +63,7 @@ def random_cfg(rng):
     def r(n):
         return rng.randrange(1 << n)
     div = rng.choice([0, 0, 0, 1, 2, 3, r(16) & 0x1F, r(16)])
-    c1 = rng.choice([0, 0, 0, 1, 2, 3]) | (r(1) << 2) | (r(3) << 3) | (r(1) << 6)
+    c1 = rng.choice([0, 0, 0, 1, 2, 3]) | (r(1) << 2) | (r(3) << 3) | (r(1) << 6) | (r(1) << 7)
     c2 = r(16)
     c3 = r(13)
     c4 = r(16)
@@ -102,25 +107,68 @@ def codec_cfg(rng):
     return c
 
 
+def xlate_word(rng):
+    """Instructions for the translation features: DDR pin input, IN TIME, push/pull traffic."""
+    r = rng.random()
+    delay = rng.choice([0, 0, 0, 1, 3])
+    if r < 0.35:
+        return 0x4000 | (delay << 8) | rng.choice([1, 2, 2, 3, 4, 8, 16, 5, 0])           # in pins, n
+    if r < 0.55:
+        return 0x40A0 | (delay << 8) | rng.choice([16, 8, 4, 1, 0, 3])                    # in time, n
+    if r < 0.7:
+        return 0x6000 | (rng.choice([0, 1, 2, 3]) << 5) | (delay << 8) | rng.choice([1, 4, 8, 16])  # out
+    if r < 0.82:
+        return 0x8000 | rng.choice([0x00, 0x20, 0x40, 0x80, 0xA0, 0xC0])                 # push / pull
+    if r < 0.87:
+        return 0x2000 | (rng.randrange(2) << 7) | rng.choice([0x20, 0x28, 0x00, 0x08]) | rng.randrange(8)  # wait
+    if r < 0.93:
+        return 0xA000 | (rng.choice([1, 2, 6, 7]) << 5) | rng.randrange(8)                # mov
+    return random_word(rng)
+
+
+def xlate_cfg(rng):
+    c = random_cfg(rng)
+    c[0] = rng.choice([0, 0, 0, 1, 2])
+    c[1] = (c[1] & ~3) | (1 << 7) if rng.random() < 0.7 else c[1]                    # IN_DDR mostly
+    c[4] = (c[4] & ~0x3FF) | 31 << 5                                                # wrap 31 -> 0
+    c[4] |= rng.choice([0, 1, 3]) << 12                                             # autopush / autopull
+    c[5] &= ~0x3000 if rng.random() < 0.8 else 0xFFFF                               # mostly no line unit
+    return c
+
+
 def run_case(seed, cycles, vvp=None, cov=None):
     rng = random.Random(seed)
-    codec = rng.random() < 0.35
+    xlate = rng.random() < 0.3
+    codec = not xlate and rng.random() < 0.35
     ref = [None]
-    pins = RandomPins(rng, rng.choice([0.01, 0.05, 0.2, 0.5] if codec else [0.01, 0.05, 0.2]), ref)
+    pins = RandomPins(rng, rng.choice([0.01, 0.05, 0.2, 0.5] if codec else [0.01, 0.05, 0.2]), ref,
+                      half=rng.random() < 0.5)
     b = Bench3([pins])
     ref[0] = b
     b.reset()
-    gen = codec_word if codec else random_word
+    gen = codec_word if codec else xlate_word if xlate else random_word
     b.load([gen(rng) for _ in range(32)], origin=0)
     for sm in (0, 1):
-        b.configure(sm, codec_cfg(rng) if codec else random_cfg(rng))
-    b.globals(od=rng.randrange(256), owner=rng.randrange(256), span=int(rng.random() < 0.15))
+        b.configure(sm, codec_cfg(rng) if codec else xlate_cfg(rng) if xlate else random_cfg(rng))
+    b.globals(od=rng.randrange(256), owner=rng.randrange(256), span=int(rng.random() < 0.15),
+              link01=int(rng.random() < (0.7 if xlate else 0.3)), link10=int(rng.random() < (0.5 if xlate else 0.3)))
     for _ in range(rng.randrange(4)):
         b.exec(rng.randrange(2), random_word(rng))
     b.enable(rng.choice([1, 2, 3, 3]))
     end = b.cycle + cycles
     while b.cycle < end:
         r = rng.random()
+        if xlate and r < 0.6:                          # drain RX entries / feed TX
+            sm = rng.randrange(2)
+            if (b.status >> (2 * sm + 1)) & 1 and rng.random() < 0.8:
+                b.ch = sm
+                b.rt ^= 1
+                b.step(rng.randrange(1, 4))
+            elif (b.status >> (2 * sm)) & 1:
+                b.write_nibble(sm, rng.randrange(16))
+            else:
+                b.step(rng.randrange(1, 6))
+            continue
         if codec and r < 0.5:                          # keep TX buffers fed
             sm = rng.randrange(2)
             if (b.status >> (2 * sm)) & 1:

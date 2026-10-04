@@ -195,6 +195,30 @@ support on CMOS5L is unconfirmed, although the macros are in the CMOS5L PDK.
 Keep the design clock-agnostic so the same silicon can run at 48 (USB FS),
 40 (CAN, 10BASE-T), 50 (RMII) and 25.175 MHz (DVI).
 
+## 7. Implemented in v3 (2026-10-04)
+
+The question was whether logic can "translate" fast protocols into something a
+small engine handles algorithmically. Logic cannot sample faster than its pins.
+Above about 50 Mb/s per pin, and for analog lines (CML, LVDS, PAM, MLT-3), the
+first step has to be an external PHY or bridge. Behind that step, translation
+works at three levels, and v3 now has hardware for each. Spec: `v3/docs/spec.md`.
+
+| Level | What it means | v3 feature | Cost (pre-layout) | Demonstrated by |
+|---|---|---|---|---|
+| Rate | Sample faster than the clock | **IN_DDR**: falling-edge flops on all 8 pins; `in pins, 2` stores two samples per clock (100 MS/s at 50 MHz) | 16 flops + 2 rotators | `test_ddr_capture_two_samples_per_clock` (4 variants), cocotb `ddr_capture` |
+| Representation | Send *when* edges happen instead of every sample, so the host decodes timing in software | **IN TIME**: free-running 16-bit clock counter as an IN source; `wait … edge` + `in time, 16` gives exact pulse/gap widths | 16 flops + incrementer | `test_edge_timestamps_measure_pulse_widths` |
+| Protocol | Terminate protocol A and speak protocol B at line rate, no host in the data path | **SM-to-SM links** (LINK01, LINK10): an RX entry moves straight into the other SM's TX buffer | muxes only | `test_link_translates_usb_line_to_uart_without_host`: USB-style NRZI + bit-stuffed line at 12.5 Mb/s in, UART at 25 Mbaud out, host bus idle; cocotb `usb_line_to_uart_translator` |
+
+Together the three features add 4,286 µm² (+3.7%). The v3 total is
+119,507 µm² by the same-flow measure, with 13.1 ns slow-corner pre-layout
+reg2reg against the 20 ns period.
+
+Still missing from the section 6 list: the pulse catcher (a second clock
+domain), clock-forward output, the wide CRC, and the packet buffer. Without a
+buffer, the two sides of a link must run at similar average rates, because
+each direction holds one entry. Data that goes to the host is limited by the
+nibble bus, roughly 8 MB/s for a fast host.
+
 [tt-faq]: https://tinytapeout.com/faq/
 [tt-clock]: https://tinytapeout.com/specs/clock/
 [tt-gpio]: https://tinytapeout.com/specs/gpio/

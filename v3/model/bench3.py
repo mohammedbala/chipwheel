@@ -1,6 +1,9 @@
 """Cycle bench for Chipwheel v3: nibble host bus driver, 8-line resolution,
 independent devices (reused from v2/model/bench.py), and recording of every
-cycle's inputs and model outputs for replay on RTL / gate-level netlists."""
+cycle's inputs and model outputs for replay on RTL / gate-level netlists.
+
+A device may set `drive_late` (a dict like `drive`) to give the line a
+different value for the falling-edge half of the clock (DDR sampling)."""
 import sys
 from pathlib import Path
 
@@ -12,7 +15,7 @@ from cw3 import Chip  # noqa: E402
 CH_TX0, CH_TX1, CH_CMD, CH_PROG = 0, 1, 2, 3
 
 
-def config3(div=0, clksrc=0, resync=0, clk_pin=0, in_fast=0,
+def config3(div=0, clksrc=0, resync=0, clk_pin=0, in_fast=0, in_ddr=0,
             out_base=0, out_count=0, set_base=0, set_count=0, side_base=0,
             in_base=0, jmp_pin=0, side_count=0, side_en=0, side_pindir=0, jflag=0, status_sel=0,
             wrap_bottom=0, wrap_top=31, in_left=0, out_left=0, autopush=0, autopull=0,
@@ -23,7 +26,7 @@ def config3(div=0, clksrc=0, resync=0, clk_pin=0, in_fast=0,
         wrap_bottom, wrap_top = prog.wrap_target, prog.wrap
         side_count, side_en, side_pindir = prog.side_count, prog.side_en, prog.side_pindir
     return [div & 0xFFFF,
-            (clksrc & 3) | (resync << 2) | ((clk_pin & 7) << 3) | (in_fast << 6),
+            (clksrc & 3) | (resync << 2) | ((clk_pin & 7) << 3) | (in_fast << 6) | (in_ddr << 7),
             (out_base & 7) | ((out_count & 15) << 3) | ((set_base & 7) << 7) | ((set_count & 7) << 10) |
             ((side_base & 7) << 13),
             (in_base & 7) | ((jmp_pin & 7) << 3) | ((side_count & 3) << 6) | (side_en << 8) |
@@ -55,12 +58,13 @@ class Bench3:
     def ui(self):
         return (self.rt << 7) | ((self.ch & 3) << 5) | (self.wt << 4) | (self.nib & 15)
 
-    def _resolve(self):
+    def _resolve(self, late=False):
         uo, uout, oe, care = self.out
         lines = 0
         for i in range(8):
             chip = (uout >> i) & 1 if (oe >> i) & 1 else None
-            devs = [d for d in (dv.drive.get(i) for dv in self.devices) if d is not None]
+            devs = [d for d in ((dv.drive_late if late and getattr(dv, 'drive_late', None) is not None
+                                 else dv.drive).get(i) for dv in self.devices) if d is not None]
             if chip == 1 and 0 in devs:
                 raise AssertionError(f'cycle {self.cycle}: G{i} contention (chip 1, device 0)')
             vals = devs + ([chip] if chip is not None else [])
@@ -75,8 +79,10 @@ class Bench3:
             if any(getattr(d, 'same_cycle', False) for d in self.devices):
                 self.lines = self._resolve()
             ui = self.ui
-            self.stim.append((self.rst_n << 16) | (ui << 8) | self.lines)
-            self.out = self.chip.edge(ui, self.lines, self.rst_n)
+            late = (self._resolve(late=True)
+                    if any(getattr(d, 'drive_late', None) is not None for d in self.devices) else self.lines)
+            self.stim.append((late << 17) | (self.rst_n << 16) | (ui << 8) | self.lines)
+            self.out = self.chip.edge(ui, self.lines, self.rst_n, late)
             uo, uout, oe, care = self.out
             self.expect.append((uo << 24) | (uout << 16) | (oe << 8) | care)
             self.cycle += 1
@@ -130,9 +136,9 @@ class Bench3:
         for i, v in enumerate(regs):
             self.command((sm << 4) | i, v)
 
-    def globals(self, od=0, owner=0, span=0):
+    def globals(self, od=0, owner=0, span=0, link01=0, link10=0):
         self.command(0x20, (od & 0xFF) | ((owner & 0xFF) << 8))
-        self.command(0x21, span & 1)
+        self.command(0x21, (span & 1) | ((link01 & 1) << 1) | ((link10 & 1) << 2))
 
     def enable(self, mask):
         self.command(0x30, mask & 3)

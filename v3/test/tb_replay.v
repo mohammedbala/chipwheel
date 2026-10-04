@@ -3,7 +3,8 @@
 
 // Trace-replay bench: applies recorded inputs one per clock (1 ns after the
 // falling edge) and compares every output a quarter period after each rising
-// edge with the reference-model expectation. Stops at the first mismatch.
+// edge with the reference-model expectation; then applies the uio value for
+// the falling edge (stim[24:17], DDR sampling). Stops at the first mismatch.
 module tb_replay;
     reg clk = 0, rst_n = 0, ena = 1;
     reg [7:0] ui_in = 0, uio_in = 0;
@@ -57,7 +58,8 @@ module tb_replay;
                              cycle, uo_out, e[31:24], uio_out, e[23:16], e[7:0], uio_oe, e[15:8]);
                     errors = errors + 1;
                 end
-                #5 clk = 0;
+                #1 uio_in = s[24:17];
+                #4 clk = 0;
                 cycle = cycle + 1;
             end
         end

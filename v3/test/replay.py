@@ -40,7 +40,7 @@ def replay(bench, vvp=None, waves=False, keep=None):
     with tempfile.TemporaryDirectory(dir=BUILD) as td:
         td = Path(keep) if keep else Path(td)
         td.mkdir(parents=True, exist_ok=True)
-        (td / 'stim.hex').write_text(''.join(f'{x:05x}\n' for x in bench.stim))
+        (td / 'stim.hex').write_text(''.join(f'{x:07x}\n' for x in bench.stim))
         (td / 'exp.hex').write_text(''.join(f'{x:08x}\n' for x in bench.expect))
         cmd = [str(VVP), '-n', str(vvp), f'+stim={td}/stim.hex', f'+exp={td}/exp.hex']
         if waves:

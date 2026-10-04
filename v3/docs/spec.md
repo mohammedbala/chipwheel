@@ -1,4 +1,4 @@
-# Chipwheel v3 specification (draft 1, 2026-10-04)
+# Chipwheel v3 specification (draft 2, 2026-10-04)
 
 A general programmable protocol engine. Goal: any logic-level digital protocol
 that fits 8 pins and edges up to clk/2 becomes firmware. Written before the
@@ -31,7 +31,7 @@ an asynchronous reset.
 
 Write channels: CH=0/1: nibble to SM0/SM1's TX buffer (low nibble first; the
 entry completes when the nibble count reaches 2, or 4 when FIFO16). While the entry is complete (TXR=0), more
-nibbles are ignored. CH=2: command packets of 6 nibbles, high nibble first:
+nibbles are ignored, and so are all nibbles to a TX buffer fed by a link (section 5a). CH=2: command packets of 6 nibbles, high nibble first:
 address byte A, then 16-bit data D. CH=3: program words, 4 nibbles high first,
 written to `mem[PPTR]`, PPTR+1. CH=2 and CH=3 share one shift register and
 nibble counter; a write on the other of the two channels restarts the count.
@@ -42,7 +42,8 @@ another CH=2/3 nibble event on that clock (legal 3-clock pacing guarantees this)
 Read channels: CH=0/1: SM0/SM1 RX entry, low nibble first. The read nibble
 pointer is shared by all read channels; a read event on CH=0/1 with a valid
 entry pops it when the pointer is at or past the last nibble (1, or 3 when
-FIFO16), otherwise advances the pointer. CH=2: status word
+FIFO16), otherwise advances the pointer. The RX entry of a linked source is
+never popped by the host: reads only advance the pointer (mod 4), as a peek. CH=2: status word
 `{PC1[4:0], PC0[4:0], EN1, EN0, IRQ[3:0]}`, nibble 0 first, cycling. CH=3 reads 0.
 
 Command address `A[7:4]` = target, `A[3:0]` = register:
@@ -50,7 +51,7 @@ Command address `A[7:4]` = target, `A[3:0]` = register:
 | Target | Registers |
 |---|---|
 | 0, 1 | SM0, SM1 configuration (section 6) |
-| 2 | global: G0 `[7:0]` open-drain mask, `[15:8]` pin owner mask (1 = SM1); G1 `[0]` SPAN |
+| 2 | global: G0 `[7:0]` open-drain mask, `[15:8]` pin owner mask (1 = SM1); G1 `[0]` SPAN, `[1]` LINK01, `[2]` LINK10 |
 | 3 | actions: 0 ENABLE `D[1:0]`; 1 RESTART SM `D[8]` at PC `D[4:0]`; 2/3 EXEC instruction `D` on SM0/SM1 (only while that SM is disabled); 4 PPTR `D[4:0]`; 5 clear IRQ flags `D[3:0]` |
 
 RESTART clears ISR/OSR, sets the ISR count to 0 and the OSR count to 16 (empty, so
@@ -83,6 +84,14 @@ PC+1` unless it jumped. A stalled instruction is re-issued on the next tick.
 A disabled SM holds state; its pins keep their values.
 
 Input samples: IN_FAST=1 uses the first synchronizer stage, else the second.
+Each pin is also sampled on the falling edge and that sample re-registered on
+the rising edge (`pnr`). Per clock this gives, in time order, `pb` (rising
+edge k-1), `pnr` (falling edge k-1), `pa` (rising edge k). With IN_DDR, `IN PINS`
+(not the line unit's single-bit path) takes two samples per pin: the pair
+(`pb`, `pnr`), or (`pnr`, `pa`) with IN_FAST. For IN_BASE-rotated pin k, data bit
+2k is the earlier sample and 2k+1 the later one (swapped when shifting left), so
+the earlier sample always enters the ISR first. `in pins, 2` every clock records
+one pin at twice the clock rate. Other pin reads (WAIT, JMP PIN, MOV) are unchanged.
 
 ## 4. Instructions (RP2040 PIO encoding)
 
@@ -96,7 +105,7 @@ write by the same instruction.
 |---|---|---|
 | JMP 000 | cond `[7:5]`, addr `[4:0]` | always; !X; X-- (jump if X!=0, then X-1); !Y; Y--; X!=Y; PIN (JMP_PIN high); FLAG (JFLAG: 0 !OSRE, 1 CRC==0, 2 TIMEOUT, 3 CODE_ERR; flags 2/3 are cleared when tested) |
 | WAIT 001 | pol `[7]`, src `[6:5]`, idx `[4:0]` | src 0 GPIO `idx[2:0]`, 1 PIN `(IN_BASE+idx[2:0])%8`: for these, `idx[3]`=EDGE (level==pol and the previous tick's level != pol), `idx[4]`=TIMEOUT (while waiting, X-- each tick; if X==0 the wait ends with TIMEOUT flag). src 2 IRQ flag `idx[1:0]` (+SM number mod 4 if `idx[4]`), cleared on completion when pol=1. src 3 LINE: pol=1 TX unit idle and queue empty, pol=0 TX unit busy |
-| IN 010 | src `[7:5]`, count `[4:0]` (0 or >16 = 16) | src PINS (count pins from IN_BASE, IN_BASE is bit 0), X, Y, NULL, CRC, (5 = NULL), ISR, OSR. Shift into ISR: right: `ISR = {data, ISR} >> count`; left: `ISR = ISR << count \| data`. Count saturates at 16. Autopush at threshold; if the RX buffer is full the IN stalls before shifting |
+| IN 010 | src `[7:5]`, count `[4:0]` (0 or >16 = 16) | src PINS (count pins from IN_BASE, IN_BASE is bit 0; IN_DDR: section 3), X, Y, NULL, CRC, TIME (5: the free-running 16-bit clock counter, 0 at reset, +1 every clock), ISR, OSR. Shift into ISR: right: `ISR = {data, ISR} >> count`; left: `ISR = ISR << count \| data`. Count saturates at 16. Autopush at threshold; if the RX buffer is full the IN stalls before shifting |
 | OUT 011 | dest `[7:5]`, count | dest PINS (OUT_BASE..), X, Y, NULL, PINDIRS, PC, ISR (ISR=data, count=count), CRC (CRC=data). Shift out of OSR: right takes the low bits, left the high bits. Autopull: if the OSR count has reached PULL_THRESH, refill from the TX buffer first (stall if empty), then shift in the same tick |
 | PUSH/PULL 100 | `[7]` 0 push / 1 pull, `[6]` if-full/if-empty, `[5]` block | as PIO. Non-blocking push with full buffer drops the data and clears ISR; non-blocking pull from empty copies X to OSR |
 | MOV 101 | dest `[7:5]`, op `[4:3]`, src `[2:0]` | dest PINS (OUT group), X, Y, CRC, (EXEC = no-op), PC, ISR (count 0), OSR (count 0); op none / invert / bit-reverse / none; src PINS (8 pins rotated from IN_BASE), X, Y, NULL, CRC, STATUS (all ones if TX buffer empty, or if STATUS_SEL: RX buffer full), ISR, OSR |
@@ -146,12 +155,26 @@ Normal: `fb = CRC[15] ^ bit; CRC = CRC<<1 ^ (fb ? POLY : 0)`. Reflected:
 `fb = CRC[0] ^ bit; CRC = CRC>>1 ^ (fb ? POLY : 0)`. Initialise with MOV CRC.
 `CRC==0` is testable by JMP FLAG; residues via MOV X, CRC and JMP X!=Y.
 
+## 5a. SM-to-SM links
+
+G1 LINK01 connects SM0's RX buffer to SM1's TX buffer, LINK10 SM1's RX to SM0's
+TX; both may be set. On every clock where the source's RX entry is valid and
+the sink's TX buffer is empty, the 16-bit entry moves across: the sink's TX
+buffer is loaded and marked full (nibble count 0) and the source's RX entry is
+released. The SMs see an ordinary push and pull. Entries cross as 16-bit
+values: an 8-bit push (`{00, byte}`) gives an 8-bit sink its byte and a 16-bit
+sink `0x00XX`; a 16-bit entry into an 8-bit sink delivers its low byte. Host
+writes to the sink's channel are ignored and host reads of the source's channel
+do not pop it. One entry takes one clock to cross, so a pipeline runs at up
+to one entry per two clocks with no host involvement: one SM terminates
+protocol A, the other speaks protocol B.
+
 ## 6. Configuration registers (per SM, 16-bit, latched)
 
 | # | Fields |
 |---|---|
 | 0 CLKDIV | DIV |
-| 1 CLKCTRL | `[1:0]` CLKSRC, `[2]` RESYNC, `[5:3]` CLK_PIN, `[6]` IN_FAST |
+| 1 CLKCTRL | `[1:0]` CLKSRC, `[2]` RESYNC, `[5:3]` CLK_PIN, `[6]` IN_FAST, `[7]` IN_DDR |
 | 2 PINCTRL | `[2:0]` OUT_BASE, `[6:3]` OUT_COUNT (0..8), `[9:7]` SET_BASE, `[12:10]` SET_COUNT (0..5), `[15:13]` SIDE_BASE |
 | 3 PINCTRL2 | `[2:0]` IN_BASE, `[5:3]` JMP_PIN, `[7:6]` SIDE_COUNT, `[8]` SIDE_EN, `[9]` SIDE_PINDIR, `[11:10]` JFLAG, `[12]` STATUS_SEL |
 | 4 EXECCTRL | `[4:0]` WRAP_BOTTOM, `[9:5]` WRAP_TOP, `[10]` IN_SHIFTDIR (1 = left), `[11]` OUT_SHIFTDIR (1 = left), `[12]` AUTOPUSH, `[13]` AUTOPULL, `[14]` FIFO16, `[15]` DIFF |
@@ -166,5 +189,5 @@ pins output 0 with `oe = pindir & !value`, others `out = value, oe = pindir`.
 
 All state machines disabled, PCs 0, registers and counters 0 (OSR count 16), pin values 0
 and directions input (pads released), IRQ flags 0, host parser idle, PPTR 0,
-synchronizers 0. Program and configuration latches keep their contents and
+synchronizers and input samples 0, clock counter 0. Program and configuration latches keep their contents and
 are undefined at power-up.

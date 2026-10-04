@@ -1,0 +1,24 @@
+; USB-style packet receive for forwarding over an SM-to-SM link: the line unit
+; does NRZI decoding and destuffing; each byte after SYNC becomes one 8-bit
+; entry (FIFO16 off, shift right: the byte is ISR[15:8]). x = bytes - 1 (EXEC).
+; 14 words, so it fits bank A beside a transmitter in bank B.
+.program usb_rx_bridge
+hunt:
+    mov isr, null
+    in pins, 1
+    mov y, isr
+    jmp y-- hunt            ; idle J decodes as 1s: keep hunting
+zeros:
+    mov isr, null
+    in pins, 1
+    mov y, isr
+    jmp !y zeros            ; inside SYNC
+byte:
+    set y, 7
+bit:
+    in pins, 1
+    jmp y-- bit
+    push
+    jmp x-- byte
+end:
+    jmp end
