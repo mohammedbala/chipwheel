@@ -20,7 +20,8 @@ module tt_um_chipwheel (
     reg  w1, w2, w3, r1, r2, r3;
     wire wt_ev = w2 ^ w3;
     wire rt_ev = r2 ^ r3;
-    reg  [7:0] pa, pb;
+    reg  [7:0] pa, pb, pn, pnr;          // rising samples; falling sample and its copy
+    reg  [15:0] now;                     // free-running clock counter (IN TIME)
     reg  [23:0] shreg;
     reg  [2:0] ncount;
     reg  pch, cmd_ready, prog_ready;
@@ -63,6 +64,7 @@ module tt_um_chipwheel (
         end
     endgenerate
     wire span = glob[1][0];
+    wire link01 = glob[1][1], link10 = glob[1][2];  // SM0 RX -> SM1 TX, SM1 RX -> SM0 TX
     wire [7:0] od_mask = glob[0][7:0], owner = glob[0][15:8];
 
     // ------------------------------------------------------------ fetch
@@ -82,15 +84,19 @@ module tt_um_chipwheel (
     wire [7:0] val0, val1, dir0, dir1;
     wire [3:0] set0, set1, clr0, clr1;
     wire [15:0] rxb0, rxb1;
-    wire pop0 = rt_ev & ch == 2'd0 & rxv0 & (rd_nib >= (f16_0 ? 2'd3 : 2'd1));
-    wire pop1 = rt_ev & ch == 2'd1 & rxv1 & (rd_nib >= (f16_1 ? 2'd3 : 2'd1));
+    wire pop0 = rt_ev & ch == 2'd0 & rxv0 & ~link01 & (rd_nib >= (f16_0 ? 2'd3 : 2'd1));
+    wire pop1 = rt_ev & ch == 2'd1 & rxv1 & ~link10 & (rd_nib >= (f16_1 ? 2'd3 : 2'd1));
+    // links: a waiting RX entry moves into the other SM's empty TX buffer
+    wire mv01 = link01 & rxv0 & ~txv1;
+    wire mv10 = link10 & rxv1 & ~txv0;
 
     chipwheel3_sm #(.NUM(0)) sm0 (
         .clk(clk), .rst_n(rst_n),
         .c0(cfg0[0]), .c1(cfg0[1]), .c2(cfg0[2]), .c3(cfg0[3]),
         .c4(cfg0[4]), .c5(cfg0[5]), .c6(cfg0[6]), .c7(cfg0[7]),
-        .pa(pa), .pb(pb), .fetched(ins0), .flags(irq), .blocked(1'b0),
-        .host_wnib(wt_ev & ch == 2'd0), .nib(nib), .host_pop(pop0),
+        .pa(pa), .pb(pb), .pnr(pnr), .now(now), .fetched(ins0), .flags(irq), .blocked(1'b0),
+        .host_wnib(wt_ev & ch == 2'd0 & ~link10), .nib(nib), .host_pop(pop0 | mv01),
+        .link_load(mv10), .link_data(rxb1),
         .act_en(act & cmd_reg == 4'd0), .en_bit(cmd_data[0]),
         .act_restart(act & cmd_reg == 4'd1 & ~cmd_data[8]), .restart_pc(cmd_data[4:0]),
         .act_exec(act & cmd_reg == 4'd2), .exec_ins(cmd_data),
@@ -100,8 +106,9 @@ module tt_um_chipwheel (
         .clk(clk), .rst_n(rst_n),
         .c0(cfg1[0]), .c1(cfg1[1]), .c2(cfg1[2]), .c3(cfg1[3]),
         .c4(cfg1[4]), .c5(cfg1[5]), .c6(cfg1[6]), .c7(cfg1[7]),
-        .pa(pa), .pb(pb), .fetched(ins1), .flags(irq), .blocked(span),
-        .host_wnib(wt_ev & ch == 2'd1), .nib(nib), .host_pop(pop1),
+        .pa(pa), .pb(pb), .pnr(pnr), .now(now), .fetched(ins1), .flags(irq), .blocked(span),
+        .host_wnib(wt_ev & ch == 2'd1 & ~link01), .nib(nib), .host_pop(pop1 | mv10),
+        .link_load(mv01), .link_data(rxb0),
         .act_en(act & cmd_reg == 4'd0), .en_bit(cmd_data[1]),
         .act_restart(act & cmd_reg == 4'd1 & cmd_data[8]), .restart_pc(cmd_data[4:0]),
         .act_exec(act & cmd_reg == 4'd3), .exec_ins(cmd_data),
@@ -113,13 +120,14 @@ module tt_um_chipwheel (
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             w1 <= 0; w2 <= 0; w3 <= 0; r1 <= 0; r2 <= 0; r3 <= 0;
-            pa <= 0; pb <= 0;
+            pa <= 0; pb <= 0; pnr <= 0; now <= 0;
             shreg <= 0; ncount <= 0; pch <= 0; cmd_ready <= 0; prog_ready <= 0;
             pptr <= 0; rd_nib <= 0; irq <= 0;
         end else begin
             w1 <= ui_in[4]; w2 <= w1; w3 <= w2;
             r1 <= ui_in[7]; r2 <= r1; r3 <= r2;
-            pa <= uio_in; pb <= pa;
+            pa <= uio_in; pb <= pa; pnr <= pn;
+            now <= now + 16'd1;
             cmd_ready <= 0;
             prog_ready <= 0;
             if (wt_ev & ch[1]) begin
@@ -141,6 +149,12 @@ module tt_um_chipwheel (
             if (prog_ready) pptr <= pptr + 5'd1;
             irq <= (irq | set0 | set1) & ~(clr0 | clr1 | (host_irq_clr ? cmd_data[3:0] : 4'd0));
         end
+    end
+
+    // falling-edge input sample (DDR); re-registered on the rising edge as pnr
+    always @(negedge clk or negedge rst_n) begin
+        if (!rst_n) pn <= 0;
+        else pn <= uio_in;
     end
 
     // ------------------------------------------------------------ outputs
@@ -168,13 +182,16 @@ endmodule
 module chipwheel3_sm #(parameter NUM = 0) (
     input  wire        clk, rst_n,
     input  wire [15:0] c0, c1, c2, c3, c4, c5, c6, c7,
-    input  wire [7:0]  pa, pb,
+    input  wire [7:0]  pa, pb, pnr,
+    input  wire [15:0] now,
     input  wire [15:0] fetched,
     input  wire [3:0]  flags,
     input  wire        blocked,
     input  wire        host_wnib,
     input  wire [3:0]  nib,
     input  wire        host_pop,
+    input  wire        link_load,
+    input  wire [15:0] link_data,
     input  wire        act_en, en_bit,
     input  wire        act_restart,
     input  wire [4:0]  restart_pc,
@@ -196,6 +213,7 @@ module chipwheel3_sm #(parameter NUM = 0) (
     wire resync = c1[2];
     wire [2:0] clk_pin = c1[5:3];
     wire in_fast = c1[6];
+    wire in_ddr = c1[7];
     wire [2:0] out_base = c2[2:0];
     wire [3:0] out_count = (c2[6:3] > 4'd8) ? 4'd8 : c2[6:3];
     wire [2:0] set_base = c2[9:7];
@@ -282,9 +300,24 @@ module chipwheel3_sm #(parameter NUM = 0) (
     function [7:0] rotl8(input [7:0] v, input [2:0] r);
         rotl8 = (v << r) | (v >> (4'd8 - {1'b0, r}));
     endfunction
+    function [7:0] rotr8(input [7:0] v, input [2:0] r);
+        rotr8 = (v >> r) | (v << (4'd8 - {1'b0, r}));
+    endfunction
     function [7:0] therm8(input [3:0] n);
         therm8 = (n >= 4'd8) ? 8'hFF : ((8'd1 << n) - 8'd1);
     endfunction
+    // DDR: two samples per pin per clock, interleaved so the earlier enters the ISR first
+    wire [7:0] ddr_e = in_fast ? pnr : pb, ddr_l = in_fast ? pa : pnr;
+    wire [7:0] ddr_lo = rotr8(in_left ? ddr_l : ddr_e, in_base);
+    wire [7:0] ddr_hi = rotr8(in_left ? ddr_e : ddr_l, in_base);
+    wire [15:0] ddr_word;
+    genvar gi;
+    generate
+        for (gi = 0; gi < 8; gi = gi + 1) begin : g_ddr
+            assign ddr_word[2 * gi] = ddr_lo[gi];
+            assign ddr_word[2 * gi + 1] = ddr_hi[gi];
+        end
+    endgenerate
     // pin write data/mask (computed from the request regs below; combinational)
     wire [7:0] pw_rot, pw_mask, sd_rot, sd_mask;
 
@@ -380,10 +413,11 @@ module chipwheel3_sm #(parameter NUM = 0) (
                         data = {15'd0, rq};
                     end else begin
                         case (ins[7:5])
-                            3'd0: data = {8'd0, rot_in};
+                            3'd0: data = in_ddr ? ddr_word : {8'd0, rot_in};
                             3'd1: data = x;
                             3'd2: data = y;
                             3'd4: data = crc;
+                            3'd5: data = now;
                             3'd6: data = isr;
                             3'd7: data = osr;
                             default: data = 16'd0;
@@ -586,6 +620,7 @@ module chipwheel3_sm #(parameter NUM = 0) (
                 if (txn >= (fifo16 ? 2'd3 : 2'd1)) begin txv <= 1; txn <= 2'd0; end
                 else txn <= txn + 2'd1;
             end
+            if (link_load) begin txbuf <= link_data; txv <= 1; txn <= 2'd0; end
             if (host_pop) rxv <= 0;
             if (act_restart) begin
                 pc <= restart_pc; isr <= 0; osr <= 0; isr_cnt <= 0; osr_cnt <= 5'd16;

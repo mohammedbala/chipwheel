@@ -13,6 +13,15 @@ machine has hardware for the per-bit work of serial protocols:
 - a programmable 16-bit CRC; edge waits with timeouts; stepping on an external
   clock edge (slave modes); differential output for D+/D- pairs.
 
+For protocols faster than the pins (behind an external PHY or bridge) there
+are three translation features:
+- SM-to-SM links: one state machine's received data feeds the other's
+  transmitter, so the chip converts one protocol into another with no host in
+  the data path.
+- Double-data-rate input sampling: two samples per pin per clock.
+- A free-running clock counter as an input source, for exact edge
+  timestamps.
+
 All eight `uio` pins (G0..G7) are protocol pins; the host uses `ui_in`/`uo_out`.
 Specification: `v3/docs/spec.md`.
 
@@ -28,8 +37,9 @@ Channels: 0/1 = data to/from SM0/SM1 (two nibbles per byte, low first),
 configuration, global pin setup, and actions such as enable, restart, execute
 an instruction), 3 = program words (four nibbles each). The bench in
 `v3/model/bench3.py` and the programs in `v3/programs` show complete
-sequences; `make` in `test/` runs UART, SPI, I2C, USB-style and Manchester
-scenarios against independent device models.
+sequences; `make` in `test/` runs UART, SPI, I2C, USB-style, Manchester,
+USB-line-to-UART translation and DDR capture scenarios against independent
+device models.
 
 ## External hardware
 

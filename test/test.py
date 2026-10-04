@@ -61,6 +61,8 @@ async def replay(dut, bench, name):
         assert got_uo == uo, f'{name} cycle {i}: uo_out {got_uo:02x} expected {uo:02x}'
         assert got_oe == oe, f'{name} cycle {i}: uio_oe {got_oe:02x} expected {oe:02x}'
         assert (got_out ^ uout) & care == 0, f'{name} cycle {i}: uio_out {got_out:02x} expected {uout:02x}'
+        await Timer(1, unit='ns')
+        dut.uio_in.value = (s >> 17) & 255          # value for the falling edge (DDR sampling)
     dut._log.info(f'{name}: {len(bench.stim)} clocks match the reference model')
 
 
@@ -196,3 +198,43 @@ async def i2c_with_clock_stretching(dut):
     b.step(300)
     assert got == [0xDE, 0xAD]
     await replay(dut, b, 'i2c')
+
+
+@cocotb.test()
+async def usb_line_to_uart_translator(dut):
+    """SM-to-SM link: SM0 decodes a USB-style line, SM1 re-sends each byte as UART; host idle."""
+    await begin(dut)
+    data = [0xC3, 0x00, 0xFF, 0x7E]
+    crc = dv.crc16_usb(dv.bytes_lsb(data[1:]))
+    bits = dv.bytes_lsb([0x80]) + dv.bytes_lsb(data) + crc
+    line = dv.nrzi_encode(dv.stuff(bits, 6, True), 1)
+    wave = [lv for lv in line for _ in range(4)] + [0] * 8 + [1] * 4
+    rec = LineRecorder(0)
+    b = Bench3([dv.Waveform({2: wave}, start=1500, idle={2: 1}), rec])
+    b.reset()
+    rx = prog('usb_rx_bridge.pio')
+    tx = prog('uart_tx_fast.pio', origin=16)
+    n = len(data) + 2
+    start(b, rx, 0, config3(prog=rx, div=3, in_base=2, set_base=0, set_count=2, resync=1, line_rx=1, dec=1,
+                            stuff_n=6, stuff_ones=1), [f'set x, {n - 1}'])
+    start(b, tx, 1, config3(prog=tx, div=1, out_count=1, set_count=1), ['set pins, 1', 'set pindirs, 1'])
+    b.globals(owner=0b1, link01=1)
+    b.enable(3)
+    t0 = b.cycle
+    b.step(1500 + len(wave) + 100 - b.cycle)
+    assert uart_decode(rec.trace, 2, start=t0)[0] == data + dv.bits_to_bytes_lsb(crc)
+    await replay(dut, b, 'translator')
+
+
+@cocotb.test()
+async def ddr_capture(dut):
+    """IN_DDR: 16 consecutive half-clock samples of one pin per entry (falling-edge flops)."""
+    await begin(dut)
+    halves = [1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0]
+    b = Bench3([dv.HalfWave(3, halves, start=700)])
+    b.reset()
+    p = prog('ddr_capture.pio')
+    start(b, p, 0, config3(prog=p, in_base=3, in_ddr=1, autopush=1, fifo16=1), enable=1)
+    e = b.read(0, nibbles=4)
+    assert [(e >> k) & 1 for k in range(16)] == halves[2:18]
+    await replay(dut, b, 'ddr')
