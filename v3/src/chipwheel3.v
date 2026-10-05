@@ -31,8 +31,9 @@ module tt_um_chipwheel3 (
 
     wire [7:0] cmd_addr = shreg[23:16];
     wire [15:0] cmd_data = shreg[15:0];
-    wire [3:0] cmd_tgt = cmd_addr[7:4], cmd_reg = cmd_addr[3:0];
-    wire act = cmd_ready & (cmd_tgt == 4'd3);
+    // Action strobes (target 3) are decoded when a command's last nibble arrives, from
+    // the address byte as it will be after the shift, so they come straight from flops.
+    reg  a_en, a_rst, a_ex0, a_ex1, a_pptr, a_irqc;
 
     // ------------------------------------------------------------ latch storage
     // Program memory (32 words) and configuration (2 x 8 SM registers + 2 global),
@@ -97,9 +98,9 @@ module tt_um_chipwheel3 (
         .pa(pa), .pb(pb), .pnr(pnr), .now(now), .fetched(ins0), .flags(irq), .blocked(1'b0),
         .host_wnib(wt_ev & ch == 2'd0 & ~link10), .nib(nib), .host_pop(pop0 | mv01),
         .link_load(mv10), .link_data(rxb1),
-        .act_en(act & cmd_reg == 4'd0), .en_bit(cmd_data[0]),
-        .act_restart(act & cmd_reg == 4'd1 & ~cmd_data[8]), .restart_pc(cmd_data[4:0]),
-        .act_exec(act & cmd_reg == 4'd2), .exec_ins(cmd_data),
+        .act_en(a_en), .en_bit(cmd_data[0]),
+        .act_restart(a_rst & ~cmd_data[8]), .restart_pc(cmd_data[4:0]),
+        .act_exec(a_ex0), .exec_ins(cmd_data),
         .pc_o(pc0), .pcn_o(pcn0), .en_o(en0), .val_o(val0), .dir_o(dir0), .irq_set(set0), .irq_clr(clr0),
         .txv_o(txv0), .rxv_o(rxv0), .rxbuf_o(rxb0), .fifo16_o(f16_0));
     chipwheel3_sm #(.NUM(1)) sm1 (
@@ -109,20 +110,20 @@ module tt_um_chipwheel3 (
         .pa(pa), .pb(pb), .pnr(pnr), .now(now), .fetched(ins1), .flags(irq), .blocked(span),
         .host_wnib(wt_ev & ch == 2'd1 & ~link01), .nib(nib), .host_pop(pop1 | mv10),
         .link_load(mv01), .link_data(rxb0),
-        .act_en(act & cmd_reg == 4'd0), .en_bit(cmd_data[1]),
-        .act_restart(act & cmd_reg == 4'd1 & cmd_data[8]), .restart_pc(cmd_data[4:0]),
-        .act_exec(act & cmd_reg == 4'd3), .exec_ins(cmd_data),
+        .act_en(a_en), .en_bit(cmd_data[1]),
+        .act_restart(a_rst & cmd_data[8]), .restart_pc(cmd_data[4:0]),
+        .act_exec(a_ex1), .exec_ins(cmd_data),
         .pc_o(pc1), .pcn_o(pcn1), .en_o(en1), .val_o(val1), .dir_o(dir1), .irq_set(set1), .irq_clr(clr1),
         .txv_o(txv1), .rxv_o(rxv1), .rxbuf_o(rxb1), .fifo16_o(f16_1));
 
     // ------------------------------------------------------------ sequential host logic
-    wire host_irq_clr = act & cmd_reg == 4'd5;
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             w1 <= 0; w2 <= 0; w3 <= 0; r1 <= 0; r2 <= 0; r3 <= 0;
             pa <= 0; pb <= 0; pnr <= 0; now <= 0;
             shreg <= 0; ncount <= 0; pch <= 0; cmd_ready <= 0; prog_ready <= 0;
             pptr <= 0; rd_nib <= 0; irq <= 0;
+            a_en <= 0; a_rst <= 0; a_ex0 <= 0; a_ex1 <= 0; a_pptr <= 0; a_irqc <= 0;
         end else begin
             w1 <= ui_in[4]; w2 <= w1; w3 <= w2;
             r1 <= ui_in[7]; r2 <= r1; r3 <= r2;
@@ -130,11 +131,18 @@ module tt_um_chipwheel3 (
             now <= now + 16'd1;
             cmd_ready <= 0;
             prog_ready <= 0;
+            {a_en, a_rst, a_ex0, a_ex1, a_pptr, a_irqc} <= 6'd0;
             if (wt_ev & ch[1]) begin
                 shreg <= {shreg[19:0], nib};
                 pch <= ch[0];
                 if (ch[0] == 1'b0 && (pch == 1'b0 ? ncount : 3'd0) == 3'd5) begin
                     cmd_ready <= 1; ncount <= 0;
+                    a_en <= shreg[19:12] == 8'h30;
+                    a_rst <= shreg[19:12] == 8'h31;
+                    a_ex0 <= shreg[19:12] == 8'h32;
+                    a_ex1 <= shreg[19:12] == 8'h33;
+                    a_pptr <= shreg[19:12] == 8'h34;
+                    a_irqc <= shreg[19:12] == 8'h35;
                 end else if (ch[0] == 1'b1 && (pch == 1'b1 ? ncount : 3'd0) == 3'd3) begin
                     prog_ready <= 1; ncount <= 0;
                 end else
@@ -145,9 +153,9 @@ module tt_um_chipwheel3 (
                 else if (ch == 2'd0 && rxv0) rd_nib <= pop0 ? 2'd0 : rd_nib + 2'd1;
                 else if (ch == 2'd1 && rxv1) rd_nib <= pop1 ? 2'd0 : rd_nib + 2'd1;
             end
-            if (act & cmd_reg == 4'd4) pptr <= cmd_data[4:0];
+            if (a_pptr) pptr <= cmd_data[4:0];
             if (prog_ready) pptr <= pptr + 5'd1;
-            irq <= (irq | set0 | set1) & ~(clr0 | clr1 | (host_irq_clr ? cmd_data[3:0] : 4'd0));
+            irq <= (irq | set0 | set1) & ~(clr0 | clr1 | (a_irqc ? cmd_data[3:0] : 4'd0));
         end
     end
 
@@ -249,6 +257,7 @@ module chipwheel3_sm #(parameter NUM = 0) (
     reg tx_last, tx_ph, tx_cur, tx_act, tq, tqv, rx_last, rx_prev, rq, rqv;
     reg [15:0] txbuf, rxbuf;
     reg [15:0] ir;                      // instruction register: mem[pc] as of the previous clock
+    reg xp;                             // the IR holds an EXEC'd instruction
     reg txv, rxv;
     reg [1:0] txn;
     assign pc_o = pc; assign en_o = en; assign val_o = val; assign dir_o = dir;
@@ -263,10 +272,11 @@ module chipwheel3_sm #(parameter NUM = 0) (
     wire tick = line ? 1'b1
               : (clksrc == 2'd0) ? (~rs_hit & divc == 16'd0)
               : (clksrc == 2'd1) ? rise : (clksrc == 2'd2) ? fall : (rise | fall);
-    wire forced = act_exec & ~en;
+    // EXEC: the instruction is loaded into the IR and executes on the next clock (xp)
+    wire forced = xp;
     wire issue_n = run & tick & dly == 5'd0;
     wire issue = issue_n | forced;
-    wire [15:0] ins = forced ? exec_ins : ir;
+    wire [15:0] ins = ir;
 
     // ---- decode helpers
     wire [2:0] op = ins[15:13];
@@ -608,9 +618,10 @@ module chipwheel3_sm #(parameter NUM = 0) (
             crc <= 0; tx_run <= 0; tx_last <= 0; tx_ph <= 0; tx_cur <= 0; tx_act <= 0; tq <= 0; tqv <= 0;
             rx_run <= 0; rx_last <= 0; rx_prev <= 0; rq <= 0; rqv <= 0;
             timeout <= 0; codeerr <= 0; irq_wait <= 0;
-            txbuf <= 0; txv <= 0; txn <= 0; rxbuf <= 0; rxv <= 0; ir <= 0;
+            txbuf <= 0; txv <= 0; txn <= 0; rxbuf <= 0; rxv <= 0; ir <= 0; xp <= 0;
         end else begin
-            ir <= fetched;
+            ir <= (act_exec & ~en) ? exec_ins : fetched;
+            xp <= act_exec & ~en;
             clk_prev <= clk_cur;
             rs_prev <= sbit;
             // host side of the buffers

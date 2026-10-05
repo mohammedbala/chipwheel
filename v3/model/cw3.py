@@ -89,6 +89,7 @@ class SM:
         self.rxbuf = 0
         self.rxv = 0
         self.ir = 0           # instruction register (prefetch of mem[pc])
+        self.xp = None        # EXEC'd instruction waiting in the IR (executes next clock)
 
     def reset_codec(self, rx_ref=0):
         self.tq = self.tqv = 0      # TX bit queue
@@ -244,7 +245,7 @@ class Chip:
                 elif reg in (2, 3):
                     i = reg - 2
                     if not self.sms[i].en:
-                        exec_req[i] = data
+                        exec_req[i] = data      # into the IR now, executed on the next clock
                 elif reg == 4:
                     nxt['pptr'] = data & 31
                 elif reg == 5:
@@ -259,12 +260,13 @@ class Chip:
         flags_now = self.irq
         for i, s in enumerate(self.sms):
             nx = sm_next[i]
+            nx['xp'] = exec_req[i]
             if 'restart' in nx:
                 continue      # applied below (restart wins over execution this clock)
             if s.en and not (i == 1 and span):
                 self._run_sm(s, Cfg(self.cfg[i]), nx, flags_now, None)
-            elif exec_req[i] is not None:
-                self._run_sm(s, Cfg(self.cfg[i]), nx, flags_now, exec_req[i])
+            elif s.xp is not None:
+                self._run_sm(s, Cfg(self.cfg[i]), nx, flags_now, s.xp)
             irq_set |= nx.pop('_irq_set', 0)
             irq_clr |= nx.pop('_irq_clr', 0)
         # ---- SM-to-SM links: a waiting RX entry moves into the other SM's empty
@@ -300,7 +302,7 @@ class Chip:
                 setattr(s, k, v)
         self.irq = (self.irq | irq_set) & ~irq_clr & 15
         for s in self.sms:                           # prefetch the instruction at the new PC
-            s.ir = mem_before[self._addr(s.num, s.pc, span_before)]
+            s.ir = mem_before[self._addr(s.num, s.pc, span_before)] if s.xp is None else s.xp
         for k, v in nxt.items():
             setattr(self, k, v)
         # Latches capture during the clock-high phase after this edge, i.e. the
