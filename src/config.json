@@ -27,9 +27,11 @@
   "//": "borrow time, which OpenSTA reports as exactly 0 ns slack at every latch D pin.",
   "//": "With the default 0.05 ns setup margin the post-CTS resizer treats all of them as",
   "//": "violations it can never fix and loops for hours (v2: 104 such pins, harmless).",
-  "//": "A 0 margin leaves them alone; repair is also limited to the worst endpoint.",
+  "//": "A 0 margin leaves them alone. Real violations are still repaired, also after",
+  "//": "global routing (the post-CTS estimate missed 4.8 ns of slow-corner wire delay).",
   "PL_RESIZER_SETUP_SLACK_MARGIN": 0,
-  "PL_RESIZER_SETUP_REPAIR_TNS_PCT": 0,
+  "RUN_POST_GRT_RESIZER_TIMING": 1,
+  "GRT_RESIZER_SETUP_SLACK_MARGIN": 0,
 
   "//": "v3: the last detailed-routing violations were on the root nets of the 50 gated",
   "//": "clocks, which CTS gives a 2x-spacing rule; plain spacing is enough at 50 MHz.",
