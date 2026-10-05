@@ -56,7 +56,8 @@ Command address `A[7:4]` = target, `A[3:0]` = register:
 
 RESTART clears ISR/OSR, sets the ISR count to 0 and the OSR count to 16 (empty, so
 the first OUT autopulls), the delay counter, codec state and
-flags, and loads the PC. EXEC executes `D` once on the next clock as if issued
+flags, and loads the PC. EXEC loads `D` into the SM's instruction register when
+the action is applied and executes it once on the following clock as if issued
 (side-set and pin writes included); an instruction that would stall has no
 effect and no delay is applied.
 
